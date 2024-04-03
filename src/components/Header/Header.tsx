@@ -1,9 +1,22 @@
-import { Stack } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import { FaRegUser } from 'react-icons/fa6';
 import './Header.scss';
+import { Stack } from 'react-bootstrap';
+// import Button from 'react-bootstrap/Button';
+import { FaRegUser } from 'react-icons/fa6';
+import { useState } from 'react';
+import Signup from '../Modals/Signup/Signup';
 
 function Header() {
+  const [showModalSignup, setShowModalSignup] = useState(false);
+
+  const handleShowModalSignup = () => {
+    setShowModalSignup(true);
+  };
+  console.log(handleShowModalSignup);
+
+  const handleCloseModalSignup = () => {
+    setShowModalSignup(false);
+  };
+
   return (
     <header className="Header">
       <Stack className="Banner" direction="horizontal" gap={3}>
@@ -16,9 +29,8 @@ function Header() {
         </div>
         <div className="Login ms-auto">
           <FaRegUser className="ImageProfile" />
-          <Button className="LoginButton" variant="outline-light">
-            Login
-          </Button>
+
+          <Signup />
         </div>
       </Stack>
     </header>
