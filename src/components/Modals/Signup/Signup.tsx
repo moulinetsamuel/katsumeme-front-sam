@@ -7,6 +7,7 @@ function Signup() {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [show, setShow] = useState(false);
 
   const handleShowModalSignup = () => {
@@ -39,18 +40,35 @@ function Signup() {
     setPassword(event.target.value);
   };
 
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(event.target.value);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(
-      `Nom: ${username}, Prénom: ${firstname}, Nom: ${lastname}, Email: ${email}, Mot de passe: ${password}`
-    );
+    if (password !== confirmPassword) {
+      alert('Votre mot de passe ne correspond pas');
+      return;
+    }
+    // console.log(
+    // `Nom: ${username}, Prénom: ${firstname}, Nom: ${lastname}, Email: ${email}, Mot de passe: ${password}`);
     handleCloseModalSignup(); //To close modal after submit
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShowModalSignup}>
-        S'inscrire
+      <Button
+        onClick={handleShowModalSignup}
+        className="mx-auto"
+        style={{
+          width: '100%',
+          backgroundColor: '#e8811c',
+          border: 'none',
+        }}
+      >
+        Créer un compte
       </Button>
 
       <Modal show={show} onHide={handleCloseModalSignup}>
@@ -67,6 +85,7 @@ function Signup() {
                 placeholder="Entrez votre nom d'utilisateur"
                 value={username}
                 onChange={handleNameChange}
+                required
               />
             </Form.Group>
 
@@ -77,6 +96,7 @@ function Signup() {
                 placeholder="Entrez votre nom"
                 value={lastname}
                 onChange={handleLastnameChange}
+                required
               />
             </Form.Group>
 
@@ -87,6 +107,7 @@ function Signup() {
                 placeholder="Entrez votre prénom"
                 value={firstname}
                 onChange={handleFirstnameChange}
+                required
               />
             </Form.Group>
 
@@ -97,6 +118,7 @@ function Signup() {
                 placeholder="Entrez votre email"
                 value={email}
                 onChange={handleEmailChange}
+                required
               />
             </Form.Group>
 
@@ -107,6 +129,18 @@ function Signup() {
                 placeholder="Entrez votre mot de passe"
                 value={password}
                 onChange={handlePasswordChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicConfirmPassword">
+              <Form.Label>Confirmez votre mot de passe</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Confirmez votre mot de passe"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                required
               />
             </Form.Group>
             <Button variant="primary" type="submit">
@@ -114,11 +148,6 @@ function Signup() {
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModalSignup}>
-            Fermer
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
