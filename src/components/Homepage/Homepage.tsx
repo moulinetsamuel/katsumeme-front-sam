@@ -4,7 +4,7 @@ import MemeCard from '../MemeCard/MemeCard';
 
 import './Homepage.scss';
 
-function App() {
+function Homepage() {
   return (
     <div className="app">
       <Header />
@@ -14,4 +14,4 @@ function App() {
   );
 }
 
-export default App;
+export default Homepage;
