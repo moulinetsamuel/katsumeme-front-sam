@@ -1,7 +1,7 @@
-import './Header.scss';
 import { Stack } from 'react-bootstrap';
-// import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 import { FaRegUser } from 'react-icons/fa6';
+import './Header.scss';
 
 
 function Header() {
@@ -17,6 +17,9 @@ function Header() {
         </div>
         <div className="Login ms-auto">
           <FaRegUser className="ImageProfile" />
+          <Button className="LoginButton" variant="outline-light">
+            Login
+          </Button>
 
 
         </div>
