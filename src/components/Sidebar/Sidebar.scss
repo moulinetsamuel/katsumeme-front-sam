@@ -1,0 +1,36 @@
+.SidebarContainer {
+  display: flex;
+  width: 14rem;
+}
+
+.color {
+  background-color: rgba(#775088, 0.3);
+}
+
+.Sidebar {
+  position: fixed;
+  top: 15rem;
+  left: 0;
+  height: 34rem;
+  width: 14rem;
+  padding-top: 50px;
+  margin-left: 1.5rem;
+  text-align: left;
+  border-radius: 1rem;
+  border: solid 0.3rem;
+}
+
+.Searchbar {
+  position: fixed;
+  top: 12rem;
+  width: 13rem;
+  margin-left: 2rem;
+  border-radius: 1rem;
+  border: solid 0.3rem;
+  background-color: transparent;
+}
+
+.styleSearchBar {
+  display: flex;
+  align-items: center;
+}
