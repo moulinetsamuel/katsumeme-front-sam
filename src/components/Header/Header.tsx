@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import { FaRegUser } from 'react-icons/fa6';
 import './Header.scss';
 
-
 function Header() {
   return (
     <header className="Header">
@@ -20,8 +19,6 @@ function Header() {
           <Button className="LoginButton" variant="outline-light">
             Login
           </Button>
-
-
         </div>
       </Stack>
     </header>
