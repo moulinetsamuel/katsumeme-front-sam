@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -8,20 +8,21 @@ import Signup from '../Signup/Signup';
 import { useForm } from 'react-hook-form';
 
 type SomeConponentProps = {
-  history: any;
+  history: any; // To access the navigation history
 };
 
 function Signin({ history }: SomeConponentProps): JSX.Element {
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>(''); // State to store error message
+  const [successMessage, setSuccessMessage] = useState<string>(''); // Same but for success message
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm(); //Initializing React Hook Form for form handling (so it can be used below in the form)
 
   const login = (data: any) => {
+    // To handle user login
     let params = {
       email: data.email,
       password: data.password,
@@ -31,12 +32,12 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
       .then(function (response) {
         // IF EMAIL ALREADY EXISTS
         if (response.data.succes === false) {
-          setErrorMessage(response.data.error as string);
+          setErrorMessage(response.data.error);
         } else {
-          setSuccessMessage(response.data.message as string);
+          setSuccessMessage(response.data.message);
         }
-        localStorage.setItem('auth', response.data.token);
-        history.push('/');
+        localStorage.setItem('auth', response.data.token); // Store the authentification token in the localStorage
+        history.push('/login');
       })
       .catch(function (error) {
         console.log(error);
@@ -146,7 +147,7 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
             Créer un compte
           </Button>*/}
           <div className="text-center d-grid">
-            <Signup />
+            <Signup history={history} />
           </div>
         </Modal.Footer>
       </Modal>
