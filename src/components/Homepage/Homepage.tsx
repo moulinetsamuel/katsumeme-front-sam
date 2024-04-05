@@ -1,6 +1,6 @@
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
-import MemeCard from '../MemeCard/MemeCard';
+import MemePage from '../MemePage/MemePage';
 
 import './Homepage.scss';
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <MemeCard />
+      <MemePage />
       <Footer />
     </div>
   );
