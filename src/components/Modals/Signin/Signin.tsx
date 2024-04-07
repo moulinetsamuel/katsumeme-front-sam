@@ -14,6 +14,7 @@ type SomeConponentProps = {
 function Signin({ history }: SomeConponentProps): JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string>(''); // State to store error message
   const [successMessage, setSuccessMessage] = useState<string>(''); // Same but for success message
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // State to track if user is login or not
 
   const {
     register,
@@ -48,6 +49,12 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
       });
   };
 
+  const logout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    history.push('/login');
+  };
+
   const [show, setShow] = useState(false);
   //const [email, setEmail] = useState('');
   //const [password, setPassword] = useState('');
@@ -73,13 +80,23 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
   return (
     <div className="Login ms-auto">
       <FaRegUser className="ImageProfile" />
-      <Button
-        className="LoginButton"
-        variant="outline-light"
-        onClick={handleShow}
-      >
-        Se connecter
-      </Button>
+      {isLoggedIn ? (
+        <Button
+          className="LoginButton"
+          variant="outline-light"
+          onClick={logout}
+        >
+          Se déconnecter
+        </Button>
+      ) : (
+        <Button
+          className="LoginButton"
+          variant="outline-light"
+          onClick={handleShow}
+        >
+          Se connecter
+        </Button>
+      )}
 
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
