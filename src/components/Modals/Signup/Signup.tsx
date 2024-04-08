@@ -1,13 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 
-type SomeConponentProps = {
-  history: any;
-};
-
-function Signup({ history }: SomeConponentProps) {
+function Signup() {
   const [username, setUsername] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
@@ -15,39 +9,6 @@ function Signup({ history }: SomeConponentProps) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [show, setShow] = useState(false);
-  const [succesMessage, setSuccessMessage] = useState<string>('');
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm(); //Initializing React Hook Form for form handling (so it can be used below in the form)
-
-  const submitData = (data: any) => {
-    // To handle user signup
-    let params = {
-      username: data.username,
-      firstname: data.firstname,
-      lastname: data.lastname,
-      email: data.email,
-      password: data.password,
-      confirmpassword: data.cpassword,
-    };
-    axios
-      .post('.../api/signup', params)
-      .then(function (response) {
-        setSuccessMessage(response.data.message);
-        reset();
-        history.push('/login');
-      })
-
-      .catch(function (error) {
-        console.log(error);
-        setSuccessMessage('Inscription validée !');
-      });
-  };
 
   const handleShowModalSignup = () => {
     setShow(true);
@@ -57,44 +18,44 @@ function Signup({ history }: SomeConponentProps) {
     setShow(false);
   };
 
-  //const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //  setUsername(event.target.value);
-  //};
-  //
-  //const handleFirstnameChange = (
-  //  event: React.ChangeEvent<HTMLInputElement>
-  //) => {
-  //  setFirstname(event.target.value);
-  //};
-  //
-  //const handleLastnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //  setLastname(event.target.value);
-  //};
-  //
-  //const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //  setEmail(event.target.value);
-  //};
-  //
-  //const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //  setPassword(event.target.value);
-  //};
-  //
-  //const handleConfirmPasswordChange = (
-  //  event: React.ChangeEvent<HTMLInputElement>
-  //) => {
-  //  setConfirmPassword(event.target.value);
-  //};
-  //
-  //const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //  event.preventDefault();
-  //  if (password !== confirmPassword) {
-  //    alert('Votre mot de passe ne correspond pas');
-  //    return;
-  //  }
-  //  // console.log(
-  //  // `Nom: ${username}, Prénom: ${firstname}, Nom: ${lastname}, Email: ${email}, Mot de passe: ${password}`);
-  //  handleCloseModalSignup(); //To close modal after submit
-  //};
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
+
+  const handleFirstnameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFirstname(event.target.value);
+  };
+
+  const handleLastnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastname(event.target.value);
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      alert('Votre mot de passe ne correspond pas');
+      return;
+    }
+    // console.log(
+    // `Nom: ${username}, Prénom: ${firstname}, Nom: ${lastname}, Email: ${email}, Mot de passe: ${password}`);
+    handleCloseModalSignup(); //To close modal after submit
+  };
 
   return (
     <>
@@ -116,15 +77,15 @@ function Signup({ history }: SomeConponentProps) {
         </Modal.Header>
 
         <Modal.Body>
-          <Form onSubmit={handleSubmit(submitData)}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicUsername">
               <Form.Label>Nom d'utilisateur</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Entrez votre nom d'utilisateur"
-                {...register('username', {
-                  required: "Nom d'utilisateur requis",
-                })}
+                value={username}
+                onChange={handleNameChange}
+                required
               />
             </Form.Group>
 
@@ -133,9 +94,9 @@ function Signup({ history }: SomeConponentProps) {
               <Form.Control
                 type="text"
                 placeholder="Entrez votre nom"
-                {...register('lastname', {
-                  required: 'Nom de famille requis',
-                })}
+                value={lastname}
+                onChange={handleLastnameChange}
+                required
               />
             </Form.Group>
 
@@ -144,9 +105,9 @@ function Signup({ history }: SomeConponentProps) {
               <Form.Control
                 type="text"
                 placeholder="Entrez votre prénom"
-                {...register('firstname', {
-                  required: 'Prénom requis',
-                })}
+                value={firstname}
+                onChange={handleFirstnameChange}
+                required
               />
             </Form.Group>
 
@@ -155,9 +116,9 @@ function Signup({ history }: SomeConponentProps) {
               <Form.Control
                 type="email"
                 placeholder="Entrez votre email"
-                {...register('email', {
-                  required: 'Email requis',
-                })}
+                value={email}
+                onChange={handleEmailChange}
+                required
               />
             </Form.Group>
 
@@ -166,9 +127,9 @@ function Signup({ history }: SomeConponentProps) {
               <Form.Control
                 type="password"
                 placeholder="Entrez votre mot de passe"
-                {...register('password', {
-                  required: 'Mot de passe requis',
-                })}
+                value={password}
+                onChange={handlePasswordChange}
+                required
               />
             </Form.Group>
 
@@ -177,13 +138,9 @@ function Signup({ history }: SomeConponentProps) {
               <Form.Control
                 type="password"
                 placeholder="Confirmez votre mot de passe"
-                {...register('cpassword', {
-                  required: 'Confirmation de Mot de passe requis',
-
-                  validate: (value) =>
-                    value === watch('password') ||
-                    'Les mots de passe ne sont pas identiques',
-                })}
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                required
               />
             </Form.Group>
             <Button variant="primary" type="submit">
@@ -197,3 +154,4 @@ function Signup({ history }: SomeConponentProps) {
 }
 
 export default Signup;
+
