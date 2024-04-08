@@ -28,24 +28,26 @@ function Signup({ history }: SomeConponentProps) {
   const submitData = (data: any) => {
     // To handle user signup
     let params = {
-      username: data.username,
+      nickname: data.username,
       firstname: data.firstname,
       lastname: data.lastname,
       email: data.email,
       password: data.password,
-      confirmpassword: data.cpassword,
+      confirm_password: data.cpassword,
     };
+    console.log(params);
     axios
-      .post('.../api/signup', params)
+
+      .post('https://katsumeme-8c128449f9bf.herokuapp.com/api/users', params)
       .then(function (response) {
         setSuccessMessage(response.data.message);
         reset();
         history.push('/login');
+        setSuccessMessage('Inscription validée !');
       })
 
       .catch(function (error) {
         console.log(error);
-        setSuccessMessage('Inscription validée !');
       });
   };
 

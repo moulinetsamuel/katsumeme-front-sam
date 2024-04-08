@@ -11,6 +11,8 @@ type SomeConponentProps = {
   history: any; // To access the navigation history
 };
 
+console.log('test');
+
 function Signin({ history }: SomeConponentProps): JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string>(''); // State to store error message
   const [successMessage, setSuccessMessage] = useState<string>(''); // Same but for success message
@@ -29,7 +31,10 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
       password: data.password,
     };
     axios
-      .post('http://localhost:3000/api/login', params)
+      .post(
+        'https://katsumeme-8c128449f9bf.herokuapp.com/api/auth/login',
+        params
+      )
       .then(function (response) {
         // IF EMAIL ALREADY EXISTS
         if (response.data.succes === false) {
