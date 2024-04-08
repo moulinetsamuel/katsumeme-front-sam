@@ -1,3 +1,4 @@
+import CreateMemePage from '../CreateMemePage/CreateMemePage';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import MemePage from '../MemePage/MemePage';
@@ -9,6 +10,7 @@ function App() {
     <div className="app">
       <Header />
       <MemePage />
+      <CreateMemePage />
       <Footer />
     </div>
   );
