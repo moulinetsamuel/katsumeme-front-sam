@@ -1,5 +1,7 @@
 import axios from 'axios';
 
-export default axios.create({
-  baseURL: 'https://katsumeme-8c128449f9bf.herokuapp.com/',
+const axiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
 });
+
+export default axiosInstance;

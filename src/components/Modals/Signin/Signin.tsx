@@ -5,8 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FaRegUser } from 'react-icons/fa6';
 import axios from 'axios';
 import Signup from '../Signup/Signup';
-
-const LOGIN_URL = 'https://katsumeme-8c128449f9bf.herokuapp.com/api/auth/login';
+import axiosInstance from '../../API/axios';
 
 function Signin() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // State to track if user is login or not
@@ -33,8 +32,8 @@ function Signin() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        LOGIN_URL,
+      const response = await axiosInstance.post(
+        '/api/auth/login',
         JSON.stringify({
           email,
           password,

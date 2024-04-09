@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-
-const REGISTER_URL = 'https://katsumeme-8c128449f9bf.herokuapp.com/api/users';
+import axiosInstance from '../../API/axios';
 
 function Signup() {
   const [show, setShow] = useState(false);
@@ -31,8 +30,8 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        REGISTER_URL,
+      const response = await axiosInstance.post(
+        '/api/users',
         JSON.stringify({
           nickname,
           firstname,
