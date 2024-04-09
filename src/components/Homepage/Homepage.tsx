@@ -1,4 +1,3 @@
-import PrivateRoute from '../Auth/PrivateRoute';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -7,6 +6,7 @@ import MemePage from '../MemePage/MemePage';
 import './Homepage.scss';
 import Signin from '../Modals/Signin/Signin';
 import Signup from '../Modals/Signup/Signup';
+import AuthProvider from '../Auth/AuthProvider';
 
 function App() {
   return (
@@ -20,9 +20,13 @@ function App() {
           {/* Using "path" targets the route precisly. */}
           <Route
             path="/Signin"
-            element={<PrivateRoute element={<Signin history={history} />} />}
+            element={
+              <AuthProvider>
+                <Signin />
+              </AuthProvider>
+            }
           />
-          <Route path="/Signup" element={<Signup history={history} />} />
+          <Route path="/Signup" element={<Signup />} />
         </Routes>
       </div>
     </BrowserRouter>

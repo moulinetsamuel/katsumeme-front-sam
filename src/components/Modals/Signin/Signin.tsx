@@ -1,86 +1,97 @@
-import { useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegUser } from 'react-icons/fa6';
 import axios from 'axios';
 import Signup from '../Signup/Signup';
-import { useForm } from 'react-hook-form';
 
-type SomeConponentProps = {
-  history: any; // To access the navigation history
-};
+const LOGIN_URL = 'https://katsumeme-8c128449f9bf.herokuapp.com/api/auth/login';
 
-console.log('test');
-
-function Signin({ history }: SomeConponentProps): JSX.Element {
-  const [errorMessage, setErrorMessage] = useState<string>(''); // State to store error message
-  const [successMessage, setSuccessMessage] = useState<string>(''); // Same but for success message
+function Signin() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // State to track if user is login or not
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm(); //Initializing React Hook Form for form handling (so it can be used below in the form)
-
-  const login = (data: any) => {
-    // To handle user login
-    let params = {
-      email: data.email,
-      password: data.password,
-    };
-    axios
-      .post(
-        'https://katsumeme-8c128449f9bf.herokuapp.com/api/auth/login',
-        params
-      )
-      .then(function (response) {
-        // IF EMAIL ALREADY EXISTS
-        if (response.data.succes === false) {
-          setErrorMessage(response.data.error);
-        } else {
-          setSuccessMessage(response.data.message);
-        }
-        localStorage.setItem('auth', response.data.token); // Store the authentification token in the localStorage
-        history.push('/login');
-      })
-      .catch(function (error) {
-        console.log(error);
-        setErrorMessage(
-          `Une erreur s'est produite lors de la connexion. Veuillez réessayer !`
-        );
-        setSuccessMessage('');
-      });
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    setIsLoggedIn(false);
-    history.push('/login');
-  };
-
   const [show, setShow] = useState(false);
-  //const [email, setEmail] = useState('');
-  //const [password, setPassword] = useState('');
-  //const [rememberMe, setRememberMe] = useState(false);
-  //const [error, setError] = useState('');
+
+  //const errRef = useRef(); // if we want implement error toast
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  });
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [email, password]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({
+          email,
+          password,
+        }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: false,
+        }
+      );
+
+      console.log(JSON.stringify(response?.data));
+
+      const tokens = response?.data?.accessToken;
+      localStorage.setItem('token', JSON.stringify(tokens));
+
+      //const { accessToken, tokenType } = JSON.parse(token);
+
+      if (tokens) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        localStorage.setItem('token', token);
+      } else {
+        delete axios.defaults.headers.common['Authorization'];
+        localStorage.removeItem('tokens');
+      }
+
+      // const roles = response?.data?.roles // add roles if necessary
+
+      setEmail('');
+      setPassword('');
+      setSuccess(true);
+
+      handleClose();
+    } catch (error) {
+      console.error(error);
+      if (!error?.response) {
+        setErrorMessage('Aucune réponse du serveur');
+      } else if (error.response.status === 400) {
+        setErrorMessage('Email ou mot de passe manquant');
+      } else if (error.response.status === 401) {
+        const test = error.response.data;
+        setErrorMessage(test);
+        console.log(setErrorMessage(test));
+      } else {
+        setErrorMessage('Connexion échouée');
+      }
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  };
 
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
-
-  //const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //  e.preventDefault();
-  //  try {
-  //    const response = await axios.post('.../api/login', {
-  //      email,
-  //      password,
-  //    });
-  //  } catch (error) {
-  //    setError('Identifiants invalides. Veuillez réessayer');
-  //  }
-  //};
 
   return (
     <div className="Login ms-auto">
@@ -89,7 +100,7 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
         <Button
           className="LoginButton"
           variant="outline-light"
-          onClick={logout}
+          onClick={handleLogout}
         >
           Se déconnecter
         </Button>
@@ -102,25 +113,20 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
           Se connecter
         </Button>
       )}
-
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Se connecter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(login)}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Adresse email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Email"
-                {...register('email', { required: 'Email requis' })}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
-              {/*{errors.email && (
-                <p className="text-danger" style={{ fontSize: 14 }}>
-                  {errors.email.message}
-                </p>
-              )}*/}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -128,13 +134,9 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
               <Form.Control
                 type="password"
                 placeholder="Mot de passe"
-                {...register('password', { required: 'Mot de passe requis' })}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
-              {/*{errors.password && (
-                <p className="text-danger" style={{ fontSize: 14 }}>
-                  {errors.password.message}
-                </p>
-              )}*/}
               <Form.Text className="text-muted">
                 Ne partagez jamais votre mot de passe avec des tiers.
               </Form.Text>
@@ -169,11 +171,12 @@ function Signin({ history }: SomeConponentProps): JSX.Element {
             Créer un compte
           </Button>*/}
           <div className="text-center d-grid">
-            <Signup history={history} />
+            <Signup />
           </div>
         </Modal.Footer>
       </Modal>
     </div>
   );
 }
+
 export default Signin;

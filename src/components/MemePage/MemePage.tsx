@@ -3,8 +3,20 @@ import Sidebar from '../Sidebar/Sidebar';
 import { IoIosShareAlt } from 'react-icons/io';
 import { FaPlusCircle } from 'react-icons/fa';
 import './MemePage.scss';
+import axios from 'axios';
 
 function MemePage() {
+  const handleButton = async () => {
+    await axios
+      .get('https://katsumeme-8c128449f9bf.herokuapp.com/api/test')
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="MemePageContainer">
       <div className="ButtonContainer">
@@ -30,6 +42,7 @@ function MemePage() {
             border: 'transparent',
             borderRadius: '1rem',
           }}
+          onClick={handleButton}
         >
           <FaPlusCircle />
           Créer un meme
