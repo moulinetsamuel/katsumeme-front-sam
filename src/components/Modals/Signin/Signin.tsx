@@ -11,8 +11,6 @@ function Signin() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // State to track if user is login or not
   const [show, setShow] = useState(false);
 
-  //const errRef = useRef(); // if we want implement error toast
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -55,6 +53,7 @@ function Signin() {
         const token = JSON.parse(localStorage.getItem('token'));
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         localStorage.setItem('token', token);
+        location.reload();
       } else {
         delete axios.defaults.headers.common['Authorization'];
         localStorage.removeItem('tokens');
@@ -72,11 +71,10 @@ function Signin() {
       if (!error?.response) {
         setErrorMessage('Aucune réponse du serveur');
       } else if (error.response.status === 400) {
-        setErrorMessage('Email ou mot de passe manquant');
+        setErrorMessage('Email ou mot de passe manquant/incorrect');
+        console.log();
       } else if (error.response.status === 401) {
-        const test = error.response.data;
-        setErrorMessage(test);
-        console.log(setErrorMessage(test));
+        setErrorMessage('Accès refusé');
       } else {
         setErrorMessage('Connexion échouée');
       }
@@ -86,6 +84,7 @@ function Signin() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
+    location.reload();
   };
 
   const handleClose = () => setShow(false);
@@ -117,6 +116,13 @@ function Signin() {
           <Modal.Title>Se connecter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div>
+            <p>
+              {typeof errorMessage === 'object'
+                ? (errorMessage as { message: string }).message
+                : errorMessage}
+            </p>
+          </div>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Adresse email</Form.Label>

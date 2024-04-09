@@ -17,10 +17,15 @@ function Signup() {
   const [password, setPassword] = useState('');
 
   const [confirm_password, setconfirm_password] = useState('');
-  const [validMatch, setValidMatch] = useState(false);
+  const [validMatch, setValidMatch] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const [nicknameError, setNicknameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   useEffect(() => {
     setErrorMessage('');
@@ -28,7 +33,10 @@ function Signup() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    if (password !== confirm_password) {
+      setValidMatch('Les mots de passe ne correspondent pas');
+      return;
+    }
     try {
       const response = await axiosInstance.post(
         '/api/users',
@@ -60,11 +68,34 @@ function Signup() {
     } catch (error) {
       console.error(error);
       if (!error?.response) {
-        setErrorMessage('No Server Response');
-      } else if (error.response?.status === 409) {
-        setErrorMessage('Username Taken');
-      } else {
-        setErrorMessage('Registration Failed');
+        setErrorMessage('Le serveur ne répond pas');
+      } else if (error.response?.status === 400) {
+        const details = error.response.data.message.details;
+        if (Array.isArray(details)) {
+          //const errorMessage = details.map((detail) => detail.message);
+          //console.log(errorMessage);
+          //setErrorMessage(errorMessage.join(', '));
+          details.forEach((detail) => {
+            switch (detail.path[0]) {
+              case 'nickname':
+                setNicknameError(detail.message);
+                break;
+              case 'email':
+                setEmailError(detail.message);
+                break;
+              case 'password':
+                setPasswordError(detail.message);
+                break;
+              case 'confirm_password':
+                setConfirmPasswordError(detail.message);
+                break;
+              default:
+                break;
+            }
+          });
+        } else {
+          setErrorMessage(error.response.data.message);
+        }
       }
     }
   };
@@ -105,7 +136,17 @@ function Signup() {
                 placeholder="Entrez votre nom d'utilisateur"
                 onChange={(e) => setNickname(e.target.value)}
                 value={nickname}
+                required
               />
+              <p>{nicknameError}</p>
+              {/*<p>
+                {typeof errorMessage === 'object'
+                  ? (errorMessage as { message: string }).message
+                  : errorMessage
+                      .split(',')
+                      .filter((message) => message.includes('nickname'))
+                      .join(', ')}
+      </p>*/}
             </Form.Group>
 
             <Form.Group controlId="formBasicLastname">
@@ -115,6 +156,7 @@ function Signup() {
                 placeholder="Entrez votre nom"
                 onChange={(e) => setLastname(e.target.value)}
                 value={lastname}
+                required
               />
             </Form.Group>
 
@@ -125,6 +167,7 @@ function Signup() {
                 placeholder="Entrez votre prénom"
                 onChange={(e) => setFirstname(e.target.value)}
                 value={firstname}
+                required
               />
             </Form.Group>
 
@@ -135,7 +178,9 @@ function Signup() {
                 placeholder="Entrez votre email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                required
               />
+              <p>{emailError}</p>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -145,7 +190,9 @@ function Signup() {
                 placeholder="Entrez votre mot de passe"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                required
               />
+              <p>{passwordError}</p>
             </Form.Group>
 
             <Form.Group controlId="formBasicConfirmPassword">
@@ -155,7 +202,9 @@ function Signup() {
                 placeholder="Confirmez votre mot de passe"
                 onChange={(e) => setconfirm_password(e.target.value)}
                 value={confirm_password}
+                required
               />
+              <p>{confirmPasswordError}</p>
             </Form.Group>
             <Button variant="primary" type="submit">
               S'inscrire
