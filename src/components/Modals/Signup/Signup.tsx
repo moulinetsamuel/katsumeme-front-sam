@@ -1,5 +1,3 @@
-
-import axios from 'axios';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import axiosInstance from '../../API/axios';
@@ -9,7 +7,7 @@ function Signup() {
   const errRef = useRef();
 
   const [nickname, setNickname] = useState('');
-  
+
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
 
@@ -100,7 +98,7 @@ function Signup() {
       }
     }
   };
-  
+
   const handleShowModalSignup = () => {
     setShow(true);
   };
@@ -123,7 +121,8 @@ function Signup() {
 
   const handleInputChangeConfirmPwd = () => {
     setConfirmPasswordError('');
-  
+  };
+
   return (
     <>
       <Button
@@ -174,7 +173,7 @@ function Signup() {
                 type="text"
                 placeholder="Entrez votre nom"
                 onChange={(e) => setLastname(e.target.value)}
-                value={lastname}             
+                value={lastname}
                 required
               />
             </Form.Group>
@@ -245,4 +244,3 @@ function Signup() {
 }
 
 export default Signup;
-
