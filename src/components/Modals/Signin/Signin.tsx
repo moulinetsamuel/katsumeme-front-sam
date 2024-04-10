@@ -69,14 +69,14 @@ function Signin() {
     } catch (error) {
       console.error(error);
       if (!error?.response) {
-        setErrorMessage('Aucune réponse du serveur');
+        setErrorMessage('No Server Response');
       } else if (error.response.status === 400) {
-        setErrorMessage('Email ou mot de passe manquant/incorrect');
+        setErrorMessage('Incorrect/Missing Email or Password');
         console.log();
       } else if (error.response.status === 401) {
-        setErrorMessage('Accès refusé');
+        setErrorMessage('Unauthorized');
       } else {
-        setErrorMessage('Connexion échouée');
+        setErrorMessage('Login Failed');
       }
     }
   };

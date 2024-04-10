@@ -108,6 +108,22 @@ function Signup() {
     setShow(false);
   };
 
+  const handleInputChangeNickname = () => {
+    setNicknameError('');
+  };
+
+  const handleInputChangeEmail = () => {
+    setEmailError('');
+  };
+
+  const handleInputChangePassword = () => {
+    setPasswordError('');
+  };
+
+  const handleInputChangeConfirmPwd = () => {
+    setConfirmPasswordError('');
+  };
+
   return (
     <>
       <Button
@@ -134,11 +150,13 @@ function Signup() {
               <Form.Control
                 type="text"
                 placeholder="Entrez votre nom d'utilisateur"
-                onChange={(e) => setNickname(e.target.value)}
+                onChange={(e) => {
+                  setNickname(e.target.value);
+                  handleInputChangeNickname();
+                }}
                 value={nickname}
                 required
               />
-              <p>{nicknameError}</p>
               {/*<p>
                 {typeof errorMessage === 'object'
                   ? (errorMessage as { message: string }).message
@@ -147,6 +165,7 @@ function Signup() {
                       .filter((message) => message.includes('nickname'))
                       .join(', ')}
       </p>*/}
+              <p>{nicknameError}</p>
             </Form.Group>
 
             <Form.Group controlId="formBasicLastname">
@@ -176,7 +195,10 @@ function Signup() {
               <Form.Control
                 type="email"
                 placeholder="Entrez votre email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  handleInputChangeEmail();
+                }}
                 value={email}
                 required
               />
@@ -188,7 +210,10 @@ function Signup() {
               <Form.Control
                 type="password"
                 placeholder="Entrez votre mot de passe"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  handleInputChangePassword();
+                }}
                 value={password}
                 required
               />
@@ -200,7 +225,10 @@ function Signup() {
               <Form.Control
                 type="password"
                 placeholder="Confirmez votre mot de passe"
-                onChange={(e) => setconfirm_password(e.target.value)}
+                onChange={(e) => {
+                  setconfirm_password(e.target.value);
+                  handleInputChangeConfirmPwd();
+                }}
                 value={confirm_password}
                 required
               />
