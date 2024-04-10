@@ -1,9 +1,12 @@
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import MemePage from '../MemePage/MemePage';
 
 import './Homepage.scss';
+
 import Signin from '../Modals/Signin/Signin';
 import Signup from '../Modals/Signup/Signup';
 import AuthProvider from '../Auth/AuthProvider';
@@ -30,6 +33,8 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+
+
   );
 }
 
