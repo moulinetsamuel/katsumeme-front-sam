@@ -145,7 +145,7 @@ function MemeEditor() {
       // Convert the canvas content to a data URL
       const dataURL = canvas.toDataURL();
 
-      // Create a temporary anchor element to trigger the download
+      // Create an anchor element to trigger the download"
       const link = document.createElement('a');
       link.download = 'Katsumeme.png';
       link.href = dataURL;
@@ -184,6 +184,7 @@ function MemeEditor() {
           <div className="meme-actions">
             <Button onClick={downloadMeme}>Download</Button>
           </div>
+          {/* <Button OnClick={Publier}> Publier</Button> */}
         </div>
       </div>
     </div>
