@@ -4,7 +4,6 @@ import Previews from './MyDropZone';
 import './MemeEditor.scss';
 
 // Function to split text into multiple lines
-// Function to split text into multiple lines
 const splitTextIntoLines = (
   text: string,
   maxWidth: number,
@@ -13,16 +12,20 @@ const splitTextIntoLines = (
   const words = text.split(' ');
   const lines = [];
   let currentLine = '';
+  let currentLineWidth = 0;
 
   words.forEach((word) => {
-    const testLine = currentLine.length === 0 ? word : `${currentLine} ${word}`;
-    const testWidth = ctx.measureText(testLine).width;
+    const wordWidth = ctx.measureText(word).width;
+    const testLine = currentLine === '' ? word : `${currentLine} ${word}`;
+    const testLineWidth = ctx.measureText(testLine).width;
 
-    if (testWidth > maxWidth) {
+    if (testLineWidth > maxWidth && currentLineWidth > 0) {
       lines.push(currentLine);
       currentLine = word;
+      currentLineWidth = wordWidth;
     } else {
       currentLine = testLine;
+      currentLineWidth += wordWidth;
     }
   });
 
@@ -52,7 +55,7 @@ function MemeEditor() {
   // Function to setup text styles
   const setupTextStyles = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = 'white';
-    ctx.font = '40px inter';
+    ctx.font = '40px impact';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
   };
@@ -182,7 +185,7 @@ function MemeEditor() {
             </div>
           </div>
           <div className="meme-actions">
-            <Button onClick={downloadMeme}>Download</Button>
+            <Button onClick={downloadMeme}>Télécharger</Button>
           </div>
           {/* <Button OnClick={Publier}> Publier</Button> */}
         </div>
