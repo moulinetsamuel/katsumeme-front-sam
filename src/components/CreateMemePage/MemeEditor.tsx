@@ -3,6 +3,33 @@ import { Button } from 'react-bootstrap';
 import Previews from './MyDropZone';
 import './MemeEditor.scss';
 
+// Function to split text into multiple lines
+// Function to split text into multiple lines
+const splitTextIntoLines = (
+  text: string,
+  maxWidth: number,
+  ctx: CanvasRenderingContext2D
+) => {
+  const words = text.split(' ');
+  const lines = [];
+  let currentLine = '';
+
+  words.forEach((word) => {
+    const testLine = currentLine.length === 0 ? word : `${currentLine} ${word}`;
+    const testWidth = ctx.measureText(testLine).width;
+
+    if (testWidth > maxWidth) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine = testLine;
+    }
+  });
+
+  lines.push(currentLine);
+  return lines;
+};
+
 function MemeEditor() {
   const [image, setImage] = useState<File | null>(null);
   const [topText, setTopText] = useState<string>('');
@@ -20,6 +47,14 @@ function MemeEditor() {
 
   const handleBottomText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBottomText(e.target.value);
+  };
+
+  // Function to setup text styles
+  const setupTextStyles = (ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = 'white';
+    ctx.font = '40px inter';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
   };
 
   useEffect(() => {
@@ -41,40 +76,15 @@ function MemeEditor() {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
         ctx.drawImage(img, 0, 0); // Draw the image on the canvas
 
-        ctx.fillStyle = 'white'; // Set the fill color to white
-        ctx.font = '40px inter'; // Set the font size and family
-        ctx.textAlign = 'center'; // Set the text alignment
-        ctx.textBaseline = 'top'; // Set the text baseline
+        // Call the function to setup text styles
+        setupTextStyles(ctx);
 
         const maxLineWidth = canvas.width - 100; // Maximum width for the text (100 pixels from each side)
         const lineHeight = 50; // Height of each line
 
-        // Function to split text into multiple lines
-        const splitTextIntoLines = (text: string, maxWidth: number) => {
-          const words = text.split(' ');
-          const lines = [];
-          let currentLine = '';
-
-          words.forEach((word) => {
-            const testLine =
-              currentLine.length === 0 ? word : `${currentLine} ${word}`;
-            const testWidth = ctx.measureText(testLine).width;
-
-            if (testWidth > maxWidth) {
-              lines.push(currentLine);
-              currentLine = word;
-            } else {
-              currentLine = testLine;
-            }
-          });
-
-          lines.push(currentLine);
-          return lines;
-        };
-
         // Split top and bottom text into multiple lines if needed
-        const topLines = splitTextIntoLines(topText, maxLineWidth);
-        const bottomLines = splitTextIntoLines(bottomText, maxLineWidth);
+        const topLines = splitTextIntoLines(topText, maxLineWidth, ctx);
+        const bottomLines = splitTextIntoLines(bottomText, maxLineWidth, ctx);
 
         // Draw top text
         topLines.forEach((line, index) => {
@@ -110,21 +120,34 @@ function MemeEditor() {
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
 
+      // Call the function to setup text styles
+      setupTextStyles(ctx);
+
+      // Split top and bottom text into multiple lines if needed
+      const maxLineWidth = canvas.width - 100; // Maximum width for the text (100 pixels from each side)
+      const topLines = splitTextIntoLines(topText, maxLineWidth, ctx);
+      const bottomLines = splitTextIntoLines(bottomText, maxLineWidth, ctx);
+
       // Draw the top text
-      ctx.fillStyle = 'white';
-      ctx.font = '40px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(topText, canvas.width / 2, 50);
+      topLines.forEach((line, index) => {
+        ctx.fillText(line, canvas.width / 2, 50 + index * 50);
+      });
 
       // Draw the bottom text
-      ctx.fillText(bottomText, canvas.width / 2, canvas.height - 50);
+      bottomLines.forEach((line, index) => {
+        ctx.fillText(
+          line,
+          canvas.width / 2,
+          canvas.height - 50 - (bottomLines.length - index - 1) * 50
+        );
+      });
 
       // Convert the canvas content to a data URL
       const dataURL = canvas.toDataURL();
 
       // Create a temporary anchor element to trigger the download
       const link = document.createElement('a');
-      link.download = 'meme.png';
+      link.download = 'Katsumeme.png';
       link.href = dataURL;
       link.click();
     };
@@ -161,7 +184,6 @@ function MemeEditor() {
           <div className="meme-actions">
             <Button onClick={downloadMeme}>Download</Button>
           </div>
-          <div className="generated-meme"></div>
         </div>
       </div>
     </div>
