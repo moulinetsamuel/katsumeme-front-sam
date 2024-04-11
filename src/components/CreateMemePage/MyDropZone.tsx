@@ -49,40 +49,30 @@ function Previews({ onChange }: { onChange: (file: File) => void }) {
         })
       );
       setFiles(filesWithPreview);
-      if (filesWithPreview.length > 0) {
-        onChange(filesWithPreview[0]); // Transmettre la première image sélectionnée
-      }
+      onChange(filesWithPreview[0]); // Call onChange with the first image
     },
   });
 
-  const thumbs = files.map((file) => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
-        <img
-          alt=""
-          src={file.preview}
-          style={img}
-          // Revoke data uri after image is loaded
-          onLoad={() => {
-            URL.revokeObjectURL(file.preview);
-          }}
-        />
+  const thumbs =
+    files.length === 1 ? (
+      <div style={thumb} key={files[0].name}>
+        <div style={thumbInner}>
+          <img
+            alt=""
+            src={files[0].preview}
+            style={img}
+            // ...
+          />
+        </div>
       </div>
-    </div>
-  ));
-
-  useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, []);
+    ) : null;
 
   return (
     <section className="container">
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
-        <p>Drag and drop some files here, or click to select files</p>
+        <p>Drag and drop le fichier ou sélectionnez en un.</p>
       </div>
-      <aside style={thumbsContainer}>{thumbs}</aside>
     </section>
   );
 }

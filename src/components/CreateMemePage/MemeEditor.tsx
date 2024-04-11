@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Stack, Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Previews from './MyDropZone';
 import './MemeEditor.scss';
 
@@ -163,16 +165,14 @@ function MemeEditor() {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-5">
-          <div className="dropzone">
+    <div className="meme-container">
+      <Stack direction="horizontal" gap={3}>
+        <Row>
+          <Col md={5} className="dropzone ms-auto">
             <Previews onChange={handleImageChange} />
-          </div>
-        </div>
-        <div className="col-md-7">
-          <canvas ref={canvasRef} width={500} height={500} />
-          <div className="meme-container">
+          </Col>
+          <Col md={7} className="img ms-auto">
+            <canvas ref={canvasRef} width={500} height={500} />{' '}
             <div className="text-inputs">
               <input
                 className="top-text form-control col-lg-8"
@@ -189,13 +189,12 @@ function MemeEditor() {
                 onChange={handleBottomText}
               />
             </div>
-          </div>
-          <div className="meme-actions">
+          </Col>{' '}
+          <div className="dl-button">
             <Button onClick={downloadMeme}>Télécharger</Button>
           </div>
-          {/* <Button OnClick={Publier}> Publier</Button> */}
-        </div>
-      </div>
+        </Row>
+      </Stack>
     </div>
   );
 }
