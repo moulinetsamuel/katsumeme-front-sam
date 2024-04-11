@@ -9,26 +9,32 @@ const splitTextIntoLines = (
   maxWidth: number,
   ctx: CanvasRenderingContext2D
 ) => {
+  // Split the text into words using the space character as the separator
   const words = text.split(' ');
+  // Create an array to store the lines
   const lines = [];
+  // Create a variable to store the current line
   let currentLine = '';
+  // Initialize the current line width
   let currentLineWidth = 0;
 
+  // Loop through each word
   words.forEach((word) => {
     const wordWidth = ctx.measureText(word).width;
     const testLine = currentLine === '' ? word : `${currentLine} ${word}`;
     const testLineWidth = ctx.measureText(testLine).width;
-
+    // If the test line is less than the max width, add the word to the current line
     if (testLineWidth > maxWidth && currentLineWidth > 0) {
       lines.push(currentLine);
       currentLine = word;
       currentLineWidth = wordWidth;
     } else {
       currentLine = testLine;
+      // Add the word width to the current line width
       currentLineWidth += wordWidth;
     }
   });
-
+  // Add the current line to the lines array
   lines.push(currentLine);
   return lines;
 };
