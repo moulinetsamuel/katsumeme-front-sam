@@ -16,12 +16,55 @@ function Signin() {
   const [errorMessage, setErrorMessage] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const [token, setToken] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+
+  const checkUserStatus = async () => {
+    try {
+      const response = await axiosInstance.get('/api/profil');
+      if (response.data.isLoggedIn) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error(
+        'Erreur lors de la vérification du statut utilisateur :',
+        error
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
     }
-  });
+    checkUserStatus();
+  }, []);
+
+  //useEffect(() => {
+  //  const fetchToken = async () => {
+  //    try {
+  //      const response = await axiosInstance.get('/api/profil');
+  //      console.log(response);
+  //
+  //      const tokenData = response.data.accesToken;
+  //
+  //      if (tokenData) {
+  //        localStorage.setItem('token', tokenData);
+  //        axios.defaults.headers.common['Authorization'] = `Bearer $//{token}`;
+  //        setIsLoggedIn(true);
+  //      }
+  //    } catch (error) {
+  //      console.error('ERREUR lors de la récupération du token', error);
+  //    }
+  //
+  //    fetchToken();
+  //  };
+  //}, []);
 
   useEffect(() => {
     setErrorMessage('');
@@ -46,20 +89,17 @@ function Signin() {
 
       const tokens = response?.data?.accessToken;
       localStorage.setItem('token', JSON.stringify(tokens));
-
       //const { accessToken, tokenType } = JSON.parse(token);
-
       if (tokens) {
         const token = JSON.parse(localStorage.getItem('token'));
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        localStorage.setItem('token', token);
         location.reload();
       } else {
         delete axios.defaults.headers.common['Authorization'];
         localStorage.removeItem('tokens');
       }
 
-      // const roles = response?.data?.roles // add roles if necessary
+      //const roles = response?.data?.roles // add roles if necessary
 
       setEmail('');
       setPassword('');
@@ -83,6 +123,7 @@ function Signin() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
     setIsLoggedIn(false);
     location.reload();
   };
@@ -90,6 +131,10 @@ function Signin() {
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="Login ms-auto">

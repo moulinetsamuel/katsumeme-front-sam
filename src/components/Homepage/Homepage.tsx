@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Footer from '../Footer/Footer';
@@ -33,8 +32,6 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
-
-
   );
 }
 
