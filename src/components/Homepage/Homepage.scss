@@ -23,6 +23,19 @@
     color: v.$color;
   }
 
+  .ButtonContainerCreate {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .ButtonContainerShare {
+    position: absolute;
+    display: flex;
+    gap: 0.5rem;
+  }
+
   &-link {
     color: v.$color-primary;
   }
