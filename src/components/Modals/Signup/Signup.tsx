@@ -1,15 +1,106 @@
-import React, { useState } from 'react';
+
+import axios from 'axios';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import axiosInstance from '../../API/axios';
 
 function Signup() {
-  const [username, setUsername] = useState('');
+  const [show, setShow] = useState(false);
+  const errRef = useRef();
+
+  const [nickname, setNickname] = useState('');
+  
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [show, setShow] = useState(false);
 
+  const [email, setEmail] = useState('');
+
+  const [password, setPassword] = useState('');
+
+  const [confirm_password, setconfirm_password] = useState('');
+  const [validMatch, setValidMatch] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  const [nicknameError, setNicknameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [nickname, firstname, lastname, email, password, confirm_password]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (password !== confirm_password) {
+      setValidMatch('Les mots de passe ne correspondent pas');
+      return;
+    }
+    try {
+      const response = await axiosInstance.post(
+        '/api/users',
+        JSON.stringify({
+          nickname,
+          firstname,
+          lastname,
+          email,
+          password,
+          confirm_password,
+        }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: false,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      // params needed for sign up
+      setNickname('');
+      setFirstname('');
+      setLastname('');
+      setEmail('');
+      setPassword('');
+      setconfirm_password('');
+
+      setSuccess(true);
+      // Close modal if success
+      handleCloseModalSignup();
+    } catch (error) {
+      console.error(error);
+      if (!error?.response) {
+        setErrorMessage('Le serveur ne répond pas');
+      } else if (error.response?.status === 400) {
+        const details = error.response.data.message.details;
+        if (Array.isArray(details)) {
+          //const errorMessage = details.map((detail) => detail.message);
+          //console.log(errorMessage);
+          //setErrorMessage(errorMessage.join(', '));
+          details.forEach((detail) => {
+            switch (detail.path[0]) {
+              case 'nickname':
+                setNicknameError(detail.message);
+                break;
+              case 'email':
+                setEmailError(detail.message);
+                break;
+              case 'password':
+                setPasswordError(detail.message);
+                break;
+              case 'confirm_password':
+                setConfirmPasswordError(detail.message);
+                break;
+              default:
+                break;
+            }
+          });
+        } else {
+          setErrorMessage(error.response.data.message);
+        }
+      }
+    }
+  };
+  
   const handleShowModalSignup = () => {
     setShow(true);
   };
@@ -18,45 +109,21 @@ function Signup() {
     setShow(false);
   };
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+  const handleInputChangeNickname = () => {
+    setNicknameError('');
   };
 
-  const handleFirstnameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFirstname(event.target.value);
+  const handleInputChangeEmail = () => {
+    setEmailError('');
   };
 
-  const handleLastnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastname(event.target.value);
+  const handleInputChangePassword = () => {
+    setPasswordError('');
   };
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setConfirmPassword(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (password !== confirmPassword) {
-      alert('Votre mot de passe ne correspond pas');
-      return;
-    }
-    // console.log(
-    // `Nom: ${username}, Prénom: ${firstname}, Nom: ${lastname}, Email: ${email}, Mot de passe: ${password}`);
-    handleCloseModalSignup(); //To close modal after submit
-  };
-
+  const handleInputChangeConfirmPwd = () => {
+    setConfirmPasswordError('');
+  
   return (
     <>
       <Button
@@ -83,10 +150,22 @@ function Signup() {
               <Form.Control
                 type="text"
                 placeholder="Entrez votre nom d'utilisateur"
-                value={username}
-                onChange={handleNameChange}
+                onChange={(e) => {
+                  setNickname(e.target.value);
+                  handleInputChangeNickname();
+                }}
+                value={nickname}
                 required
               />
+              {/*<p>
+                {typeof errorMessage === 'object'
+                  ? (errorMessage as { message: string }).message
+                  : errorMessage
+                      .split(',')
+                      .filter((message) => message.includes('nickname'))
+                      .join(', ')}
+      </p>*/}
+              <p>{nicknameError}</p>
             </Form.Group>
 
             <Form.Group controlId="formBasicLastname">
@@ -94,8 +173,8 @@ function Signup() {
               <Form.Control
                 type="text"
                 placeholder="Entrez votre nom"
-                value={lastname}
-                onChange={handleLastnameChange}
+                onChange={(e) => setLastname(e.target.value)}
+                value={lastname}             
                 required
               />
             </Form.Group>
@@ -105,8 +184,8 @@ function Signup() {
               <Form.Control
                 type="text"
                 placeholder="Entrez votre prénom"
+                onChange={(e) => setFirstname(e.target.value)}
                 value={firstname}
-                onChange={handleFirstnameChange}
                 required
               />
             </Form.Group>
@@ -116,10 +195,14 @@ function Signup() {
               <Form.Control
                 type="email"
                 placeholder="Entrez votre email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  handleInputChangeEmail();
+                }}
                 value={email}
-                onChange={handleEmailChange}
                 required
               />
+              <p>{emailError}</p>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -127,10 +210,14 @@ function Signup() {
               <Form.Control
                 type="password"
                 placeholder="Entrez votre mot de passe"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  handleInputChangePassword();
+                }}
                 value={password}
-                onChange={handlePasswordChange}
                 required
               />
+              <p>{passwordError}</p>
             </Form.Group>
 
             <Form.Group controlId="formBasicConfirmPassword">
@@ -138,10 +225,14 @@ function Signup() {
               <Form.Control
                 type="password"
                 placeholder="Confirmez votre mot de passe"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
+                onChange={(e) => {
+                  setconfirm_password(e.target.value);
+                  handleInputChangeConfirmPwd();
+                }}
+                value={confirm_password}
                 required
               />
+              <p>{confirmPasswordError}</p>
             </Form.Group>
             <Button variant="primary" type="submit">
               S'inscrire

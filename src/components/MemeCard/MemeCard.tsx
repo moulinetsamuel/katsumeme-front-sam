@@ -7,8 +7,24 @@ import { BsTags } from 'react-icons/bs';
 import './MemeCard.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 
 function MemeCard() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return localStorage.getItem('token') !== null;
+  }); // State to track if user is login or not
+
+  useEffect(() => {
+    const handleStorageCHange = () => {
+      setIsLoggedIn(localStorage.getItem('token') !== null);
+    };
+    window.addEventListener('storage', handleStorageCHange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageCHange);
+    };
+  }, []);
+
   return (
     <div className="MemeCardContainer">
       <Card className="CardStyle" style={{ width: '25rem' }}>
@@ -39,10 +55,12 @@ function MemeCard() {
             <Button variant="primary">
               <FaDownload />
             </Button>
-            <Button variant="primary">
-              <MdOutlineStarBorder />
-              {/* <MdOutlineStar /> */}
-            </Button>
+            {isLoggedIn && (
+              <Button variant="primary">
+                <MdOutlineStarBorder />
+                {/* <MdOutlineStar /> */}
+              </Button>
+            )}
           </div>
         </Card.Body>
       </Card>
