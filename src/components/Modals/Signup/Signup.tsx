@@ -48,11 +48,9 @@ function Signup() {
           confirm_password,
         }),
         {
-          headers: { 'Content-Type': 'application/json' },
           withCredentials: false,
         }
       );
-      console.log(JSON.stringify(response?.data));
       // params needed for sign up
       setNickname('');
       setFirstname('');
@@ -65,10 +63,7 @@ function Signup() {
       // Close modal if success
       handleCloseModalSignup();
     } catch (error) {
-      console.error(error);
-      if (!error?.response) {
-        setErrorMessage('Le serveur ne répond pas');
-      } else if (error.response?.status === 400) {
+      if (error.response?.status === 400) {
         const details = error.response.data.message.details;
         if (Array.isArray(details)) {
           //const errorMessage = details.map((detail) => detail.message);
@@ -93,7 +88,7 @@ function Signup() {
             }
           });
         } else {
-          setErrorMessage(error.response.data.message);
+          setErrorMessage('An error occurred');
         }
       }
     }
