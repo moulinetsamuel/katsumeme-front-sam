@@ -1,8 +1,4 @@
-
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-
-import React, { useState } from 'react';
-
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -116,12 +112,11 @@ function Signin() {
           Se connecter
         </Button>
       )}
-       <Modal show={show} onHide={handleClose} animation={false}>
+      <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Se connecter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <div>
             <p>
               {typeof errorMessage === 'object'
@@ -134,12 +129,11 @@ function Signin() {
               <Form.Label>Adresse email</Form.Label>
               <Form.Control
                 type="email"
-
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
-         </Form.Group>
+            </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Mot de passe</Form.Label>
@@ -152,10 +146,7 @@ function Signin() {
               <Form.Text className="text-muted">
                 Ne partagez jamais votre mot de passe avec des tiers.
               </Form.Text>
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-           </Form.Group>
+            </Form.Group>
             {/*<Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check
           type="checkbox"
