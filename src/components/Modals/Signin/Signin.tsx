@@ -36,6 +36,7 @@ function Signin({ hide, onHide }: SigninProps) {
           password,
         }),
         {
+          headers: { 'Content-Type': 'application/json' },
           withCredentials: false,
         }
       );

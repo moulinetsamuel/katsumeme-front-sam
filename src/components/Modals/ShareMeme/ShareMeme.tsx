@@ -12,8 +12,8 @@ type ShareMemeProps = {
 
 function ShareMeme({ hide, onHide }: ShareMemeProps) {
   const [filePreview, setFilePreview] = useState<string | null>(null);
-  const [tags, setTags] = useState<string[]>([]);
-  const [title, setTitle] = useState('');
+  const [tags, setTags] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [meme, setMeme] = useState<File | null>(null);
 
   const [success, setSucces] = useState(false);
@@ -22,33 +22,35 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
   const [tagsError, setTagsError] = useState('');
   const defaultFile = new File([], 'default.jpg', { type: 'image/jpeg' });
 
-  const handleClose = () => onHide(false);
+  // const [tagsArray, setTagsArray] = useState<string[]>([]);
+
+  const handleClose = () => {
+    setTags('');
+    setTitle('');
+    setMeme(null);
+    setFilePreview(null);
+    onHide(false);
+  };
 
   const upload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      if (meme) {
-        formData.append('meme', meme); // Add file to form data
-      }
-      formData.append('title', title);
-      formData.append('tags', JSON.stringify(tags)); // Convert tags array to JSON string
+      const tagsArrayUpdated = tags.split(' / ');
 
-      const response = await axiosInstance.post('/api/memes', formData, {
-        withCredentials: false,
+      const dataForm = {
+        meme: meme,
+        title: title,
+        tags: tagsArrayUpdated,
+      };
+
+      const response = await axiosInstance.post('/api/memes', dataForm, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      console.log(JSON.stringify(response?.data));
-
-      setTitle('');
-      setTags([]);
-      setMeme(defaultFile);
       setSucces(true);
 
       handleClose();
     } catch (error) {
-      console.error(error);
-
       if (error.response?.status === 400) {
         const details = error.response.data.message.details;
         if (Array.isArray(details)) {
@@ -137,7 +139,7 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
           <Modal.Title>Partager un meme</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={upload}>
+          <Form onSubmit={upload} encType="multipart/form-data">
             <div className="dropzoneStyle">
               <Dropzone onDrop={handleDrop}>
                 {({ getRootProps, getInputProps }) => (
@@ -187,12 +189,14 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
                 placeholder="tags..."
                 name="tags"
                 onChange={(e) => {
-                  const tagsArray = e.target.value.split(' '); // send tags as an array with space separated values
-                  setTags(tagsArray);
+                  setTags(e.target.value.replace(/,/g, ' / '));
                   handleInputChangeTags();
                 }}
                 value={tags}
               />
+              <Form.Text className="text-muted">
+                Pour ajouter plusieurs tags ","
+              </Form.Text>
               <p>{tagsError}</p>
             </Form.Group>
 

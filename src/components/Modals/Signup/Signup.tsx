@@ -48,6 +48,7 @@ function Signup() {
           confirm_password,
         }),
         {
+          headers: { 'Content-Type': 'application/json' },
           withCredentials: false,
         }
       );

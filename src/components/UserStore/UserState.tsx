@@ -25,6 +25,7 @@ const useUserStore = create<UserState>((set) => ({
         user: (state.user = {}),
         isAuthenticated: (state.isAuthenticated = false),
       }));
+      localStorage.clear();
     }
   },
 }));
