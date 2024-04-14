@@ -3,7 +3,7 @@ import axiosInstance from '../../API/axios';
 import { useState } from 'react';
 import Dropzone, { FileRejection } from 'react-dropzone';
 import FileWithPreview from 'react-dropzone';
-import { type } from 'os';
+import FormData from 'form-data';
 
 type ShareMemeProps = {
   hide: boolean;
@@ -43,8 +43,12 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
         tags: tagsArrayUpdated,
       };
 
+      console.log('test :', dataForm);
+
       const response = await axiosInstance.post('/api/memes', dataForm, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       setSucces(true);
@@ -200,6 +204,7 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
               <p>{tagsError}</p>
             </Form.Group>
 
+            <p>{errorMessage}</p>
             <Button variant="primary" type="submit">
               Publier
             </Button>
