@@ -1,28 +1,26 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { FaRegUser } from 'react-icons/fa6';
-import axios from 'axios';
 import Signup from '../Signup/Signup';
-
 import axiosInstance from '../../API/axios';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
-function Signin() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // State to track if user is login or not
-  const [show, setShow] = useState(false);
+type SigninProps = {
+  hide: boolean;
+  onHide: (boolean: any) => void;
+};
 
+function Signin({ hide, onHide }: SigninProps) {
+  //const [show, setShow] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [success, setSuccess] = useState(false);
+  //const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  });
+  //const [token, setToken] = useState<string>('');
+  //const [loading, setLoading] = useState(true);
+
+  const handleClose = () => onHide(false);
 
   useEffect(() => {
     setErrorMessage('');
@@ -43,76 +41,38 @@ function Signin() {
         }
       );
 
-      console.log(JSON.stringify(response?.data));
+      localStorage.setItem(
+        'accessToken',
+        JSON.stringify(response?.data?.accessToken)
+      );
+      localStorage.setItem(
+        'refreshToken',
+        JSON.stringify(response?.data?.refreshToken)
+      );
 
-      const tokens = response?.data?.accessToken;
-      localStorage.setItem('token', JSON.stringify(tokens));
-
-      //const { accessToken, tokenType } = JSON.parse(token);
-
-      if (tokens) {
-        const token = JSON.parse(localStorage.getItem('token'));
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        localStorage.setItem('token', token);
-        location.reload();
-      } else {
-        delete axios.defaults.headers.common['Authorization'];
-        localStorage.removeItem('tokens');
-      }
-
-      // const roles = response?.data?.roles // add roles if necessary
+      //const roles = response?.data?.roles // add roles if necessary
 
       setEmail('');
       setPassword('');
-      setSuccess(true);
+      //setSuccess(true);
 
       handleClose();
+      location.reload();
     } catch (error) {
       console.error(error);
-      if (!error?.response) {
-        setErrorMessage('No Server Response');
-      } else if (error.response.status === 400) {
-        setErrorMessage('Incorrect/Missing Email or Password');
-        console.log();
-      } else if (error.response.status === 401) {
-        setErrorMessage('Unauthorized');
+      if (error?.response.status === 400) {
+        setErrorMessage('Missing Email or Password');
+      } else if (error?.response.status === 401) {
+        setErrorMessage('Incorrect Email or Password');
       } else {
-        setErrorMessage('Login Failed');
+        setErrorMessage('An error occurred');
       }
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    location.reload();
-  };
-
-  const handleClose = () => setShow(false);
-
-  const handleShow = () => setShow(true);
-
   return (
-    <div className="Login ms-auto">
-      <FaRegUser className="ImageProfile" />
-      {isLoggedIn ? (
-        <Button
-          className="LoginButton"
-          variant="outline-light"
-          onClick={handleLogout}
-        >
-          Se déconnecter
-        </Button>
-      ) : (
-        <Button
-          className="LoginButton"
-          variant="outline-light"
-          onClick={handleShow}
-        >
-          Se connecter
-        </Button>
-      )}
-      <Modal show={show} onHide={handleClose} animation={false}>
+    <div>
+      <Modal show={hide} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Se connecter</Modal.Title>
         </Modal.Header>

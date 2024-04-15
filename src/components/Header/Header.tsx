@@ -1,8 +1,12 @@
 import { Stack } from 'react-bootstrap';
 import './Header.scss';
-import Signin from '../Modals/Signin/Signin';
+import useUserStore from '../UserStore/UserState';
+import LoginLogout from '../ButtonLogin-Logout/ButtonLogin-Logout';
 
 function Header() {
+  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+  const user = useUserStore((state) => state.user);
+
   return (
     <header className="Header">
       <Stack className="Banner" direction="horizontal" gap={3}>
@@ -14,7 +18,7 @@ function Header() {
           />
         </div>
         <div className="Login ms-auto">
-          <Signin />
+          <LoginLogout />
         </div>
       </Stack>
     </header>

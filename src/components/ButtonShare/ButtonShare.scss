@@ -1,9 +1,13 @@
-.ButtonShare {
+.Button {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+}
+
+.dropzoneStyle {
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 12rem;
-  height: 3rem;
-  font-weight: bold;
+  height: 100%;
+  margin-bottom: 1rem;
 }

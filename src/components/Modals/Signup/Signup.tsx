@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import axiosInstance from '../../API/axios';
@@ -53,7 +52,6 @@ function Signup() {
           withCredentials: false,
         }
       );
-      console.log(JSON.stringify(response?.data));
       // params needed for sign up
       setNickname('');
       setFirstname('');
@@ -66,10 +64,7 @@ function Signup() {
       // Close modal if success
       handleCloseModalSignup();
     } catch (error) {
-      console.error(error);
-      if (!error?.response) {
-        setErrorMessage('Le serveur ne répond pas');
-      } else if (error.response?.status === 400) {
+      if (error.response?.status === 400) {
         const details = error.response.data.message.details;
         if (Array.isArray(details)) {
           //const errorMessage = details.map((detail) => detail.message);
@@ -94,7 +89,7 @@ function Signup() {
             }
           });
         } else {
-          setErrorMessage(error.response.data.message);
+          setErrorMessage('An error occurred');
         }
       }
     }
@@ -123,6 +118,7 @@ function Signup() {
   const handleInputChangeConfirmPwd = () => {
     setConfirmPasswordError('');
   };
+
   return (
     <>
       <Button
