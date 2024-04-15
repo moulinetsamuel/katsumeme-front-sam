@@ -1,10 +1,9 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import axiosInstance from '../../API/axios';
 
 function Signup() {
   const [show, setShow] = useState(false);
-  const errRef = useRef();
 
   const [nickname, setNickname] = useState('');
 
@@ -16,7 +15,6 @@ function Signup() {
   const [password, setPassword] = useState('');
 
   const [confirm_password, setconfirm_password] = useState('');
-  const [validMatch, setValidMatch] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
   const [success, setSuccess] = useState(false);
@@ -32,12 +30,9 @@ function Signup() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password !== confirm_password) {
-      setValidMatch('Les mots de passe ne correspondent pas');
-      return;
-    }
+
     try {
-      const response = await axiosInstance.post(
+      await axiosInstance.post(
         '/api/users',
         JSON.stringify({
           nickname,
@@ -64,8 +59,8 @@ function Signup() {
       // Close modal if success
       handleCloseModalSignup();
     } catch (error) {
-      if (error.response?.status === 400) {
-        const details = error.response.data.message.details;
+      if ((error as any).response?.status === 400) {
+        const details = (error as any).response.data.message.details;
         if (Array.isArray(details)) {
           //const errorMessage = details.map((detail) => detail.message);
           //console.log(errorMessage);
@@ -153,14 +148,6 @@ function Signup() {
                 value={nickname}
                 required
               />
-              {/*<p>
-                {typeof errorMessage === 'object'
-                  ? (errorMessage as { message: string }).message
-                  : errorMessage
-                      .split(',')
-                      .filter((message) => message.includes('nickname'))
-                      .join(', ')}
-      </p>*/}
               <p>{nicknameError}</p>
             </Form.Group>
 
