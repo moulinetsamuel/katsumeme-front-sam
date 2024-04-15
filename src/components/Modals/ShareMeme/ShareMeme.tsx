@@ -3,7 +3,6 @@ import axiosInstance from '../../API/axios';
 import { useState } from 'react';
 import Dropzone, { FileRejection } from 'react-dropzone';
 import FileWithPreview from 'react-dropzone';
-import FormData from 'form-data';
 
 type ShareMemeProps = {
   hide: boolean;
@@ -20,9 +19,6 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
   const [errorMessage, setErrorMessage] = useState('');
   const [titleError, setTitleError] = useState('');
   const [tagsError, setTagsError] = useState('');
-  const defaultFile = new File([], 'default.jpg', { type: 'image/jpeg' });
-
-  // const [tagsArray, setTagsArray] = useState<string[]>([]);
 
   const handleClose = () => {
     setTags('');
@@ -43,9 +39,7 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
         tags: tagsArrayUpdated,
       };
 
-      console.log('test :', dataForm);
-
-      const response = await axiosInstance.post('/api/memes', dataForm, {
+      await axiosInstance.post('/api/memes', dataForm, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -55,8 +49,8 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
 
       handleClose();
     } catch (error) {
-      if (error.response?.status === 400) {
-        const details = error.response.data.message.details;
+      if ((error as any).response?.status === 400) {
+        const details = (error as any).response.data.message.details;
         if (Array.isArray(details)) {
           details.forEach((detail) => {
             switch (detail.path[0]) {
