@@ -1,3 +1,4 @@
+import { Route, Routes } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
@@ -10,9 +11,7 @@ function CreateMemePage() {
 
   return (
     <div className="CreateMemePage">
-      <Header />
       <MemeEditor />
-      <Footer />
     </div>
   );
 }
