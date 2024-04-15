@@ -122,6 +122,7 @@ function Signup() {
   return (
     <>
       <Button
+        type="button"
         onClick={handleShowModalSignup}
         className="mx-auto"
         style={{

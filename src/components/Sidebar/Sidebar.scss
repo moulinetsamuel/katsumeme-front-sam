@@ -8,7 +8,7 @@
 }
 
 .Sidebar {
-  position: fixed;
+  position: absolute;
   top: 15rem;
   left: 0;
   height: 34rem;
@@ -17,16 +17,16 @@
   margin-left: 1.5rem;
   text-align: left;
   border-radius: 1rem;
-  border: solid 0.3rem;
+  border: solid 0.1rem;
 }
 
 .Searchbar {
-  position: fixed;
+  position: absolute;
   top: 12rem;
   width: 13rem;
   margin-left: 2rem;
   border-radius: 1rem;
-  border: solid 0.3rem;
+  border: solid 0.1rem;
   background-color: transparent;
 }
 
