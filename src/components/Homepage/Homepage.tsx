@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import useUserStore from '../UserStore/UserState';
 import CreateMemePage from '../CreateMemePage/CreateMemePage';
 
-
 function App() {
   const setAppState = useUserStore((state) => state.setAppState);
 
@@ -16,17 +15,15 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <div className="app">
-        <Header />
-        <MemePage />
-        <Footer />
-      </div>
+    <div className="app">
+      <Header />
+
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<MemePage />} />
         <Route path="/create-meme" element={<CreateMemePage />} />
       </Routes>
-    </BrowserRouter>
+      <Footer />
+    </div>
   );
 }
 
