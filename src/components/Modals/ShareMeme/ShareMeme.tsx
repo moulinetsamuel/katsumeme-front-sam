@@ -1,8 +1,9 @@
 import { Modal, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../../API/axios';
 import { useState } from 'react';
-import Dropzone, { FileRejection } from 'react-dropzone';
-import FileWithPreview from 'react-dropzone';
+import './ShareMeme.scss';
+import DropZone from '../../Dropzone/DropZone';
+import { IoIosRocket } from 'react-icons/io';
 
 type ShareMemeProps = {
   hide: boolean;
@@ -39,6 +40,8 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
         tags: tagsArrayUpdated,
       };
 
+      console.log(dataForm);
+
       await axiosInstance.post('/api/memes', dataForm, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -71,57 +74,6 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
     }
   };
 
-  const handleFilePreview = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      if (e.target && e.target.result) {
-        setFilePreview(e.target.result as string);
-      }
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  // Function to handle file drop
-  const handleDrop = (
-    acceptedFiles: FileWithPreview[],
-    fileRejections: FileRejection[]
-  ) => {
-    // Gérer les fichiers acceptés ici
-    if (acceptedFiles && acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      setMeme(file);
-      handleFilePreview(file);
-
-      // When the file is read it triggers the onload event
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target && e.target.result) {
-          // Check if the result is not null
-          setFilePreview(e.target.result as string); // Update filePreview state with generated URL
-          setMeme(file);
-        }
-      };
-
-      reader.readAsDataURL(file); // Generate preview URL asynchronously
-    }
-
-    // Gérer les rejets de fichiers si nécessaire
-    if (fileRejections && fileRejections.length > 0) {
-      console.log('Fichiers rejetés :', fileRejections);
-    }
-  };
-
-  // Function to preview file when selected
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      setMeme(file);
-      // Pass an array with the selected file and an empty array for rejections
-      handleDrop([file], []);
-    }
-  };
-
   const handleInputChangeTitle = () => {
     setTitleError('');
   };
@@ -133,42 +85,17 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
   return (
     <div>
       <Modal show={hide} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="modalBannerStyle">
           <Modal.Title>Partager un meme</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={upload} encType="multipart/form-data">
-            <div className="dropzoneStyle">
-              <Dropzone onDrop={handleDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div {...getRootProps()}>
-                      <input
-                        {...getInputProps()}
-                        style={{
-                          border: 'solid',
-                          width: '10rem',
-                          height: '2rem',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          backgroundColor: 'rgb(173, 173, 173)',
-                        }}
-                        type="file"
-                        name="meme"
-                        onChange={handleFileChange}
-                      />
-                    </div>
-                    {filePreview && (
-                      <div>
-                        <img src={filePreview} alt="Prévisualisation" />
-                      </div>
-                    )}
-                  </section>
-                )}
-              </Dropzone>
-            </div>
-            <Form.Group className="mb-3" controlId="title">
+            <DropZone meme={meme} setMeme={setMeme} />
+            <Form.Group
+              className="mb-3"
+              controlId="title"
+              style={{ marginTop: '0.5rem' }}
+            >
               <Form.Control
                 type="text"
                 placeholder="Titre"
@@ -199,9 +126,21 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
             </Form.Group>
 
             <p>{errorMessage}</p>
-            <Button variant="primary" type="submit">
-              Publier
-            </Button>
+            <div className="text-center d-grid">
+              <Button
+                type="submit"
+                style={{
+                  gap: '0.5rem',
+                  background: '#e8811c',
+                  color: 'black',
+                  border: 'transparent',
+                }}
+                className="d-flex justify-content-center align-items-center"
+              >
+                <IoIosRocket />
+                Publier
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>

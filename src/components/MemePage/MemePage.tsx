@@ -7,10 +7,6 @@ import ButtonCreate from '../ButtonCreate/ButtonCreate';
 function MemePage() {
   return (
     <div>
-      <div className="ButtonContainer">
-        <ButtonShare />
-        <ButtonCreate />
-      </div>
       <MemeCard />
       <Sidebar />
     </div>
