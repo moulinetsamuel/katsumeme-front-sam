@@ -10,10 +10,7 @@ import { Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../API/axios';
 import Reactions from './Reactions';
-
-interface MemeCardProps {
-  meme: Meme;
-}
+import useUserStore from '../UserStore/UserState';
 
 interface Meme {
   id: number;
@@ -26,16 +23,11 @@ interface Meme {
   dislikeCount: { liked_by: number };
   isBookmarked: boolean;
   isliked: boolean;
-  likes: number;
-  dislikes: number;
 }
 
-const handleLike = (memeId: number) => {
-};
-
-const handleDislike = (memeId: number) => {
-
-};
+interface MemeCardProps {
+  memes: Meme[];
+}
 
 // Function to format the date
 function formatDate(dateString: string) {
@@ -50,100 +42,86 @@ function formatDate(dateString: string) {
 
   if (diffDays > 0) {
     if (diffDays === 1) {
-      return 'Publié hier';
+      return 'publié hier';
     } else {
-      return `Publié il y a ${diffDays} jour(s)`;
+      return `publié il y a ${diffDays} jour(s)`;
     }
   } else if (diffHours > 0) {
-    return `Publié il y a ${diffHours} heure(s)`;
+    return `publié il y a ${diffHours} heure(s)`;
   } else if (diffMinutes > 0) {
-    return `Publié il y a ${diffMinutes} minute(s)`;
+    return `publié il y a ${diffMinutes} minute(s)`;
   } else {
-    return `Publié il y a quelques secondes`;
+    return `publié il y a quelques secondes`;
   }
 }
 
-function MemeCard() {
-  const [memes, setMemes] = useState<Meme[]>([]);
-  const [page, setPage] = useState(1);
-  const memesPerPage = 4;
-
-  const fetchMeme = async () => {
-    try {
-      const startIndex = (page - 1) * memesPerPage;
-      const response = await axiosInstance.get(
-        `/api/memes?limit=${memesPerPage}&page=${page}`
-      );
-      if (page === 1) {
-        setMemes(response.data); // Set the new memes
-      } else setMemes((prevMemes) => [...prevMemes, ...response.data]); // Concatenate the new memes with the old ones
-    } catch (error) {
-      console.error('Error fetching meme data', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMeme();
-  }, [page]);
-
-  const handleLoadMoreMemes = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+// Component to display the memes
+function MemeCard({ memes }: MemeCardProps) {
+  // meme is the prop passed to the component
 
   return (
-    <div className="MemeCardContainer">
+    <div className="MemeCardContainer d-flex flex-column justify-content-center">
       {memes.map((meme, index) => (
-        <Card key={index} className="CardStyle" style={{ width: '35rem' }}>
-          <Card.Body>
-            <Card.Title>{meme.title}</Card.Title>
-            <Card.Subtitle style={{ fontSize: '0.9rem', textAlign: 'left' }}>
-              {`Auteur: ${meme.author.nickname}, ${formatDate(meme.created_at)}`}
-            </Card.Subtitle>
+        <div className="row mb-4">
+          <div className="col d-flex justify-content-center">
+            <Card
+              key={index}
+              className="CardStyle"
+              style={{ border: '#000000 solid 0.2rem', width: '32rem' }}
+            >
+            <Card.Header style={{ backgroundColor: '#d6cadb' }}>
+                <Card.Title
+                  className="CardTitle pb-2"
+                  style={{ fontSize: '2rem' }}
+                >
+                  {meme.title}
+                </Card.Title>
+                <Card.Subtitle
+                  className="text-muted my-1"
+                  style={{ fontSize: '1rem', textAlign: 'left' }}
+                >
+                  {`Auteur: ${meme.author.nickname}, ${formatDate(meme.created_at)}`}
+                </Card.Subtitle>
+              </Card.Header>
+              <Card.Body>
+                <div className="align-self-center">
+                  <Card.Img
+                    className="CardImage img-fluid"
+                    variant="top"
+                    src={meme.image_url}
+                  />
+                </div>
+                <div className="my-2 align-items-end">
+                  {meme.tags.map((tag, tagIndex) => (
+                    <Card.Link key={tagIndex} href="#">
+                      {tag.tags.name}
+                    </Card.Link>
+                  ))}
+                </div>
+              </Card.Body>
+              <Card.Footer style={{ backgroundColor: '#d6cadb' }}>
+                <Button type="button" variant="primary" className="me-2">
+                  <FaComment /> Commenter
+                </Button>
 
-            <Card.Img variant="top" src={meme.image_url} />
-            <section>
-              <BsTags />
-              <div>
-                {meme.tags.map((tag, tagIndex) => (
-                  <Card.Link key={tagIndex} href="#">
-                    {tag.tags.name}
-                  </Card.Link>
-                ))}
-              </div>
-            </section>
+                <Reactions memeId={meme.id} />
 
-            <div className="Emotes">
-              <Button 
-              type="button"
-              variant="primary">
-                <FaComment />
-              </Button>
-
-           <Reactions
-          initialLikes={meme.likes}
-          initialDislikes={meme.dislikes}
-          onLike={() => handleLike(meme.id)} 
-          onDislike={() => handleDislike(meme.id)}
-/>
-
-              <Button 
-              type="button"
-              variant="primary">
-                <FaDownload />
-              </Button>
-              <Button variant="primary">
-                <MdOutlineStarBorder />
-                {/* <MdOutlineStar /> */}
-              </Button>
-            </div>
-          </Card.Body>
-        </Card>
+                <Button
+                  className="downloadButton"
+                  type="button"
+                  variant="primary"
+                >
+                  <FaDownload />
+                </Button>
+                <Button variant="primary">
+                  <MdOutlineStarBorder />
+                  {/* <MdOutlineStar /> */}
+                </Button>
+              </Card.Footer>
+            </Card>
+          </div>
+        </div>
       ))}
-      <div className="LoadMoreButton">
-        <Button variant="primary" type="button" onClick={handleLoadMoreMemes}>
-          Chargez plus
-        </Button>
-      </div>
     </div>
   );
 }

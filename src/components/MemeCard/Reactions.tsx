@@ -1,59 +1,69 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import useUserStore from '../UserStore/UserState';
+import axiosInstance from '../API/axios';
+import { SlDislike, SlLike } from 'react-icons/sl';
+import Signin from '../Modals/Signin/Signin';
+
+// RECUPERER LE NOMBRE DE LIKES ET DISLIKES DEJA PRESENTS SUR LE MEME
 
 interface ReactionsProps {
-  initialLikes: number;
-  initialDislikes: number;
-  onLike: () => void;
-  onDislike: () => void;
+  memeId: number;
 }
 
-const Reactions: React.FC<ReactionsProps> = ({
-  initialLikes,
-  initialDislikes,
-  onLike,
-  onDislike,
-}) => {
-  const [likes, setLikes] = useState(initialLikes || 0);
-  const [dislikes, setDislikes] = useState(initialDislikes || 0);
+function Reactions({ memeId }: ReactionsProps) {
   const [userReaction, setUserReaction] = useState<'like' | 'dislike' | null>(
     null
   );
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated); 
+  const [likes, setLikes] = useState<number>(0);
+  const [dislikes, setDislikes] = useState<number>(0);
 
-  const handleLike = () => {
-    if (isAuthenticated) {
+  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+
+  const [openModalSignIn, setOpenModalSignIn] = useState(false);
   
-      if (userReaction !== 'like') {
-        setLikes(likes + 1);
-        setUserReaction('like');
+  const handleOpenSigninModal = () => {
+    if (!isAuthenticated) {
+      setOpenModalSignIn(true);
+    }
+  };
+  
+  const handleCloseSigninModal = () => {
+    setOpenModalSignIn(false);
+  };
+
+  const handleLike = async () => {
+    {
+      try {
+        const likeUrl = `/api/toggle/like/meme/${memeId}`;
+        console.log(likeUrl);
+        
+        await axiosInstance.get(likeUrl); // Use the constructed URL
+        setUserReaction('like'); // Update user reaction state
+        setLikes((prevLikes) => prevLikes + 1); // Update likes count
         if (userReaction === 'dislike') {
-          setDislikes(dislikes - 1);
+          setDislikes((prevDislikes) => prevDislikes - 1); // Update dislikes count
         }
-        onLike();
-      } else {
-        setLikes(likes - 1);
-        setUserReaction(null);
+      } catch (error) {
+        console.error('Error liking meme', error);
       }
-    } else {
     }
   };
 
-  const handleDislike = () => {
-    if (isAuthenticated) {
-      if (userReaction !== 'dislike') {
-        setDislikes(dislikes + 1);
+  const handleDislike = async () => {
+     {
+      try {
+        const dislikeUrl = `/api/toggle/dislike/meme/${memeId}`;
+         // Build the URL dynamically
+        await axiosInstance.get(dislikeUrl); // Use the constructed URL
         setUserReaction('dislike');
+        setDislikes((prevDislikes) => prevDislikes + 1);
         if (userReaction === 'like') {
-          setLikes(likes - 1);
+          setLikes((prevLikes) => prevLikes - 1);
         }
-        onDislike();
-      } else {
-        setDislikes(dislikes - 1);
-        setUserReaction(null);
+      } catch (error) {
+        console.error('Error disliking meme', error);
       }
-    } else {
     }
   };
 
@@ -61,20 +71,25 @@ const Reactions: React.FC<ReactionsProps> = ({
     <div className="Reactions">
       <Button
         type="button"
-        onClick={handleLike}
+        onClick={()=> { handleLike(); handleOpenSigninModal(); }}
         variant={userReaction === 'like' ? 'success' : 'outline-success'}
       >
-         ({likes})
+        <SlLike className={userReaction === 'like' ? 'filled-icon' : ''} /> (
+        {likes})
       </Button>
       <Button
         type="button"
-        onClick={handleDislike}
+        onClick={()=> { handleDislike(); handleOpenSigninModal(); }}
         variant={userReaction === 'dislike' ? 'danger' : 'outline-danger'}
       >
-         ({dislikes})
+        <SlDislike
+          className={userReaction === 'dislike' ? 'filled-icon' : ''}
+        />{' '}
+        ({dislikes})
       </Button>
+      <Signin hide={openModalSignIn} onHide={handleCloseSigninModal} />
     </div>
   );
-};
+}
 
 export default Reactions;
