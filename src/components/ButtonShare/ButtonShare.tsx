@@ -1,4 +1,4 @@
-import { IoIosShareAlt } from 'react-icons/io';
+import { IoIosRocket } from 'react-icons/io';
 import './ButtonShare.scss';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
@@ -45,10 +45,13 @@ function ButtonShare() {
           borderRadius: '1rem',
         }}
       >
-        <IoIosShareAlt />
+        <IoIosRocket />
         Partager un meme
       </Button>
-      <ShareMeme hide={showShareModal} onHide={handleCloseShareModal} />
+      <ShareMeme
+        hide={showShareModal && isAuthenticated}
+        onHide={handleCloseShareModal}
+      />
       <Signin hide={showSigninModal} onHide={handleCloseSigninModal} />
     </div>
   );
