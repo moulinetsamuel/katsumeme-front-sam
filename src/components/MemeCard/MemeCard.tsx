@@ -66,8 +66,7 @@ function formatDate(dateString: string) {
 function MemeCard() {
   const [memes, setMemes] = useState<Meme[]>([]);
   const [page, setPage] = useState(1);
-  const [totalMemesCount, setTotalMemesCount] = useState(0);
-  const memesPerPage = 3;
+  const memesPerPage = 4;
 
   const fetchMeme = async () => {
     try {
@@ -94,7 +93,7 @@ function MemeCard() {
   return (
     <div className="MemeCardContainer">
       {memes.map((meme, index) => (
-        <Card key={index} className="CardStyle" style={{ width: '23rem' }}>
+        <Card key={index} className="CardStyle" style={{ width: '35rem' }}>
           <Card.Body>
             <Card.Title>{meme.title}</Card.Title>
             <Card.Subtitle style={{ fontSize: '0.9rem', textAlign: 'left' }}>
