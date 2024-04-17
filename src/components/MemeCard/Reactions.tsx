@@ -6,6 +6,7 @@ import { SlDislike, SlLike } from 'react-icons/sl';
 import Signin from '../Modals/Signin/Signin';
 
 // RECUPERER LE NOMBRE DE LIKES ET DISLIKES DEJA PRESENTS SUR LE MEME
+// POUVOIR ANNULER SON LIKE ET DISLKIKE
 
 interface ReactionsProps {
   memeId: number;
@@ -32,38 +33,64 @@ function Reactions({ memeId }: ReactionsProps) {
     setOpenModalSignIn(false);
   };
 
-  const handleLike = async () => {
-    {
-      try {
-        const likeUrl = `/api/toggle/like/meme/${memeId}`;
-        console.log(likeUrl);
+  // const handleLike = async () => {
+  //   {
+  //     try {
+  //       const likeUrl = `/api/toggle/like/meme/${memeId}`;
+  //       console.log(likeUrl);
         
-        await axiosInstance.get(likeUrl); // Use the constructed URL
-        setUserReaction('like'); // Update user reaction state
-        setLikes((prevLikes) => prevLikes + 1); // Update likes count
-        if (userReaction === 'dislike') {
-          setDislikes((prevDislikes) => prevDislikes - 1); // Update dislikes count
-        }
-      } catch (error) {
-        console.error('Error liking meme', error);
+  //       await axiosInstance.get(likeUrl); // Use the constructed URL
+  //       setUserReaction('like'); // Update user reaction state
+  //       setLikes((prevLikes) => prevLikes + 1); // Update likes count
+  //       if (userReaction === 'dislike') {
+  //         setDislikes((prevDislikes) => prevDislikes - 1); // Update dislikes count
+  //       }
+  //     } catch (error) {
+  //       console.error('Error liking meme', error);
+  //     }
+  //   }
+  // };
+
+  const handleLike = async () => {
+    try {
+      if (userReaction !== 'like') {
+        await axiosInstance.get(`/api/toggle/like/meme/${memeId}`);
+        setUserReaction('like');
+        setLikes((prevLikes) => prevLikes + 1);
+        setDislikes((prevDislikes) => (userReaction === 'dislike' ? prevDislikes - 1 : prevDislikes));
       }
+    } catch (error) {
+      console.error('Error liking meme', error);
     }
   };
 
+  // const handleDislike = async () => {
+  //    {
+  //     try {
+  //       const dislikeUrl = `/api/toggle/dislike/meme/${memeId}`;
+  //        // Build the URL dynamically
+  //       await axiosInstance.get(dislikeUrl); // Use the constructed URL
+  //       setUserReaction('dislike');
+  //       setDislikes((prevDislikes) => prevDislikes + 1);
+  //       if (userReaction === 'like') {
+  //         setLikes((prevLikes) => prevLikes - 1);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error disliking meme', error);
+  //     }
+  //   }
+  // };
+
   const handleDislike = async () => {
-     {
-      try {
-        const dislikeUrl = `/api/toggle/dislike/meme/${memeId}`;
-         // Build the URL dynamically
-        await axiosInstance.get(dislikeUrl); // Use the constructed URL
+    try {
+      if (userReaction !== 'dislike') {
+        await axiosInstance.get(`/api/toggle/dislike/meme/${memeId}`);
         setUserReaction('dislike');
         setDislikes((prevDislikes) => prevDislikes + 1);
-        if (userReaction === 'like') {
-          setLikes((prevLikes) => prevLikes - 1);
-        }
-      } catch (error) {
-        console.error('Error disliking meme', error);
+        setLikes((prevLikes) => (userReaction === 'like' ? prevLikes - 1 : prevLikes));
       }
+    } catch (error) {
+      console.error('Error disliking meme', error);
     }
   };
 
