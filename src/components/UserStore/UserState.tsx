@@ -2,13 +2,36 @@ import { create } from 'zustand';
 import axiosInstance from '../API/axios';
 
 interface UserState {
-  user: object;
+  user: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    nickname: string;
+    avatar_url: string;
+    email: string;
+    created_at: Date;
+    role: {
+      name: string;
+    };
+  }
   isAuthenticated: boolean;
   setAppState: () => void;
 }
 
 const useUserStore = create<UserState>((set) => ({
-  user: {},
+  user: {
+    id: 0,
+    firstname: '',
+    lastname: '',
+    nickname: '',
+    avatar_url: '',
+    email: '',
+    created_at: new Date(),
+    role: {
+      name: '',
+    },
+  },
+   // Provide an initializer for the 'user' property
   isAuthenticated: false,
   setAppState: async () => {
     try {
