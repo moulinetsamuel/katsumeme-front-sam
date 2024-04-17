@@ -3,6 +3,8 @@ import './Header.scss';
 // import useUserStore from '../UserStore/UserState';
 import LoginLogout from '../ButtonLogin-Logout/ButtonLogin-Logout';
 import { Link } from 'react-router-dom';
+import ButtonShare from '../ButtonShare/ButtonShare';
+import ButtonCreate from '../ButtonCreate/ButtonCreate';
 
 function Header() {
   // const isAuthenticated = useUserStore((state) => state.isAuthenticated);
@@ -19,6 +21,10 @@ function Header() {
               alt="Logo Katsumeme Chat"
             />
           </Link>
+        </div>
+        <div className="buttonContainer ms-auto">
+          <ButtonShare />
+          <ButtonCreate />
         </div>
         <div className="Login ms-auto">
           <LoginLogout />
