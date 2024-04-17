@@ -12,22 +12,7 @@ import axiosInstance from '../API/axios';
 import Reactions from './Reactions';
 import useUserStore from '../UserStore/UserState';
 
-interface Meme {
-  id: number;
-  image_url: string;
-  title: string;
-  created_at: string;
-  tags: { tags: { name: string } }[];
-  author: { nickname: string; avatar_url: string };
-  _count: { liked_by: number };
-  dislikeCount: { liked_by: number };
-  isBookmarked: boolean;
-  isliked: boolean;
-}
-
-interface MemeCardProps {
-  memes: Meme[];
-}
+//ADD TIMESTAMP BUTTON LOADMOREMEMES
 
 // Function to format the date
 function formatDate(dateString: string) {
@@ -55,73 +40,83 @@ function formatDate(dateString: string) {
   }
 }
 
+interface Meme {
+  memes: {
+    id: number;
+    image_url: string;
+    title: string;
+    created_at: string;
+    tags: { tags: { name: string } }[];
+    author: { nickname: string; avatar_url: string };
+    _count: { liked_by: number };
+    dislikeCount: { liked_by: number };
+    isBookmarked: boolean;
+    isliked: boolean;
+  }[];
+}
+
 // Component to display the memes
-function MemeCard({ memes }: MemeCardProps) {
+function MemeCard({ memes }: Meme) {
   // meme is the prop passed to the component
+
+  const memeList = memes.map((meme) => (
+    <div key={meme.id} className="row mb-4">
+      <div className="col d-flex justify-content-center">
+        <Card
+          className="CardStyle"
+          style={{ border: '#000000 solid 0.2rem', width: '32rem' }}
+        >
+          <Card.Header style={{ backgroundColor: '#d6cadb' }}>
+            <Card.Title className="CardTitle pb-2" style={{ fontSize: '2rem' }}>
+              {meme.title}
+            </Card.Title>
+            <Card.Subtitle
+              className="text-muted my-1"
+              style={{ fontSize: '1rem', textAlign: 'left' }}
+            >
+              {`Auteur: ${meme.author.nickname}, ${formatDate(meme.created_at)}`}
+            </Card.Subtitle>
+          </Card.Header>
+          <Card.Body>
+            <div className="align-self-center">
+              <Card.Img
+                className="CardImage img-fluid"
+                variant="top"
+                src={meme.image_url}
+              />
+            </div>
+            <div className="my-2 align-items-end">
+              {meme.tags.map((tag, tagIndex) => (
+                <Card.Link key={tagIndex} href="#">
+                  {tag.tags.name}
+                </Card.Link>
+              ))}
+            </div>
+          </Card.Body>
+          <Card.Footer style={{ backgroundColor: '#d6cadb' }}>
+            <Button type="button" variant="primary" className="me-2">
+              <FaComment /> Commenter
+            </Button>
+
+            <Reactions memeId={meme.id} />
+
+            <Button className="downloadButton" type="button" variant="primary">
+              <FaDownload />
+            </Button>
+            
+            <Button variant="primary">
+              <MdOutlineStarBorder />
+              {/* <MdOutlineStar /> */}
+            </Button>
+          </Card.Footer>
+        </Card>
+      </div>
+    </div>
+  ));
 
   return (
     <div className="MemeCardContainer d-flex flex-column justify-content-center">
-      {memes.map((meme, index) => (
-        <div className="row mb-4">
-          <div className="col d-flex justify-content-center">
-            <Card
-              key={index}
-              className="CardStyle"
-              style={{ border: '#000000 solid 0.2rem', width: '32rem' }}
-            >
-            <Card.Header style={{ backgroundColor: '#d6cadb' }}>
-                <Card.Title
-                  className="CardTitle pb-2"
-                  style={{ fontSize: '2rem' }}
-                >
-                  {meme.title}
-                </Card.Title>
-                <Card.Subtitle
-                  className="text-muted my-1"
-                  style={{ fontSize: '1rem', textAlign: 'left' }}
-                >
-                  {`Auteur: ${meme.author.nickname}, ${formatDate(meme.created_at)}`}
-                </Card.Subtitle>
-              </Card.Header>
-              <Card.Body>
-                <div className="align-self-center">
-                  <Card.Img
-                    className="CardImage img-fluid"
-                    variant="top"
-                    src={meme.image_url}
-                  />
-                </div>
-                <div className="my-2 align-items-end">
-                  {meme.tags.map((tag, tagIndex) => (
-                    <Card.Link key={tagIndex} href="#">
-                      {tag.tags.name}
-                    </Card.Link>
-                  ))}
-                </div>
-              </Card.Body>
-              <Card.Footer style={{ backgroundColor: '#d6cadb' }}>
-                <Button type="button" variant="primary" className="me-2">
-                  <FaComment /> Commenter
-                </Button>
-
-                <Reactions memeId={meme.id} />
-
-                <Button
-                  className="downloadButton"
-                  type="button"
-                  variant="primary"
-                >
-                  <FaDownload />
-                </Button>
-                <Button variant="primary">
-                  <MdOutlineStarBorder />
-                  {/* <MdOutlineStar /> */}
-                </Button>
-              </Card.Footer>
-            </Card>
-          </div>
-        </div>
-      ))}
+      {memeList}
     </div>
   );
 }
