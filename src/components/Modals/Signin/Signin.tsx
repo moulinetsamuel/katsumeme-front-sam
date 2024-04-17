@@ -4,6 +4,7 @@ import Signup from '../Signup/Signup';
 import axiosInstance from '../../API/axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import useUserStore from '../../UserStore/UserState';
 
 type SigninProps = {
   hide: boolean;
@@ -14,7 +15,7 @@ function Signin({ hide, onHide }: SigninProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
+  const { setAppState } = useUserStore();
   const handleClose = () => onHide(false);
 
   useEffect(() => {
@@ -49,7 +50,6 @@ function Signin({ hide, onHide }: SigninProps) {
       setPassword('');
 
       handleClose();
-      location.reload();
     } catch (error) {
       console.error(error);
       if ((error as any).response.status === 400) {
