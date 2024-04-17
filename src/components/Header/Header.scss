@@ -1,6 +1,7 @@
 .Banner {
   background-color: #70905f;
   height: 7.5rem;
+  display: flex;
 }
 
 .ImageTitle {
@@ -27,14 +28,8 @@
   border-radius: 15rem;
 }
 
-.LoginButton {
-  height: 2.5rem;
-}
-
 .buttonContainer {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  width: 50%;
-  margin-left: -25rem;
 }

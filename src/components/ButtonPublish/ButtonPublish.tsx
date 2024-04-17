@@ -1,16 +1,17 @@
 import { IoIosRocket } from 'react-icons/io';
-import './ButtonShare.scss';
+import './ButtonPublish.scss';
 import { Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Signin from '../Modals/Signin/Signin';
-import ShareMeme from '../Modals/ShareMeme/ShareMeme';
 import useUserStore from '../UserStore/UserState';
+import PublishMeme from '../Publish/PublishMeme';
 
 type ButtonShareProps = {
   label: string;
+  canvasRef: React.RefObject<HTMLCanvasElement>;
 };
 
-function ButtonShare({ label }: ButtonShareProps) {
+function ButtonShare({ label, canvasRef }: ButtonShareProps) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSigninModal, setShowSigninModal] = useState(false);
 
@@ -52,7 +53,8 @@ function ButtonShare({ label }: ButtonShareProps) {
         <IoIosRocket />
         {label}
       </Button>
-      <ShareMeme
+      <PublishMeme
+        canvasRef={canvasRef}
         hide={showShareModal && isAuthenticated}
         onHide={handleCloseShareModal}
       />

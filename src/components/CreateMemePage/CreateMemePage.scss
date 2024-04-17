@@ -1,1 +1,16 @@
+.content-container {
+  display: flex;
+  justify-content: center;
+}
 
+.CreateMemePage {
+  margin-top: 8rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+}
+
+.CreateMemePageButton {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}

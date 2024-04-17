@@ -12,7 +12,11 @@ function Header() {
 
   return (
     <header className="Header">
-      <Stack className="Banner" direction="horizontal" gap={3}>
+      <Stack
+        className="Banner justify-content-center"
+        direction="horizontal"
+        gap={3}
+      >
         <div>
           <Link to="/">
             <img
@@ -23,7 +27,7 @@ function Header() {
           </Link>
         </div>
         <div className="buttonContainer ms-auto">
-          <ButtonShare />
+          <ButtonShare label="Partager un meme" />
           <ButtonCreate />
         </div>
         <div className="Login ms-auto">
