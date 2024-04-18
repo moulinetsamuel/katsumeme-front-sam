@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import DropZoneWithoutPreview from '../Dropzone/DropZoneWithoutPreview';
 import './CreateMemePage.scss';
-import MemeEditor from './MemeEditor';
-import ButtonPublish from '../ButtonPublish/ButtonPublish';
-import DownloadMeme from '../ButtonDownload/ButtonDownload';
+import MemeEditor from '../MemeEditor/MemeEditor';
+import ButtonPublish from '../Button/ButtonPublish/ButtonPublish';
+import DownloadMeme from '../Button/ButtonDownload/ButtonDownload';
 
 function CreateMemePage() {
   const [meme, setMeme] = useState<File | null>(null);

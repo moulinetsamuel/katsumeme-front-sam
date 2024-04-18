@@ -30,6 +30,8 @@ function DownloadMeme({ label, canvasRef }: DownloadButtonProps) {
           background: '#775088',
           border: 'transparent',
           borderRadius: '1rem',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <FaDownload />

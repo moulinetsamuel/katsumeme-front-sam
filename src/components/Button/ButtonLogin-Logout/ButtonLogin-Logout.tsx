@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FaRegUser } from 'react-icons/fa6';
 import Button from 'react-bootstrap/Button';
-import Signin from '../Modals/Signin/Signin';
-import useUserStore from '../UserStore/UserState';
+import Signin from '../../Modals/Signin/Signin';
+import useUserStore from '../../UserStore/UserState';
 
 function LoginLogout() {
   const [showSigninModal, setShowSigninModal] = useState(false);

@@ -2,9 +2,9 @@ import { IoIosRocket } from 'react-icons/io';
 import './ButtonPublish.scss';
 import { Button } from 'react-bootstrap';
 import { useRef, useState } from 'react';
-import Signin from '../Modals/Signin/Signin';
-import useUserStore from '../UserStore/UserState';
-import PublishMeme from '../Publish/PublishMeme';
+import Signin from '../../Modals/Signin/Signin';
+import useUserStore from '../../UserStore/UserState';
+import PublishMeme from '../../Modals/PublishMeme/PublishMeme';
 
 type ButtonShareProps = {
   label: string;
@@ -48,6 +48,8 @@ function ButtonShare({ label, canvasRef }: ButtonShareProps) {
           background: '#775088',
           border: 'transparent',
           borderRadius: '1rem',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <IoIosRocket />
