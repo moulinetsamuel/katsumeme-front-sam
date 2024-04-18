@@ -7,10 +7,7 @@ import { BsTags } from 'react-icons/bs';
 import './MemeCard.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import axiosInstance from '../API/axios';
 import Reactions from './Reactions';
-import useUserStore from '../UserStore/UserState';
 
 //ADD TIMESTAMP BUTTON LOADMOREMEMES
 
@@ -93,7 +90,7 @@ function MemeCard({ memes }: Meme) {
               ))}
             </div>
           </Card.Body>
-          <Card.Footer style={{ backgroundColor: '#d6cadb' }}>
+          <Card.Footer style={{ backgroundColor: '#d6cadb' }} className="d-flex justify-content-between">
             <Button type="button" variant="primary" className="me-2">
               <FaComment /> Commenter
             </Button>
