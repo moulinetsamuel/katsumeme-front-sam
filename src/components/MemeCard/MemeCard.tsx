@@ -7,7 +7,7 @@ import { BsTags } from 'react-icons/bs';
 import './MemeCard.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-import Reactions from './Reactions';
+import LikesDislikes from './LikesDislikes';
 
 //ADD TIMESTAMP BUTTON LOADMOREMEMES
 
@@ -90,17 +90,25 @@ function MemeCard({ memes }: Meme) {
               ))}
             </div>
           </Card.Body>
-          <Card.Footer style={{ backgroundColor: '#d6cadb' }} className="d-flex justify-content-between">
+          <Card.Footer
+            style={{ backgroundColor: '#d6cadb' }}
+            className="d-flex justify-content-between"
+          >
             <Button type="button" variant="primary" className="me-2">
               <FaComment /> Commenter
             </Button>
 
-            <Reactions memeId={meme.id} />
+            <LikesDislikes
+              memeId={meme.id}
+              isLiked={meme.isliked}
+              likesCount={meme._count.liked_by}
+              dislikesCount={meme.dislikeCount.liked_by}
+            />
 
             <Button className="downloadButton" type="button" variant="primary">
               <FaDownload />
             </Button>
-            
+
             <Button variant="primary">
               <MdOutlineStarBorder />
               {/* <MdOutlineStar /> */}

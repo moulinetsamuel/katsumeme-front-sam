@@ -1,0 +1,22 @@
+.SlDislike {
+  fill: #d82451;
+}
+
+.lLike {
+  fill: #44983b;
+}
+
+.like-button-ON {
+background-color: #44983b;
+border-color: #44983b;
+}
+
+.dislike-button-ON:active {
+  background-color: #d82451;
+  border-color: #d82451;
+}
+
+.like-button-OFF {
+  background-color: #d6cadb;
+  border-color: #44983b;
+}

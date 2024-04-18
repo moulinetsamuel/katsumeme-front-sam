@@ -13,7 +13,7 @@ interface UserState {
     role: {
       name: string;
     };
-  }
+  };
   isAuthenticated: boolean;
   setAppState: () => void;
 }
@@ -31,7 +31,7 @@ const useUserStore = create<UserState>((set) => ({
       name: '',
     },
   },
-   // Provide an initializer for the 'user' property
+  // Provide an initializer for the 'user' property
   isAuthenticated: false,
   setAppState: async () => {
     try {
@@ -73,7 +73,6 @@ const useUserStore = create<UserState>((set) => ({
                 JSON.stringify(response?.data?.refreshToken)
               );
               set((state) => ({
-                user: (state.user = response.data),
                 isAuthenticated: (state.isAuthenticated = true),
               }));
             }
