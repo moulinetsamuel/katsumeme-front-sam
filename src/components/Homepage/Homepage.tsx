@@ -8,7 +8,7 @@ import useUserStore from '../UserStore/UserState';
 import CreateMemePage from '../CreateMemePage/CreateMemePage';
 
 function App() {
-  const setAppState = useUserStore((state) => state.setAppState);
+  const { setAppState } = useUserStore();
 
   useEffect(() => {
     setAppState();
