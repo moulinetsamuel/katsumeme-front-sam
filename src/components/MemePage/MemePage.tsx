@@ -26,8 +26,7 @@ function MemePage() {
   const [page, setPage] = useState(1); // State to store the current page
   const memesPerPage = 3; // Number of memes to display per page
   const [hasMoreMemes, setHasMoreMemes] = useState(true); // State to track if there are more memes to load
-  const { user, uploadCount } = useUserStore();
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+  const { user, uploadCount, isAuthenticated } = useUserStore();
 
   // Function to fetch memes
   const fetchMeme = async () => {

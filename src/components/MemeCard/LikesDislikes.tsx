@@ -61,7 +61,6 @@ function LikesDislikes({
 
   const handleLike = async () => {
     try {
-      setAppState();
       await axiosInstance.get(`api/toggle/like/meme/${memeId}`);
       localLike();
     } catch (error) {
