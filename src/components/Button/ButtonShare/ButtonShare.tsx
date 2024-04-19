@@ -1,12 +1,16 @@
 import { IoIosRocket } from 'react-icons/io';
 import './ButtonShare.scss';
 import { Button } from 'react-bootstrap';
-import { useState } from 'react';
-import Signin from '../Modals/Signin/Signin';
-import ShareMeme from '../Modals/ShareMeme/ShareMeme';
-import useUserStore from '../UserStore/UserState';
+import React, { useState } from 'react';
+import Signin from '../../Modals/Signin/Signin';
+import ShareMeme from '../../Modals/ShareMeme/ShareMeme';
+import useUserStore from '../../UserStore/UserState';
 
-function ButtonShare() {
+type ButtonShareProps = {
+  label: string;
+};
+
+function ButtonShare({ label }: ButtonShareProps) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSigninModal, setShowSigninModal] = useState(false);
 
@@ -43,10 +47,12 @@ function ButtonShare() {
           background: '#775088',
           border: 'transparent',
           borderRadius: '1rem',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <IoIosRocket />
-        Partager un meme
+        {label}
       </Button>
       <ShareMeme
         hide={showShareModal && isAuthenticated}

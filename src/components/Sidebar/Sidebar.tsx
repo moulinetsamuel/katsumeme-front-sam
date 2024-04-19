@@ -3,13 +3,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { FaSearch } from 'react-icons/fa';
 import './Sidebar.scss';
+import ButtonShare from '../Button/ButtonShare/ButtonShare';
+import ButtonCreate from '../Button/ButtonCreate/ButtonCreate';
 
 function Sidebar() {
   return (
     <section className="SidebarContainer">
       <div className="Searchbar">
-        <form className="styleSearchBar" action="search">
-          <FaSearch />
+        <form
+          className="styleSearchBar d-flex align-items-center"
+          action="search"
+        >
+          <FaSearch className="mr-2" />
           <input
             placeholder="Rechercher"
             type="text"
@@ -24,6 +29,10 @@ function Sidebar() {
       </div>
 
       <div className="Sidebar color">
+        <div className="buttonContainer">
+          <ButtonShare label="Partager" />
+          <ButtonCreate />
+        </div>
         <Navbar>
           <Container>
             <Nav.Link>Katsumeme du moment</Nav.Link>

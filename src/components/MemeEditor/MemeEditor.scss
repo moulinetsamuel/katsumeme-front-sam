@@ -1,0 +1,27 @@
+.meme-container {
+  display: flex;
+}
+
+.text-inputs {
+  border: solid 2px;
+  width: 20rem;
+  height: 17rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+h3 {
+  padding-bottom: 2rem;
+}
+
+.text-muted {
+  margin-top: -0.5rem;
+  margin-left: 15.5rem;
+}
+
+input {
+  margin-bottom: 1rem;
+}

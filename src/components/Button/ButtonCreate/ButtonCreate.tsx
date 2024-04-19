@@ -15,10 +15,12 @@ function ButtonCreate() {
             background: '#775088',
             border: 'transparent',
             borderRadius: '1rem',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           <FaPlusCircle />
-          Créer un meme
+          Créer
         </Button>
       </Link>
     </div>

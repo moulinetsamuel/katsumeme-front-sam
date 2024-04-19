@@ -53,10 +53,16 @@ function DropZone({ meme, setMeme }: memeProps) {
     }
   };
 
+  const deleteMeme = () => {
+    setMeme(null);
+    setFilePreview(null);
+  };
+
   return (
     <div>
       {filePreview ? (
         <div>
+          <button onClick={deleteMeme}>X</button>
           <img src={filePreview} alt="Prévisualisation" />
         </div>
       ) : (
