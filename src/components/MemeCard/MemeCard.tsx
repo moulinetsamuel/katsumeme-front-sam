@@ -97,6 +97,7 @@ function MemeCard({ memes }: Meme) {
                     className="CardImage img-fluid"
                     variant="top"
                     src={meme.image_url}
+                    // `${process.env.VITE_API_URL}/${meme.image_url}`
                   />
                 </div>
                 <div className="my-2 align-items-end">
