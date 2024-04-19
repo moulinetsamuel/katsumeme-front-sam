@@ -97,7 +97,7 @@ function MemeCard({ memes }: Meme) {
                 className="d-flex justify-content-between"
               >
                 <Button type="button" variant="primary" className="me-2">
-                  <FaComment /> Commenter
+                  <FaComment />
                 </Button>
 
                 <LikesDislikes
