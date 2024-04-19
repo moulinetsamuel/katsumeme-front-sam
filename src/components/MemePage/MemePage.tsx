@@ -1,8 +1,6 @@
 import MemeCard from '../MemeCard/MemeCard';
 import Sidebar from '../Sidebar/Sidebar';
 import './MemePage.scss';
-import ButtonShare from '../ButtonShare/ButtonShare';
-import ButtonCreate from '../ButtonCreate/ButtonCreate';
 import { useEffect, useState } from 'react';
 import useUserStore from '../UserStore/UserState';
 import axiosInstance from '../API/axios';
@@ -61,10 +59,6 @@ function MemePage() {
   };
   return (
     <div>
-      <div className="ButtonContainer">
-        <ButtonShare />
-        <ButtonCreate />
-      </div>
       <MemeCard memes={memes} />
       {hasMoreMemes && (
         <div className="LoadMoreButton">

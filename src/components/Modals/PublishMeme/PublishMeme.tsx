@@ -3,6 +3,7 @@ import axiosInstance from '../../API/axios';
 import React, { useEffect, useState } from 'react';
 import './PublishMeme.scss';
 import { IoIosRocket } from 'react-icons/io';
+import useUserStore from '../../UserStore/UserState';
 
 type PublishMemeProps = {
   hide: boolean;
@@ -21,6 +22,8 @@ function PublishMeme({ hide, onHide, canvasRef }: PublishMemeProps) {
   const [tagsError, setTagsError] = useState('');
 
   const [previewFile, setPreviewFile] = useState<File | null>(null);
+
+  const { incrementUploadCount } = useUserStore();
 
   const handleClose = () => {
     setTags('');
@@ -61,8 +64,6 @@ function PublishMeme({ hide, onHide, canvasRef }: PublishMemeProps) {
         tags: tagsArrayUpdated,
       };
 
-      console.log(dataForm);
-
       await axiosInstance.post('/api/memes', dataForm, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -70,6 +71,8 @@ function PublishMeme({ hide, onHide, canvasRef }: PublishMemeProps) {
       });
 
       setSucces(true);
+
+      incrementUploadCount();
 
       handleClose();
     } catch (error) {
