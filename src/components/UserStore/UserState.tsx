@@ -22,7 +22,6 @@ const useUserStore = create<UserState>((set) => ({
     } catch (error) {
       if ((error as AxiosError).response?.status === 401) {
         await refreshAccessToken(set);
-        await retryAfterRefresh(set);
       } else {
         handleOtherErrors(set, error);
       }
@@ -51,6 +50,7 @@ async function refreshAccessToken(set: (state: Partial<UserState>) => void) {
         refreshToken: responseRefresh?.data?.refreshToken,
       })
     );
+    await retryAfterRefresh(set);
   } catch (error) {
     handleOtherErrors(set, error);
   }
