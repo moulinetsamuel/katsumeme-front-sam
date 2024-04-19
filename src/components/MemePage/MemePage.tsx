@@ -26,7 +26,7 @@ function MemePage() {
   const [page, setPage] = useState(1); // State to store the current page
   const memesPerPage = 3; // Number of memes to display per page
   const [hasMoreMemes, setHasMoreMemes] = useState(true); // State to track if there are more memes to load
-  const { user } = useUserStore();
+  const { user, uploadCount } = useUserStore();
   const isAuthenticated = useUserStore((state) => state.isAuthenticated);
 
   // Function to fetch memes
@@ -54,7 +54,7 @@ function MemePage() {
   // Fetch memes when the page changes
   useEffect(() => {
     fetchMeme();
-  }, [page, isAuthenticated]); // Fetch memes when page, user.id change
+  }, [page, isAuthenticated, uploadCount]); // Fetch memes when page, user.id change
 
   // Function to load more memes
   const handleLoadMoreMemes = () => {

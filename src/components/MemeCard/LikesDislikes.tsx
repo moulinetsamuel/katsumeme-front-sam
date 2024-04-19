@@ -22,7 +22,7 @@ function LikesDislikes({
   const [dislikes, setDislikes] = useState<number>(dislikesCount);
   const [liked, setLiked] = useState<boolean>(false);
   const [disliked, setDisliked] = useState<boolean>(false);
-  const { isAuthenticated } = useUserStore();
+  const { isAuthenticated, setAppState } = useUserStore();
   const [openModalSignIn, setOpenModalSignIn] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,6 @@ function LikesDislikes({
     if (!isAuthenticated) {
       setOpenModalSignIn(true);
     } else {
-      localLike();
       handleLike();
     }
   };
@@ -52,7 +51,6 @@ function LikesDislikes({
     if (!isAuthenticated) {
       setOpenModalSignIn(true);
     } else {
-      localDislike();
       handleDislike();
     }
   };
@@ -63,7 +61,9 @@ function LikesDislikes({
 
   const handleLike = async () => {
     try {
+      setAppState();
       await axiosInstance.get(`api/toggle/like/meme/${memeId}`);
+      localLike();
     } catch (error) {
       console.error('Erreur lors du like du meme', error);
     }
@@ -72,6 +72,7 @@ function LikesDislikes({
   const handleDislike = async () => {
     try {
       await axiosInstance.get(`api/toggle/dislike/meme/${memeId}`);
+      localDislike();
     } catch (error) {
       console.error('Erreur lors du like du meme', error);
     }

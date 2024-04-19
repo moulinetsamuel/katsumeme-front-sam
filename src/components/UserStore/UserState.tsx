@@ -7,12 +7,17 @@ interface UserState {
   isAuthenticated: boolean;
   error: string | null;
   setAppState: () => void;
+  uploadCount: number;
+  incrementUploadCount: () => void;
 }
 
 const useUserStore = create<UserState>((set) => ({
   user: {},
   isAuthenticated: false,
   error: null,
+  uploadCount: 0,
+  incrementUploadCount: () =>
+    set((state) => ({ uploadCount: state.uploadCount + 1 })),
   setAppState: async () => {
     set({ error: null });
 

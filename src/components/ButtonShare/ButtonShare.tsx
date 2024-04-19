@@ -48,7 +48,10 @@ function ButtonShare() {
         <IoIosRocket />
         Partager un meme
       </Button>
-      <ShareMeme hide={showShareModal} onHide={handleCloseShareModal} />
+      <ShareMeme
+        hide={showShareModal && isAuthenticated}
+        onHide={handleCloseShareModal}
+      />
       <Signin hide={showSigninModal} onHide={handleCloseSigninModal} />
     </div>
   );
