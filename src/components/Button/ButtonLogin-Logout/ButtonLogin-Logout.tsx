@@ -7,11 +7,11 @@ import useUserStore from '../../UserStore/UserState';
 function LoginLogout() {
   const [showSigninModal, setShowSigninModal] = useState(false);
 
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+  const { setAppState, isAuthenticated } = useUserStore();
 
   const handleLogout = () => {
     localStorage.clear();
-    location.reload();
+    setAppState();
   };
 
   const handleOpenSigninModal = () => {

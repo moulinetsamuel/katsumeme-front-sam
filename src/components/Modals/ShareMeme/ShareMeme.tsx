@@ -4,6 +4,7 @@ import { useState } from 'react';
 import './ShareMeme.scss';
 import DropZone from '../../Dropzone/DropZone';
 import { IoIosRocket } from 'react-icons/io';
+import useUserStore from '../../UserStore/UserState';
 
 type ShareMemeProps = {
   hide: boolean;
@@ -20,6 +21,7 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
   const [errorMessage, setErrorMessage] = useState('');
   const [titleError, setTitleError] = useState('');
   const [tagsError, setTagsError] = useState('');
+  const { incrementUploadCount } = useUserStore();
 
   const handleClose = () => {
     setTags('');
@@ -40,8 +42,6 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
         tags: tagsArrayUpdated,
       };
 
-      console.log(dataForm);
-
       await axiosInstance.post('/api/memes', dataForm, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -49,6 +49,8 @@ function ShareMeme({ hide, onHide }: ShareMemeProps) {
       });
 
       setSucces(true);
+
+      incrementUploadCount();
 
       handleClose();
     } catch (error) {

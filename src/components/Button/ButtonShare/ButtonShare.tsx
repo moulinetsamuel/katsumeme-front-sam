@@ -14,7 +14,7 @@ function ButtonShare({ label }: ButtonShareProps) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSigninModal, setShowSigninModal] = useState(false);
 
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+  const { isAuthenticated } = useUserStore();
 
   const handleOpenShareModal = () => {
     if (!isAuthenticated) {
