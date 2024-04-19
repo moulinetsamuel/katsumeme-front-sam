@@ -51,19 +51,21 @@ function MemeCard({ memes }: Meme) {
     }
   };
 
-  const handleDownload = (imageUrl: string) => {
-    fetch(imageUrl) // Fetch the image URL
-      .then((response) => response.blob()) // Convert response to Blob
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob); // Create Blob URL
-        const link = document.createElement('a'); // Create a link element
-        link.href = url; // Set the href attribute of the link
-        link.download = `Katsumeme-${new Date().getTime()}.png`;
-        document.body.appendChild(link); // Append the link to the body
-        link.click(); // Click the link
-        document.body.removeChild(link); // Remove the link from the body
-      })
-      .catch((error) => console.error('Error downloading meme:', error));
+  const handleDownload = async (imageUrl: string) => {
+    try {
+      const response = await fetch(imageUrl); // Fetch the image URL
+      const blob = await response.blob(); // Convert response to Blob
+
+      const url = window.URL.createObjectURL(blob); // Create Blob URL
+      const link = document.createElement('a'); // Create a link element
+      link.href = url; // Set the href attribute of the link
+      link.download = `Katsumeme-${new Date().getTime()}.png`;
+      document.body.appendChild(link); // Append the link to the body
+      link.click(); // Click the link
+      document.body.removeChild(link); // Remove the link from the body
+    } catch (error) {
+      console.error('Error downloading meme:', error);
+    }
   };
 
   return (
