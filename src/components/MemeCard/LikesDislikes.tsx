@@ -116,7 +116,7 @@ function LikesDislikes({
   };
 
   return (
-    <div className="Reactions">
+    <div className="LikesDislikes">
       <Button
         type="button"
         onClick={() => {

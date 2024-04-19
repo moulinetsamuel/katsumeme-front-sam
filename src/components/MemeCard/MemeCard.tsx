@@ -6,6 +6,7 @@ import './MemeCard.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import LikesDislikes from './LikesDislikes';
+import Bookmarks from './Bookmarks';
 
 interface Meme {
   memes: {
@@ -96,7 +97,7 @@ function MemeCard({ memes }: Meme) {
                 className="d-flex justify-content-between"
               >
                 <Button type="button" variant="primary" className="me-2">
-                  <FaComment /> Commenter
+                  <FaComment />
                 </Button>
 
                 <LikesDislikes
@@ -114,10 +115,7 @@ function MemeCard({ memes }: Meme) {
                   <FaDownload />
                 </Button>
 
-                <Button variant="primary">
-                  <MdOutlineStarBorder />
-                  {/* <MdOutlineStar /> */}
-                </Button>
+                <Bookmarks memeId={meme.id} isBookmarked={meme.isBookmarked} />
               </Card.Footer>
             </Card>
           </div>
