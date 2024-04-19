@@ -86,7 +86,11 @@ function MemeCard({ memes }: Meme) {
                 </div>
                 <div className="my-2 align-items-end">
                   {meme.tags.map((tag, tagIndex) => (
-                    <Card.Link key={tagIndex} href="#">
+                    <Card.Link
+                      key={tagIndex}
+                      href="#"
+                      onClick={(e) => e.preventDefault()}
+                    >
                       {tag.tags.name}
                     </Card.Link>
                   ))}
