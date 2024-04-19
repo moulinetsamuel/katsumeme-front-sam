@@ -6,9 +6,6 @@ import './MemeCard.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import LikesDislikes from './LikesDislikes';
-import { useEffect } from 'react';
-
-//ADD TIMESTAMP BUTTON LOADMOREMEMES
 
 interface Meme {
   memes: {

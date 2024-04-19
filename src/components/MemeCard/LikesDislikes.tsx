@@ -22,9 +22,8 @@ function LikesDislikes({
   const [dislikes, setDislikes] = useState<number>(dislikesCount);
   const [liked, setLiked] = useState<boolean>(false);
   const [disliked, setDisliked] = useState<boolean>(false);
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+  const { isAuthenticated } = useUserStore();
   const [openModalSignIn, setOpenModalSignIn] = useState(false);
-  // console.log('disliked', disliked, 'isliked', isLiked);
 
   useEffect(() => {
     toggleLike();

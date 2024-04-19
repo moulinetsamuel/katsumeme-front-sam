@@ -37,7 +37,6 @@ function MemePage() {
         url += `&user_id=${(user as { id: number }).id}`;
       }
       const response = await axiosInstance.get<Meme[]>(url);
-      console.log(response.data);
       if (response.data.length === 0) {
         setHasMoreMemes(false); // Set hasMoreMemes to false if there are no more memes to load
         return;
