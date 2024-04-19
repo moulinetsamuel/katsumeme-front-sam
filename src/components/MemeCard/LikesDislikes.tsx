@@ -24,18 +24,37 @@ function LikesDislikes({
   const [disliked, setDisliked] = useState<boolean>(false);
   const isAuthenticated = useUserStore((state) => state.isAuthenticated);
   const [openModalSignIn, setOpenModalSignIn] = useState(false);
-  console.log('test1', disliked, isLiked);
+  // console.log('disliked', disliked, 'isliked', isLiked);
 
   useEffect(() => {
-    if (isLiked) {
-      setLiked(isLiked);
-      setDisliked(isLiked);
-    }
-  }, []);
+    toggleLike();
+  }, [isLiked]);
 
-  const handleOpenSigninModal = () => {
+  const toggleLike = () => {
+    if (isLiked === true || isLiked === false) {
+      setLiked(isLiked);
+      setDisliked(!isLiked);
+    } else {
+      setLiked(false);
+      setDisliked(false);
+    }
+  };
+
+  const onClickLike = () => {
     if (!isAuthenticated) {
       setOpenModalSignIn(true);
+    } else {
+      localLike();
+      handleLike();
+    }
+  };
+
+  const onClickDislike = () => {
+    if (!isAuthenticated) {
+      setOpenModalSignIn(true);
+    } else {
+      localDislike();
+      handleDislike();
     }
   };
 
@@ -59,13 +78,50 @@ function LikesDislikes({
     }
   };
 
+  const localLike = async () => {
+    switch (true) {
+      case liked:
+        setLikes(likes - 1);
+        setLiked(false);
+        break;
+      case disliked:
+        setLikes(likes + 1);
+        setDislikes(dislikes - 1);
+        setLiked(true);
+        setDisliked(false);
+        break;
+      default:
+        setLikes(likes + 1);
+        setLiked(true);
+        break;
+    }
+  };
+
+  const localDislike = async () => {
+    switch (true) {
+      case disliked:
+        setDislikes(dislikes - 1);
+        setDisliked(false);
+        break;
+      case liked:
+        setDislikes(dislikes + 1);
+        setLikes(likes - 1);
+        setDisliked(true);
+        setLiked(false);
+        break;
+      default:
+        setDislikes(dislikes + 1);
+        setDisliked(true);
+        break;
+    }
+  };
+
   return (
     <div className="Reactions">
       <Button
         type="button"
         onClick={() => {
-          handleLike();
-          handleOpenSigninModal();
+          onClickLike();
         }}
         // If Liked is true, the button will be green, otherwise only the border will be green
         variant={liked ? 'success' : 'outline-success'}
@@ -76,8 +132,7 @@ function LikesDislikes({
       <Button
         type="button"
         onClick={() => {
-          handleDislike();
-          handleOpenSigninModal();
+          onClickDislike();
         }}
         // If Disliked is true, the button will be red, otherwise only the border will be red
         variant={disliked ? 'danger' : 'outline-danger'}

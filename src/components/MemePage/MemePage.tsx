@@ -28,20 +28,19 @@ function MemePage() {
   const [hasMoreMemes, setHasMoreMemes] = useState(true); // State to track if there are more memes to load
   const { user } = useUserStore();
   const isAuthenticated = useUserStore((state) => state.isAuthenticated);
-  
 
   // Function to fetch memes
   const fetchMeme = async () => {
     try {
       let url = `/api/memes?limit=${memesPerPage}&page=${page}`;
       if (isAuthenticated) {
-        url += `&user_id=${user.id}`;
+        url += `&user_id=${(user as { id: number }).id}`;
       }
       const response = await axiosInstance.get<Meme[]>(url);
       console.log(response.data);
       if (response.data.length === 0) {
         setHasMoreMemes(false); // Set hasMoreMemes to false if there are no more memes to load
-        return; 
+        return;
       }
       if (page === 1) {
         setMemes(response.data); // Set the new memes
@@ -55,9 +54,7 @@ function MemePage() {
   };
   // Fetch memes when the page changes
   useEffect(() => {
-    if (isAuthenticated || !isAuthenticated) {
     fetchMeme();
-    }
   }, [page, isAuthenticated]); // Fetch memes when page, user.id change
 
   // Function to load more memes

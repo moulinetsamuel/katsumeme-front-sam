@@ -16,7 +16,6 @@ function Signin({ hide, onHide }: SigninProps) {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { setAppState } = useUserStore();
-  const { setAppState } = useUserStore();
 
   const handleClose = () => onHide(false);
 
