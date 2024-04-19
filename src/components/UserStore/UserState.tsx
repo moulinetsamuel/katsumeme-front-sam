@@ -1,102 +1,79 @@
 import { create } from 'zustand';
 import axiosInstance from '../API/axios';
+import { AxiosError } from 'axios';
 
 interface UserState {
-  user: {
-    id: number;
-    firstname: string;
-    lastname: string;
-    nickname: string;
-    avatar_url: string;
-    email: string;
-    created_at: Date;
-    role: {
-      name: string;
-    };
-  };
+  user: object;
   isAuthenticated: boolean;
+  error: string | null;
   setAppState: () => void;
 }
 
 const useUserStore = create<UserState>((set) => ({
-  user: {
-    id: 0,
-    firstname: '',
-    lastname: '',
-    nickname: '',
-    avatar_url: '',
-    email: '',
-    created_at: new Date(),
-    role: {
-      name: '',
-    },
-  },
-  // Provide an initializer for the 'user' property
+  user: {},
   isAuthenticated: false,
+  error: null,
   setAppState: async () => {
+    set({ error: null });
+
     try {
       const response = await axiosInstance.get('/api/profil');
-
-      if (response.status === 200) {
-        console.log('access token ok');
-
-        set((state) => ({
-          user: (state.user = response.data),
-          isAuthenticated: (state.isAuthenticated = true),
-        }));
-      }
+      set({ user: response.data, isAuthenticated: true });
     } catch (error) {
-      if ((error as any).response) {
-        if ((error as any).response.status === 401) {
-          console.log('access token 401');
-          try {
-            const response = await axiosInstance.post(
-              '/api/auth/refresh',
-              JSON.stringify({
-                refreshToken: JSON.parse(localStorage.getItem('refreshToken')),
-              }),
-              {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: false,
-              }
-            );
-
-            if (response.status === 200) {
-              console.log('refresh token ok');
-
-              localStorage.setItem(
-                'accessToken',
-                JSON.stringify(response?.data?.accessToken)
-              );
-              localStorage.setItem(
-                'refreshToken',
-                JSON.stringify(response?.data?.refreshToken)
-              );
-              set((state) => ({
-                isAuthenticated: (state.isAuthenticated = true),
-              }));
-            }
-          } catch (error) {
-            console.log('refresh token 401');
-
-            set((state) => ({
-              user: (state.user = {}),
-              isAuthenticated: (state.isAuthenticated = false),
-            }));
-            localStorage.clear();
-          }
-        }
+      if ((error as AxiosError).response?.status === 401) {
+        await refreshAccessToken(set);
       } else {
-        console.log('error');
-
-        set((state) => ({
-          user: (state.user = {}),
-          isAuthenticated: (state.isAuthenticated = false),
-        }));
-        localStorage.clear();
+        handleOtherErrors(set, error);
       }
     }
   },
 }));
+
+function getRefreshToken() {
+  const tokensString = localStorage.getItem('tokens');
+  if (tokensString) {
+    const tokens = JSON.parse(tokensString);
+    return tokens.refreshToken;
+  }
+  return null;
+}
+
+async function refreshAccessToken(set: (state: Partial<UserState>) => void) {
+  try {
+    const responseRefresh = await axiosInstance.post('/api/auth/refresh', {
+      refreshToken: getRefreshToken(),
+    });
+    localStorage.setItem(
+      'tokens',
+      JSON.stringify({
+        accessToken: responseRefresh?.data?.accessToken,
+        refreshToken: responseRefresh?.data?.refreshToken,
+      })
+    );
+    await retryAfterRefresh(set);
+  } catch (error) {
+    handleOtherErrors(set, error);
+  }
+}
+
+async function retryAfterRefresh(set: (state: Partial<UserState>) => void) {
+  try {
+    const response = await axiosInstance.get('/api/profil');
+    set({ user: response.data, isAuthenticated: true });
+  } catch (error) {
+    handleOtherErrors(set, error);
+  }
+}
+
+function handleOtherErrors(
+  set: (state: Partial<UserState>) => void,
+  error: any
+) {
+  console.error('ErrorTEST:', error);
+  set({
+    isAuthenticated: false,
+    error: "Une erreur s'est produite.",
+  });
+}
 
 export default useUserStore;

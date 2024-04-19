@@ -16,6 +16,8 @@ function Signin({ hide, onHide }: SigninProps) {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { setAppState } = useUserStore();
+  const { setAppState } = useUserStore();
+
   const handleClose = () => onHide(false);
 
   useEffect(() => {
@@ -38,16 +40,17 @@ function Signin({ hide, onHide }: SigninProps) {
       );
 
       localStorage.setItem(
-        'accessToken',
-        JSON.stringify(response?.data?.accessToken)
-      );
-      localStorage.setItem(
-        'refreshToken',
-        JSON.stringify(response?.data?.refreshToken)
+        'tokens',
+        JSON.stringify({
+          accessToken: response?.data?.accessToken,
+          refreshToken: response?.data?.refreshToken,
+        })
       );
 
       setEmail('');
       setPassword('');
+
+      setAppState();
 
       handleClose();
     } catch (error) {
