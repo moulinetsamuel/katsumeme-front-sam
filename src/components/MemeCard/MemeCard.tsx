@@ -25,8 +25,6 @@ interface Meme {
 
 // Component to display the memes
 function MemeCard({ memes }: Meme) {
-  // meme is the prop passed to the component
-
   // Function to format the date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -51,6 +49,21 @@ function MemeCard({ memes }: Meme) {
     } else {
       return `publié il y a quelques secondes`;
     }
+  };
+
+  const handleDownload = (imageUrl: string) => {
+    fetch(imageUrl) // Fetch the image URL
+      .then((response) => response.blob()) // Convert response to Blob
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob); // Create Blob URL
+        const link = document.createElement('a'); // Create a link element
+        link.href = url; // Set the href attribute of the link
+        link.download = `Katsumeme-${new Date().getTime()}.png`;
+        document.body.appendChild(link); // Append the link to the body
+        link.click(); // Click the link
+        document.body.removeChild(link); // Remove the link from the body
+      })
+      .catch((error) => console.error('Error downloading meme:', error));
   };
 
   return (
@@ -115,6 +128,7 @@ function MemeCard({ memes }: Meme) {
                   className="downloadButton"
                   type="button"
                   variant="primary"
+                  onClick={() => handleDownload(meme.image_url)} // Handle download button click
                 >
                   <FaDownload />
                 </Button>
