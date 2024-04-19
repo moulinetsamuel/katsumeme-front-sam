@@ -49,9 +49,7 @@ function Signin({ hide, onHide }: SigninProps) {
       setEmail('');
       setPassword('');
 
-      
       handleClose();
-      location.reload();
     } catch (error) {
       console.error(error);
       if ((error as any).response.status === 400) {

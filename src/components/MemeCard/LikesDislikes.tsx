@@ -24,17 +24,14 @@ function LikesDislikes({
   const [disliked, setDisliked] = useState<boolean>(false);
   const isAuthenticated = useUserStore((state) => state.isAuthenticated);
   const [openModalSignIn, setOpenModalSignIn] = useState(false);
-  console.log('test1', disliked);
+  console.log('test1', disliked, isLiked);
 
   useEffect(() => {
-    if (isLiked !== null) {
+    if (isLiked) {
       setLiked(isLiked);
-      setDisliked(!isLiked);
-    } else {
-      setLiked(false);
-      setDisliked(false);
+      setDisliked(isLiked);
     }
-  }, [isLiked]);
+  }, []);
 
   const handleOpenSigninModal = () => {
     if (!isAuthenticated) {
@@ -61,7 +58,6 @@ function LikesDislikes({
       console.error('Erreur lors du like du meme', error);
     }
   };
-  console.log('test5', disliked);
 
   return (
     <div className="Reactions">
