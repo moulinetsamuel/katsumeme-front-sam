@@ -13,11 +13,16 @@ interface UserState {
 
 const useUserStore = create<UserState>((set) => ({
   user: {},
+
   isAuthenticated: false,
+
   error: null,
+
   uploadCount: 0,
+
   incrementUploadCount: () =>
     set((state) => ({ uploadCount: state.uploadCount + 1 })),
+
   setAppState: async () => {
     set({ error: null });
 
@@ -25,60 +30,12 @@ const useUserStore = create<UserState>((set) => ({
       const response = await axiosInstance.get('/api/profil');
       set({ user: response.data, isAuthenticated: true });
     } catch (error) {
-      if ((error as AxiosError).response?.status === 401) {
-        await refreshAccessToken(set);
-      } else {
-        handleOtherErrors(set, error);
-      }
+      set({
+        isAuthenticated: false,
+        error: "Une erreur s'est produite.",
+      });
     }
   },
 }));
-
-function getRefreshToken() {
-  const tokensString = localStorage.getItem('tokens');
-  if (tokensString) {
-    const tokens = JSON.parse(tokensString);
-    return tokens.refreshToken;
-  }
-  return null;
-}
-
-async function refreshAccessToken(set: (state: Partial<UserState>) => void) {
-  try {
-    const responseRefresh = await axiosInstance.post('/api/auth/refresh', {
-      refreshToken: getRefreshToken(),
-    });
-    localStorage.setItem(
-      'tokens',
-      JSON.stringify({
-        accessToken: responseRefresh?.data?.accessToken,
-        refreshToken: responseRefresh?.data?.refreshToken,
-      })
-    );
-    await retryAfterRefresh(set);
-  } catch (error) {
-    handleOtherErrors(set, error);
-  }
-}
-
-async function retryAfterRefresh(set: (state: Partial<UserState>) => void) {
-  try {
-    const response = await axiosInstance.get('/api/profil');
-    set({ user: response.data, isAuthenticated: true });
-  } catch (error) {
-    handleOtherErrors(set, error);
-  }
-}
-
-function handleOtherErrors(
-  set: (state: Partial<UserState>) => void,
-  error: any
-) {
-  console.error('ErrorTEST:', error);
-  set({
-    isAuthenticated: false,
-    error: "Une erreur s'est produite.",
-  });
-}
 
 export default useUserStore;
