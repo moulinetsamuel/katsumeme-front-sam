@@ -22,7 +22,7 @@ function LikesDislikes({
   const [dislikes, setDislikes] = useState<number>(dislikesCount);
   const [liked, setLiked] = useState<boolean>(false);
   const [disliked, setDisliked] = useState<boolean>(false);
-  const { isAuthenticated, setAppState } = useUserStore();
+  const { isAuthenticated } = useUserStore();
   const [openModalSignIn, setOpenModalSignIn] = useState(false);
 
   useEffect(() => {
