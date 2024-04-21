@@ -1,4 +1,14 @@
-.Button {
+.CustomButton {
   gap: 0.5rem;
   align-items: center;
+  border-color: #806c00;
+  width: 12rem;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+  &:hover {
+    background-color: #e7811c !important; /* le !important demande à ce que le css en priorité face à Bootstrap*/
+    border-color: #ffff !important;
+    color: #ffff !important;
+  }
 }
