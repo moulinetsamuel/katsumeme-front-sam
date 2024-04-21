@@ -14,15 +14,17 @@ function Sidebar() {
           className="styleSearchBar d-flex align-items-center"
           action="search"
         >
-          <FaSearch className="mr-2" />
+          <FaSearch className="mglass mr-2" />
           <input
             placeholder="Rechercher"
             type="text"
             style={{
-              width: '12rem',
+              width: '10rem',
               border: 'none',
               background: 'transparent',
               outline: 'none',
+              textAlign: 'center',
+              paddingTop: '1rem',
             }}
           />
         </form>
@@ -53,6 +55,7 @@ function Sidebar() {
             <Nav.Link>Derniers memes ajoutés</Nav.Link>
           </Container>
         </Navbar>
+        <img src="public/LogoChat.png" alt="Logo" className="SidebarImage" />
       </div>
     </section>
   );

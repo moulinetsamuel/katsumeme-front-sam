@@ -44,11 +44,10 @@ function ButtonShare({ label }: ButtonShareProps) {
         typeof="button"
         style={{
           color: 'white',
-          background: '#775088',
-          border: 'transparent',
+          background: '#70905f',
+          border: 'solid 0.1rem',
           borderRadius: '1rem',
           display: 'flex',
-          alignItems: 'center',
         }}
       >
         <IoIosRocket />
