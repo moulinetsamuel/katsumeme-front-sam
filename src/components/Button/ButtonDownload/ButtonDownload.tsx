@@ -15,7 +15,7 @@ function DownloadMeme({ label, canvasRef }: DownloadButtonProps) {
     const canvas = canvasRef.current;
     const dataURL = canvas.toDataURL(); // Convertir le contenu du canvas en URL de données
     const link = document.createElement('a');
-    link.download = 'meme.png'; // Nom du fichier à télécharger
+    link.download = `Katsumeme_${Date.now()}-${Math.round(Math.random() * 1e9)}.jpg`; // Nom du fichier à télécharger
     link.href = dataURL;
     link.click();
   };

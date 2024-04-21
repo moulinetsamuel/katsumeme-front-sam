@@ -1,12 +1,12 @@
 import Card from 'react-bootstrap/Card';
 import { FaComment } from 'react-icons/fa';
 import { FaDownload } from 'react-icons/fa6';
-import { MdOutlineStarBorder } from 'react-icons/md';
 import './MemeCard.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import LikesDislikes from './LikesDislikes';
 import Bookmarks from './Bookmarks';
+import { saveAs } from 'file-saver';
 
 interface Meme {
   memes: {
@@ -51,27 +51,10 @@ function MemeCard({ memes }: Meme) {
     }
   };
 
-  const handleDownload = async (imageUrl: string) => {
-    try {
-      const response = await fetch(imageUrl); // Fetch the image URL
-      const blob = await response.blob(); // Convert response to Blob
-
-      const url = window.URL.createObjectURL(blob); // Create Blob URL
-      const link = document.createElement('a'); // Create a link element
-      link.href = url; // Set the href attribute of the link
-      link.download = `Katsumeme-${new Date().getTime()}.png`;
-      document.body.appendChild(link); // Append the link to the body
-      link.click(); // Click the link
-      document.body.removeChild(link); // Remove the link from the body
-    } catch (error) {
-      console.error('Error downloading meme:', error);
-    }
-  };
-
-  const formatUrl = () => {
-    const baseUrl = import.meta.env.VITE_API_URL;
-    const url = memes[0].image_url;
-    return `${baseUrl}${url}`;
+  const handleDownload = (path: string, title: string) => {
+    const filename = `Katsumeme_${title}.jpg`;
+    const url = `${import.meta.env.VITE_API_URL}${path}`;
+    saveAs(url, filename);
   };
 
   return (
@@ -102,7 +85,7 @@ function MemeCard({ memes }: Meme) {
                   <Card.Img
                     className="CardImage img-fluid"
                     variant="top"
-                    src={formatUrl()}
+                    src={`${import.meta.env.VITE_API_URL}${meme.image_url}`}
                   />
                 </div>
                 <div className="my-2 align-items-end">
@@ -136,7 +119,7 @@ function MemeCard({ memes }: Meme) {
                   className="downloadButton"
                   type="button"
                   variant="primary"
-                  onClick={() => handleDownload(meme.image_url)} // Handle download button click
+                  onClick={() => handleDownload(meme.image_url, meme.title)} // Handle download button click
                 >
                   <FaDownload />
                 </Button>
