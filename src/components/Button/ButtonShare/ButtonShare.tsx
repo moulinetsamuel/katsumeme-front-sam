@@ -36,18 +36,18 @@ function ButtonShare({ label }: ButtonShareProps) {
   };
 
   return (
-    <div>
+    <div className="ShareButton">
       <Button
-        variant="primary"
         onClick={handleOpenShareModal}
-        className="Button"
+        className="CustomButton"
         typeof="button"
+        variant="primary"
         style={{
-          color: 'white',
           background: '#70905f',
           border: 'solid 0.1rem',
           borderRadius: '1rem',
           display: 'flex',
+          fontVariant: 'small-caps',
         }}
       >
         <IoIosRocket />

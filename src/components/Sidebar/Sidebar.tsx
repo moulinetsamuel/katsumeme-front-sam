@@ -35,27 +35,27 @@ function Sidebar() {
           <ButtonShare label="Partager" />
           <ButtonCreate />
         </div>
-        <Navbar>
+        <Navbar className="Navbar">
           <Container>
-            <Nav.Link>Katsumeme du moment</Nav.Link>
+            <Nav.Link className="custom">Katsumeme du moment</Nav.Link>
           </Container>
         </Navbar>
         <Navbar>
           <Container>
-            <Nav.Link>Les plus likés</Nav.Link>
+            <Nav.Link className="custom">Les plus likés</Nav.Link>
           </Container>
         </Navbar>
         <Navbar>
           <Container>
-            <Nav.Link>Les moins likés</Nav.Link>
+            <Nav.Link className="custom">Les moins likés</Nav.Link>
           </Container>
         </Navbar>
         <Navbar>
           <Container>
-            <Nav.Link>Derniers memes ajoutés</Nav.Link>
+            <Nav.Link className="custom">Derniers memes ajoutés</Nav.Link>
           </Container>
         </Navbar>
-        <img src="public/LogoChat.png" alt="Logo" className="SidebarImage" />
+        <img src="/LogoChat.png" alt="Logo" className="SidebarImage" />
       </div>
     </section>
   );
