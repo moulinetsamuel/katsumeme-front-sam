@@ -17,7 +17,7 @@ function Header() {
           <Link to="/">
             <img
               className="ImageTitle"
-              src="src/assets/Logo.png"
+              src="Logo.png"
               alt="Logo Katsumeme Chat"
             />
           </Link>
