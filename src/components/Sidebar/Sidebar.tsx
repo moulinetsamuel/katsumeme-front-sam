@@ -29,7 +29,6 @@ function Sidebar() {
           />
         </form>
       </div>
-
       <div className="Sidebar color">
         <div className="buttonContainer">
           <ButtonShare label="Partager" />

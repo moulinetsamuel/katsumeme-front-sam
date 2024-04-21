@@ -1,6 +1,10 @@
 .SidebarContainer {
+  position: fixed;
+  top: 12rem;
   display: flex;
+  flex-direction: column;
   width: 14rem;
+  gap: 2rem;
 }
 
 .color {
@@ -8,8 +12,6 @@
 }
 
 .Sidebar {
-  position: fixed;
-  top: 17rem;
   left: 0;
   height: 34rem;
   width: 14rem;
@@ -27,9 +29,7 @@
 }
 
 .Searchbar {
-  position: fixed;
   display: flex;
-  top: 13rem;
   width: 13rem;
   margin-left: 2rem;
   border-radius: 1rem;

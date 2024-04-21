@@ -58,7 +58,7 @@ function MemeCard({ memes }: Meme) {
   };
 
   return (
-    <div className="MemeCardContainer d-flex flex-column justify-content-center">
+    <div>
       {memes.map((meme) => (
         <div key={meme.id} className="row mb-4">
           <div className="col d-flex justify-content-center">
@@ -81,19 +81,33 @@ function MemeCard({ memes }: Meme) {
                 </Card.Subtitle>
               </Card.Header>
               <Card.Body>
-                <div className="align-self-center">
+                <div className="margin-bottom-img align-self-center">
                   <Card.Img
                     className="CardImage img-fluid"
                     variant="top"
                     src={`${import.meta.env.VITE_API_URL}${meme.image_url}`}
                   />
                 </div>
-                <div className="my-2 align-items-end">
+                <div className="my-2 d-flex flex-wrap align-items-center">
                   {meme.tags.map((tag, tagIndex) => (
                     <Card.Link
                       key={tagIndex}
                       href="#"
                       onClick={(e) => e.preventDefault()}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '1.3rem',
+                        textDecoration: 'none',
+                        color: 'white',
+                        background: '#70905f',
+                        border: 'solid 0.1rem',
+                        borderRadius: '1rem',
+                        padding: '0.3rem',
+                        marginRight: '0.5rem',
+                        marginBottom: '0.5rem',
+                        marginLeft: tagIndex !== 0 ? '0rem' : '0',
+                      }}
                     >
                       {tag.tags.name}
                     </Card.Link>
@@ -102,9 +116,19 @@ function MemeCard({ memes }: Meme) {
               </Card.Body>
               <Card.Footer
                 style={{ backgroundColor: '#d6cadb' }}
-                className="d-flex justify-content-between"
+                className="d-flex justify-content-between align-items-center"
               >
-                <Button type="button" variant="primary" className="me-2">
+                <Button
+                  type="button"
+                  variant="primary"
+                  className="me-2"
+                  style={{
+                    border: 'transparent',
+                    background: 'transparent',
+                    color: 'black',
+                    fontSize: '2rem',
+                  }}
+                >
                   <FaComment />
                 </Button>
 
@@ -120,6 +144,12 @@ function MemeCard({ memes }: Meme) {
                   type="button"
                   variant="primary"
                   onClick={() => handleDownload(meme.image_url, meme.title)} // Handle download button click
+                  style={{
+                    border: 'transparent',
+                    background: 'transparent',
+                    color: 'black',
+                    fontSize: '2rem',
+                  }}
                 >
                   <FaDownload />
                 </Button>
