@@ -116,7 +116,7 @@ function LikesDislikes({
   };
 
   return (
-    <div className="LikesDislikes">
+    <div className="LikesDislikes d-flex justify-content-between align-items-center">
       <Button
         type="button"
         onClick={() => {
@@ -124,6 +124,11 @@ function LikesDislikes({
         }}
         // If Liked is true, the button will be green, otherwise only the border will be green
         variant={liked ? 'success' : 'outline-success'}
+        style={{
+          border: 'transparent',
+          display: 'flex',
+          fontSize: '1.5rem ',
+        }}
       >
         <SlLike />({likes})
       </Button>
@@ -135,8 +140,14 @@ function LikesDislikes({
         }}
         // If Disliked is true, the button will be red, otherwise only the border will be red
         variant={disliked ? 'danger' : 'outline-danger'}
+        style={{
+          border: 'transparent',
+          display: 'flex',
+          fontSize: '1.5rem ',
+        }}
       >
-        <SlDislike />({dislikes})
+        ({dislikes})
+        <SlDislike />
       </Button>
 
       <Signin hide={openModalSignIn} onHide={handleCloseSigninModal} />

@@ -38,6 +38,7 @@ function MemePage() {
         setHasMoreMemes(false); // Set hasMoreMemes to false if there are no more memes to load
         return;
       }
+
       if (page === 1) {
         setMemes(response.data); // Set the new memes
       } else {
@@ -59,19 +60,21 @@ function MemePage() {
   };
   return (
     <div>
-      <MemeCard memes={memes} />
-      {hasMoreMemes && (
-        <div className="LoadMoreButton">
-          <Button
-            variant="primary"
-            type="button"
-            onClick={handleLoadMoreMemes}
-            style={{ backgroundColor: '#e8811c' }}
-          >
-            Charger plus
-          </Button>
-        </div>
-      )}
+      <div className="MemeCardContainer d-flex flex-column justify-content-center">
+        <MemeCard memes={memes} />
+        {hasMoreMemes && (
+          <div className="LoadMoreButton">
+            <Button
+              variant="primary"
+              type="button"
+              onClick={handleLoadMoreMemes}
+              style={{ backgroundColor: '#e8811c', border: 'none' }}
+            >
+              Charger plus
+            </Button>
+          </div>
+        )}
+      </div>
       <Sidebar />
     </div>
   );
