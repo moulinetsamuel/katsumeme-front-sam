@@ -22,6 +22,7 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
+  ignorePatterns: ['.eslintrc.cjs', 'src'],
   overrides: [
     {
       files: ['src/**/reducers/*.ts'],

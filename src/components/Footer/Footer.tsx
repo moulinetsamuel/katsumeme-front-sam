@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <footer>
-      <p>Copyright</p>
+      <p>Have fun with Katsumeme</p>
     </footer>
   );
 }

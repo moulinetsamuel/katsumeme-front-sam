@@ -1,24 +1,29 @@
 import { Stack } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import { FaRegUser } from 'react-icons/fa6';
 import './Header.scss';
+import LoginLogout from '../Button/ButtonLogin-Logout/ButtonLogin-Logout';
+import { Link } from 'react-router-dom';
+import ButtonShare from '../Button/ButtonShare/ButtonShare';
+import ButtonCreate from '../Button/ButtonCreate/ButtonCreate';
 
 function Header() {
   return (
     <header className="Header">
-      <Stack className="Banner" direction="horizontal" gap={3}>
+      <Stack
+        className="Banner justify-content-center"
+        direction="horizontal"
+        gap={3}
+      >
         <div>
-          <img
-            className="ImageTitle"
-            src="src/assets/Logo.png"
-            alt="Logo Katsumeme Chat"
-          />
+          <Link to="/">
+            <img
+              className="ImageTitle"
+              src="Logo.png"
+              alt="Logo Katsumeme Chat"
+            />
+          </Link>
         </div>
         <div className="Login ms-auto">
-          <FaRegUser className="ImageProfile" />
-          <Button className="LoginButton" variant="outline-light">
-            Login
-          </Button>
+          <LoginLogout />
         </div>
       </Stack>
     </header>
