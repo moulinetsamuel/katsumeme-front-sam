@@ -2,17 +2,6 @@
   margin-top: 2rem;
 }
 
-.MemeCardContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10rem;
-  justify-content: center;
-  width: calc(100vw - 20rem);
-  margin-left: 17rem;
-  margin-right: 17rem;
-  margin-top: 15rem;
-}
-
 .Emotes {
   display: flex;
   gap: 2rem;
@@ -30,9 +19,13 @@
 }
 
 .CardTitle {
-  border-bottom: #000000 solid 0.1rem ;
+  border-bottom: #000000 solid 0.1rem;
 }
 
 .CardImage {
   border: #000000 solid 0.1rem;
+}
+
+.margin-bottom-img {
+  margin-bottom: 1rem;
 }
