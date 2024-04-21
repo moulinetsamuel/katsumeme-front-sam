@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint src/**/*.{ts,tsx} --cache --max-warnings=0",
     "lint:fix": "eslint ./src/**/*.{ts,tsx} --fix",
-    "start": "serve -s build"
+    "start": "serve -s dist"
   },
   "dependencies": {
     "@types/file-saver": "^2.0.7",
