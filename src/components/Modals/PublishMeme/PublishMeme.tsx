@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import './PublishMeme.scss';
 import { IoIosRocket } from 'react-icons/io';
 import useUserStore from '../../UserStore/UserState';
+import { useNavigate } from 'react-router-dom';
 
 type PublishMemeProps = {
   hide: boolean;
@@ -22,6 +23,8 @@ function PublishMeme({ hide, onHide, canvasRef }: PublishMemeProps) {
   const [tagsError, setTagsError] = useState('');
 
   const [previewFile, setPreviewFile] = useState<File | null>(null);
+
+  const navigate = useNavigate();
 
   const { incrementUploadCount } = useUserStore();
 
@@ -75,6 +78,7 @@ function PublishMeme({ hide, onHide, canvasRef }: PublishMemeProps) {
       incrementUploadCount();
 
       handleClose();
+      navigate('/');
     } catch (error) {
       if ((error as any).response?.status === 400) {
         const details = (error as any).response.data.message.details;

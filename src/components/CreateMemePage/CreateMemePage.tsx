@@ -4,7 +4,6 @@ import './CreateMemePage.scss';
 import MemeEditor from '../MemeEditor/MemeEditor';
 import ButtonPublish from '../Button/ButtonPublish/ButtonPublish';
 import DownloadMeme from '../Button/ButtonDownload/ButtonDownload';
-import FooterCreateMeme from '../Footer/FooterCreateMeme';
 
 function CreateMemePage() {
   const [meme, setMeme] = useState<File | null>(null);
