@@ -25,8 +25,6 @@ interface Meme {
 
 // Component to display the memes
 function MemeCard({ memes }: Meme) {
-  // meme is the prop passed to the component
-
   // Function to format the date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -50,6 +48,23 @@ function MemeCard({ memes }: Meme) {
       return `publié il y a ${diffMinutes} minute(s)`;
     } else {
       return `publié il y a quelques secondes`;
+    }
+  };
+
+  const handleDownload = async (imageUrl: string) => {
+    try {
+      const response = await fetch(imageUrl); // Fetch the image URL
+      const blob = await response.blob(); // Convert response to Blob
+
+      const url = window.URL.createObjectURL(blob); // Create Blob URL
+      const link = document.createElement('a'); // Create a link element
+      link.href = url; // Set the href attribute of the link
+      link.download = `Katsumeme-${new Date().getTime()}.png`;
+      document.body.appendChild(link); // Append the link to the body
+      link.click(); // Click the link
+      document.body.removeChild(link); // Remove the link from the body
+    } catch (error) {
+      console.error('Error downloading meme:', error);
     }
   };
 
@@ -82,11 +97,16 @@ function MemeCard({ memes }: Meme) {
                     className="CardImage img-fluid"
                     variant="top"
                     src={meme.image_url}
+                    // `${process.env.VITE_API_URL}/${meme.image_url}`
                   />
                 </div>
                 <div className="my-2 align-items-end">
                   {meme.tags.map((tag, tagIndex) => (
-                    <Card.Link key={tagIndex} href="#">
+                    <Card.Link
+                      key={tagIndex}
+                      href="#"
+                      onClick={(e) => e.preventDefault()}
+                    >
                       {tag.tags.name}
                     </Card.Link>
                   ))}
@@ -111,6 +131,7 @@ function MemeCard({ memes }: Meme) {
                   className="downloadButton"
                   type="button"
                   variant="primary"
+                  onClick={() => handleDownload(meme.image_url)} // Handle download button click
                 >
                   <FaDownload />
                 </Button>
