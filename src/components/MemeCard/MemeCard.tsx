@@ -68,6 +68,12 @@ function MemeCard({ memes }: Meme) {
     }
   };
 
+  const formatUrl = () => {
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const url = memes[0].image_url;
+    return `${baseUrl}${url}`;
+  };
+
   return (
     <div className="MemeCardContainer d-flex flex-column justify-content-center">
       {memes.map((meme) => (
@@ -96,8 +102,7 @@ function MemeCard({ memes }: Meme) {
                   <Card.Img
                     className="CardImage img-fluid"
                     variant="top"
-                    src={meme.image_url}
-                    // `${process.env.VITE_API_URL}/${meme.image_url}`
+                    src={formatUrl()}
                   />
                 </div>
                 <div className="my-2 align-items-end">
@@ -142,7 +147,6 @@ function MemeCard({ memes }: Meme) {
           </div>
         </div>
       ))}
-      ;
     </div>
   );
 }

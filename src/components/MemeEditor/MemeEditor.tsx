@@ -146,7 +146,7 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
 
         <div className="text-inputs">
           <h3>Customes ton meme ! </h3>
-          <Form.Text className="text-muted">
+          <Form.Text className="text-muted text">
             {topTextLength}/{maxTextLength}
           </Form.Text>
           <input
@@ -166,7 +166,7 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
             onChange={handleBottomTextChange}
             maxLength={maxTextLength}
           />
-          <Form.Text className="text-muted">
+          <Form.Text className="text-muted text">
             {bottomTextLength}/{maxTextLength}
           </Form.Text>
         </div>
