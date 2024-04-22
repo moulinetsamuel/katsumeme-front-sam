@@ -8,11 +8,12 @@ import LikesDislikes from './LikesDislikes';
 import Bookmarks from './Bookmarks';
 import { saveAs } from 'file-saver';
 import DeleteMeme from './DeleteMeme';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useUserStore from '../UserStore/UserState';
+import { i } from 'vite/dist/node/types.d-aGj9QkWt';
 
 interface Meme {
-  memes: {
+  meme: {
     id: number;
     image_url: string;
     title: string;
@@ -23,25 +24,34 @@ interface Meme {
     dislikeCount: { liked_by: number };
     isBookmarked: boolean;
     isliked: boolean;
-  }[];
+  };
 }
 
 // Component to display the memes
-function MemeCard({ memes }: Meme) {
+function MemeCard({ meme }: Meme) {
   const [show, setShow] = useState(false);
-  const { user } = useUserStore();
+  const { user, isAuthenticated } = useUserStore();
 
   const showDeleteBtn = () => {
-    if (user) {
-      if (user.id === memes[0].author.id) {
-        setShow(true);
-      }
+    if (!isAuthenticated) {
+      setShow(false);
+      return;
+    }
+    if (
+      user.nickname === meme.author.nickname ||
+      (user.role && user.role.name === 'admin')
+    ) {
+      setShow(true);
     }
   };
 
+  useEffect(() => {
+    showDeleteBtn();
+  }, [isAuthenticated]);
+
   // Function to format the date
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatDate = () => {
+    const date = new Date(meme.created_at);
     const now = new Date();
 
     const diffMilliseconds = now.getTime() - date.getTime();
@@ -65,116 +75,109 @@ function MemeCard({ memes }: Meme) {
     }
   };
 
-  const handleDownload = (path: string, title: string) => {
-    const filename = `Katsumeme_${title}.jpg`;
-    const url = `${import.meta.env.VITE_API_URL}${path}`;
+  const handleDownload = () => {
+    const filename = `Katsumeme_${meme.title}.jpg`;
+    const url = `${import.meta.env.VITE_API_URL}${meme.image_url}`;
     saveAs(url, filename);
   };
 
   return (
     <div>
-      {memes.map((meme) => (
-        <div key={meme.id} className="row mb-4">
-          <div className="col d-flex justify-content-center">
-            <Card
-              className="CardStyle"
-              style={{ border: '#000000 solid 0.2rem', width: '32rem' }}
+      <div className="col d-flex justify-content-center">
+        <Card
+          className="CardStyle"
+          style={{ border: '#000000 solid 0.2rem', width: '32rem' }}
+        >
+          <Card.Header style={{ backgroundColor: '#d6cadb' }}>
+            <Card.Title className="CardTitle pb-2" style={{ fontSize: '2rem' }}>
+              {meme.title}
+            </Card.Title>
+            <Card.Subtitle
+              className="text-muted my-1 d-flex justify-content-between"
+              style={{ fontSize: '1rem', textAlign: 'left' }}
             >
-              <Card.Header style={{ backgroundColor: '#d6cadb' }}>
-                <Card.Title
-                  className="CardTitle pb-2"
-                  style={{ fontSize: '2rem' }}
-                >
-                  {meme.title}
-                </Card.Title>
-                <Card.Subtitle
-                  className="text-muted my-1 d-flex justify-content-between"
-                  style={{ fontSize: '1rem', textAlign: 'left' }}
-                >
-                  {`Auteur: ${meme.author.nickname}, ${formatDate(meme.created_at)}`}
-                  {show && <DeleteMeme memeId={meme.id} />}
-                </Card.Subtitle>
-              </Card.Header>
-              <Card.Body>
-                <div className="margin-bottom-img align-self-center">
-                  <Card.Img
-                    className="CardImage img-fluid"
-                    variant="top"
-                    src={`${import.meta.env.VITE_API_URL}${meme.image_url}`}
-                  />
-                </div>
-                <div className="my-2 d-flex flex-wrap align-items-center">
-                  {meme.tags.map((tag, tagIndex) => (
-                    <Card.Link
-                      key={tagIndex}
-                      href="#"
-                      onClick={(e) => e.preventDefault()}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: '1.3rem',
-                        textDecoration: 'none',
-                        color: 'white',
-                        background: '#70905f',
-                        border: 'solid 0.1rem',
-                        borderRadius: '0.8rem',
-                        padding: '0.3rem 0.5rem 0.3rem 0.5rem',
-                        marginRight: '0.5rem',
-                        marginBottom: '0.5rem',
-                        marginLeft: tagIndex !== 0 ? '0rem' : '0',
-                      }}
-                    >
-                      {tag.tags.name}
-                    </Card.Link>
-                  ))}
-                </div>
-              </Card.Body>
-              <Card.Footer
-                style={{ backgroundColor: '#d6cadb' }}
-                className="d-flex justify-content-between align-items-center"
-              >
-                <Button
-                  type="button"
-                  variant="primary"
-                  className="me-2"
+              {`Auteur: ${meme.author.nickname}, ${formatDate()}`}
+              {show && <DeleteMeme memeId={meme.id} />}
+            </Card.Subtitle>
+          </Card.Header>
+          <Card.Body>
+            <div className="margin-bottom-img align-self-center">
+              <Card.Img
+                className="CardImage img-fluid"
+                variant="top"
+                src={`${import.meta.env.VITE_API_URL}${meme.image_url}`}
+              />
+            </div>
+            <div className="my-2 d-flex flex-wrap align-items-center">
+              {meme.tags.map((tag, tagIndex) => (
+                <Card.Link
+                  key={tagIndex}
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
                   style={{
-                    border: 'transparent',
-                    background: 'transparent',
-                    color: 'black',
-                    fontSize: '2rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '1.3rem',
+                    textDecoration: 'none',
+                    color: 'white',
+                    background: '#70905f',
+                    border: 'solid 0.1rem',
+                    borderRadius: '0.8rem',
+                    padding: '0.3rem 0.5rem 0.3rem 0.5rem',
+                    marginRight: '0.5rem',
+                    marginBottom: '0.5rem',
+                    marginLeft: tagIndex !== 0 ? '0rem' : '0',
                   }}
                 >
-                  <FaComment />
-                </Button>
+                  {tag.tags.name}
+                </Card.Link>
+              ))}
+            </div>
+          </Card.Body>
+          <Card.Footer
+            style={{ backgroundColor: '#d6cadb' }}
+            className="d-flex justify-content-between align-items-center"
+          >
+            <Button
+              type="button"
+              variant="primary"
+              className="me-2"
+              style={{
+                border: 'transparent',
+                background: 'transparent',
+                color: 'black',
+                fontSize: '2rem',
+              }}
+            >
+              <FaComment />
+            </Button>
 
-                <LikesDislikes
-                  memeId={meme.id}
-                  isLiked={meme.isliked}
-                  likesCount={meme._count.liked_by}
-                  dislikesCount={meme.dislikeCount.liked_by}
-                />
+            <LikesDislikes
+              memeId={meme.id}
+              isLiked={meme.isliked}
+              likesCount={meme._count.liked_by}
+              dislikesCount={meme.dislikeCount.liked_by}
+            />
 
-                <Button
-                  className="downloadButton"
-                  type="button"
-                  variant="primary"
-                  onClick={() => handleDownload(meme.image_url, meme.title)} // Handle download button click
-                  style={{
-                    border: 'transparent',
-                    background: 'transparent',
-                    color: 'black',
-                    fontSize: '2rem',
-                  }}
-                >
-                  <FaDownload />
-                </Button>
+            <Button
+              className="downloadButton"
+              type="button"
+              variant="primary"
+              onClick={() => handleDownload()} // Handle download button click
+              style={{
+                border: 'transparent',
+                background: 'transparent',
+                color: 'black',
+                fontSize: '2rem',
+              }}
+            >
+              <FaDownload />
+            </Button>
 
-                <Bookmarks memeId={meme.id} isBookmarked={meme.isBookmarked} />
-              </Card.Footer>
-            </Card>
-          </div>
-        </div>
-      ))}
+            <Bookmarks memeId={meme.id} isBookmarked={meme.isBookmarked} />
+          </Card.Footer>
+        </Card>
+      </div>
     </div>
   );
 }
