@@ -61,7 +61,11 @@ function MemePage() {
   return (
     <div>
       <div className="MemeCardContainer d-flex flex-column justify-content-center">
-        <MemeCard memes={memes} />
+        {memes.map((meme) => (
+          <div key={meme.id} className="row mb-4">
+            <MemeCard meme={meme} />
+          </div>
+        ))}
         {hasMoreMemes && (
           <div className="LoadMoreButton">
             <Button
