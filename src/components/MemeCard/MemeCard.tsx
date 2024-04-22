@@ -10,9 +10,9 @@ import { saveAs } from 'file-saver';
 import DeleteMeme from './DeleteMeme';
 import { useEffect, useState } from 'react';
 import useUserStore from '../UserStore/UserState';
-import { i } from 'vite/dist/node/types.d-aGj9QkWt';
+import { M } from 'vite/dist/node/types.d-aGj9QkWt';
 
-interface Meme {
+interface MemeCardProps {
   meme: {
     id: number;
     image_url: string;
@@ -25,10 +25,11 @@ interface Meme {
     isBookmarked: boolean;
     isliked: boolean;
   };
+  deleteMeme: (memeId: number) => void;
 }
 
 // Component to display the memes
-function MemeCard({ meme }: Meme) {
+function MemeCard({ meme, deleteMeme }: MemeCardProps) {
   const [show, setShow] = useState(false);
   const { user, isAuthenticated } = useUserStore();
 
@@ -97,7 +98,7 @@ function MemeCard({ meme }: Meme) {
               style={{ fontSize: '1rem', textAlign: 'left' }}
             >
               {`Auteur: ${meme.author.nickname}, ${formatDate()}`}
-              {show && <DeleteMeme memeId={meme.id} />}
+              {show && <DeleteMeme memeId={meme.id} deleteMeme={deleteMeme} />}
             </Card.Subtitle>
           </Card.Header>
           <Card.Body>
