@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import useUserStore from '../UserStore/UserState';
 import axiosInstance from '../API/axios';
-import { GoStar } from 'react-icons/go';
+import { GoStarFill } from 'react-icons/go';
 import Signin from '../Modals/Signin/Signin';
 
 interface BookmarksProps {
@@ -65,8 +65,15 @@ function Bookmarks({ memeId, isBookmarked }: BookmarksProps) {
         }}
         // If Bookmark is true, the button will be yellow, otherwise only the border will be
         variant={bookmarked ? 'warning' : 'outline-dark'}
+        style={{
+          border: 'transparent',
+          fontSize: '2rem',
+          backgroundColor: 'transparent',
+        }}
       >
-        <GoStar />
+        <div>
+          <GoStarFill style={{ color: bookmarked ? 'yellow' : 'white' }} />
+        </div>
       </Button>
 
       <Signin hide={openModalSignIn} onHide={handleCloseSigninModal} />

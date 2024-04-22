@@ -1,6 +1,10 @@
 .SidebarContainer {
+  position: fixed;
+  top: 12rem;
   display: flex;
+  flex-direction: column;
   width: 14rem;
+  gap: 2rem;
 }
 
 .color {
@@ -9,38 +13,57 @@
 
 .Sidebar {
   position: fixed;
-  top: 15rem;
+  top: 17rem;
   left: 0;
   height: 34rem;
   width: 14rem;
-  padding-top: 50px;
+  padding-top: 3.5rem;
   margin-left: 1.5rem;
   text-align: left;
-  border-radius: 1rem;
-  border: solid 0.1rem;
+  border: #9a9797 solid 0.1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0.1rem 0.1rem 1rem #4a0464;
+}
+
+.SidebarImage {
+  position: absolute;
+  bottom: 0;
+  opacity: 0.5;
 }
 
 .Searchbar {
-  position: fixed;
   display: flex;
-  top: 12rem;
   width: 13rem;
   margin-left: 2rem;
   border-radius: 1rem;
-  border: solid 0.1rem;
+  border: solid 0.08rem;
   background-color: transparent;
-  align-items: center;
 }
 
+.mglass {
+  margin-left: 0.7rem;
+  color: #e7811c;
+}
 .styleSearchBar {
   display: flex;
   align-items: center;
+  height: 2rem;
 }
 
 .buttonContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
   margin-top: -2rem;
   margin-bottom: 1rem;
+  border-bottom: #9a9797 solid 0.1rem;
+  padding-bottom: 1.5rem;
+}
+
+.custom {
+  font-weight: bold;
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke: 0.03rem #e7811c;
+  text-transform: capitalize;
 }

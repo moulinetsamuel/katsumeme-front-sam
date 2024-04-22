@@ -15,7 +15,7 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
   const maxTextLength = 50;
 
   const handleTopTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newText = e.target.value;
+    const newText = e.target.value ? e.target.value.toUpperCase() : '';
     if (newText.length <= maxTextLength) {
       setTopText(newText);
       setTopTextLength(newText.length);
@@ -23,7 +23,7 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
   };
 
   const handleBottomTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newText = e.target.value;
+    const newText = e.target.value ? e.target.value.toUpperCase() : '';
     if (newText.length <= maxTextLength) {
       setBottomText(newText);
       setBottomTextLength(newText.length);
@@ -33,7 +33,7 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
   // Function to setup text styles
   const setupTextStyles = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = 'white';
-    ctx.font = '50px impact';
+    ctx.font = 'bold 50px impact, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
   };
@@ -102,13 +102,13 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
         const lineHeight = 50; // Height of each line
 
         // Split top and bottom text into multiple lines if needed
-        const maxWidth = 20;
+        const maxWidth = 15;
         const topLines = splitTextIntoLines(topText, maxWidth);
         const bottomLines = splitTextIntoLines(bottomText, maxWidth);
 
         // Draw top text
         topLines.forEach((line, index) => {
-          ctx.fillText(line, canvas.width / 2, 30 + index * lineHeight);
+          ctx.fillText(line, canvas.width / 2, 20 + index * lineHeight);
         });
 
         // Draw bottom text
@@ -116,21 +116,23 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
           ctx.fillText(
             line,
             canvas.width / 2,
-            canvas.height - 80 - (bottomLines.length - index - 1) * lineHeight
+            canvas.height - 60 - (bottomLines.length - index - 1) * lineHeight
           );
         });
         // Draw the text with black outline
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1; // Largeur de l'outline
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; // Couleur de l'ombre
+        ctx.shadowBlur = 5; // Flou de l'ombre
         ctx.fillStyle = 'transparent';
         topLines.forEach((line, index) => {
-          ctx.strokeText(line, canvas.width / 2, 30 + index * lineHeight);
+          ctx.strokeText(line, canvas.width / 2, 20 + index * lineHeight);
         });
         bottomLines.forEach((line, index) => {
           ctx.strokeText(
             line,
             canvas.width / 2,
-            canvas.height - 80 - (bottomLines.length - index - 1) * lineHeight
+            canvas.height - 60 - (bottomLines.length - index - 1) * lineHeight
           );
         });
       };

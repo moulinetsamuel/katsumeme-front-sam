@@ -5,18 +5,18 @@ import { Button } from 'react-bootstrap';
 
 function ButtonCreate() {
   return (
-    <div>
+    <div className="CreateButton">
       <Link to="/create-meme" style={{ textDecoration: 'none' }}>
         <Button
           type="button"
-          className="Button"
+          className="CustomButton"
+          variant="primary"
           style={{
-            color: 'white',
-            background: '#775088',
-            border: 'transparent',
+            background: '#70905f',
+            border: 'solid 0.1rem',
             borderRadius: '1rem',
             display: 'flex',
-            alignItems: 'center',
+            fontVariant: 'small-caps',
           }}
         >
           <FaPlusCircle />
