@@ -7,6 +7,9 @@ import { Button } from 'react-bootstrap';
 import LikesDislikes from './LikesDislikes';
 import Bookmarks from './Bookmarks';
 import { saveAs } from 'file-saver';
+import DeleteMeme from './DeleteMeme';
+import { useState } from 'react';
+import useUserStore from '../UserStore/UserState';
 
 interface Meme {
   memes: {
@@ -25,6 +28,17 @@ interface Meme {
 
 // Component to display the memes
 function MemeCard({ memes }: Meme) {
+  const [show, setShow] = useState(false);
+  const { user } = useUserStore();
+
+  const showDeleteBtn = () => {
+    if (user) {
+      if (user.id === memes[0].author.id) {
+        setShow(true);
+      }
+    }
+  };
+
   // Function to format the date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -74,10 +88,11 @@ function MemeCard({ memes }: Meme) {
                   {meme.title}
                 </Card.Title>
                 <Card.Subtitle
-                  className="text-muted my-1"
+                  className="text-muted my-1 d-flex justify-content-between"
                   style={{ fontSize: '1rem', textAlign: 'left' }}
                 >
                   {`Auteur: ${meme.author.nickname}, ${formatDate(meme.created_at)}`}
+                  {show && <DeleteMeme memeId={meme.id} />}
                 </Card.Subtitle>
               </Card.Header>
               <Card.Body>
