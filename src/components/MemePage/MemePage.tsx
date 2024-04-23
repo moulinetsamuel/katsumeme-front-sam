@@ -26,6 +26,10 @@ function MemePage() {
   const [hasMoreMemes, setHasMoreMemes] = useState(true); // State to track if there are more memes to load
   const { user, uploadCount, isAuthenticated } = useUserStore();
 
+  const deleteMeme = (memeId: number) => {
+    setMemes((prevMemes) => prevMemes.filter((meme) => meme.id !== memeId));
+  };
+
   // Function to fetch memes
   const fetchMeme = async () => {
     try {
@@ -61,7 +65,11 @@ function MemePage() {
   return (
     <div>
       <div className="MemeCardContainer d-flex flex-column justify-content-center">
-        <MemeCard memes={memes} />
+        {memes.map((meme) => (
+          <div key={meme.id} className="row mb-4">
+            <MemeCard meme={meme} deleteMeme={deleteMeme} />
+          </div>
+        ))}
         {hasMoreMemes && (
           <div className="LoadMoreButton">
             <Button

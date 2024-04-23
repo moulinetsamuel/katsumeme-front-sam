@@ -3,7 +3,12 @@ import axiosInstance from '../API/axios';
 import { AxiosError } from 'axios';
 
 interface UserState {
-  user: object;
+  user: {
+    id?: number;
+    nickname?: string;
+    avatar_url?: string;
+    role?: { name?: string };
+  };
   isAuthenticated: boolean;
   error: string | null;
   setAppState: () => void;
