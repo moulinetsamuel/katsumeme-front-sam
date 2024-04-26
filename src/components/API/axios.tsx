@@ -41,12 +41,16 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.config.url != '/api/auth/refresh' &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       const refreshToken = getRefreshToken();
 
-      if (refreshToken) {
+      if (refreshToken && refreshToken !== '') {
         try {
           const response = await axiosInstance.post('/api/auth/refresh', {
             refreshToken,
