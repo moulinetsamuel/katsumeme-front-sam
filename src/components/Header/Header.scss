@@ -1,25 +1,23 @@
-.Header {
+.Header .Banner {
+  position: fixed;
   top: 0;
-  position: sticky;
-  z-index: 1000;
-  width: 100%;
-}
-
-.Banner {
-  background-color: #70905f;
-  height: 7.5rem;
+  left: 0;
+  right: 0;
+  height: 6rem;
   display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0.1rem 0.1rem 0.4rem #243f16;
+  background-color: #70905f !important;
+  z-index: 1000;
 }
 
 .ImageTitle {
   top: -2rem;
-  left: 0;
-  height: 15rem;
-  width: 15rem;
+  height: 13rem;
+  width: 13rem;
   position: absolute;
   object-fit: cover;
-  z-index: 1;
 }
 
 .Login {
