@@ -8,7 +8,7 @@ import ButtonCreate from '../Button/ButtonCreate/ButtonCreate';
 
 function Sidebar() {
   return (
-    <section className="SidebarContainer">
+    <section className="SidebarContainer d-none d-md-block">
       <div className="Searchbar">
         <form
           className="styleSearchBar d-flex align-items-center"
