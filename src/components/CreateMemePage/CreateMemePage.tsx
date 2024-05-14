@@ -15,10 +15,12 @@ function CreateMemePage() {
         <DropZoneWithoutPreview setMeme={setMeme} />
         <MemeEditor meme={meme} canvasRef={canvasRef} />
       </div>
+      {/* 
       <div className="CreateMemePageButton">
         <ButtonPublish label="Publier" canvasRef={canvasRef} />
         <DownloadMeme label="Télécharger" canvasRef={canvasRef} />
       </div>
+      */}
     </div>
   );
 }
