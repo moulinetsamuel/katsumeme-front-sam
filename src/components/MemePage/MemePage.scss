@@ -1,20 +1,20 @@
 .MemePage {
   display: flex;
   flex-direction: column;
-  align-items: center; // Centrer horizontalement
-  min-height: 100vh; // Assurez-vous que le contenu occupe au moins 100% de la hauteur de la fenêtre
+  align-items: center;
+  min-height: 100vh;
 }
 
 .LoadMoreButton {
   display: flex;
-  justify-content: center; // Centrer horizontalement
-  margin-top: 0.5rem; // Ajouter un peu d'espace en haut du bouton
+  justify-content: center;
+  margin-top: 0.5rem;
 }
 
 .MemeCardContainer {
   display: flex;
-  flex-wrap: wrap; // Permettre aux cartes de passer à la ligne lorsqu'elles n'ont plus d'espace
-  justify-content: center; // Centrer horizontalement
-  align-items: center; // Centrer verticalement
-  margin-top: 2rem; // Ajouter un peu d'espace en haut du conteneur de cartes
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6rem;
 }

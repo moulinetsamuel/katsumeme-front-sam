@@ -66,7 +66,7 @@ function MemePage() {
     <div>
       <Row div className="MemeCardContainer">
         {memes.map((meme) => (
-          <Col div key={meme.id} xs={12} md={6} className="row mb-4">
+          <Col div key={meme.id} xs={12} md={12} className="row mb-4">
             <MemeCard meme={meme} deleteMeme={deleteMeme} />
           </Col>
         ))}
@@ -76,7 +76,10 @@ function MemePage() {
               variant="primary"
               type="button"
               onClick={handleLoadMoreMemes}
-              style={{ backgroundColor: '#e8811c', border: 'none' }}
+              style={{
+                backgroundColor: '#775088',
+                border: 'none',
+              }}
             >
               Charger plus
             </Button>
