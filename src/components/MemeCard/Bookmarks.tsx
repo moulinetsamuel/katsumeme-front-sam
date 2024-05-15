@@ -74,7 +74,7 @@ function Bookmarks({ memeId, isBookmarked }: BookmarksProps) {
           <GoStarFill
             style={{
               color: bookmarked ? 'yellow' : 'white',
-              fontSize: '2rem',
+              fontSize: '1.5rem',
             }}
           />
         </div>

@@ -63,30 +63,36 @@ function MemePage() {
     setPage((prevPage) => prevPage + 1);
   };
   return (
-    <div>
-      <Row div className="MemeCardContainer">
-        {memes.map((meme) => (
-          <Col div key={meme.id} xs={12} md={12} className="row mb-4">
-            <MemeCard meme={meme} deleteMeme={deleteMeme} />
-          </Col>
-        ))}
-        {hasMoreMemes && (
-          <div className="LoadMoreButton">
-            <Button
-              variant="primary"
-              type="button"
-              onClick={handleLoadMoreMemes}
-              style={{
-                backgroundColor: '#775088',
-                border: 'none',
-              }}
-            >
-              Charger plus
-            </Button>
+    <div className="MemePage">
+      <Row>
+        <Col md={3}>
+          <Sidebar />
+        </Col>
+        <Col md={9}>
+          <div className="MemeCardContainer">
+            {memes.map((meme) => (
+              <div key={meme.id} className="row mb-4">
+                <MemeCard meme={meme} deleteMeme={deleteMeme} />
+              </div>
+            ))}
           </div>
-        )}
+          {hasMoreMemes && (
+            <div className="LoadMoreButton">
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleLoadMoreMemes}
+                style={{
+                  backgroundColor: '#775088',
+                  border: 'none',
+                }}
+              >
+                Charger plus
+              </Button>
+            </div>
+          )}
+        </Col>
       </Row>
-      <Sidebar />
     </div>
   );
 }
