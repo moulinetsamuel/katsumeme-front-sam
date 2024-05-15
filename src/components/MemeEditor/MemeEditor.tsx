@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Stack } from 'react-bootstrap';
 import './MemeEditor.scss';
+import ButtonPublish from '../Button/ButtonPublish/ButtonPublish';
+import DownloadMeme from '../Button/ButtonDownload/ButtonDownload';
 
 type MemeEditorProps = {
   meme: File | null;
@@ -143,8 +145,10 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
 
   return (
     <div className="meme-container">
-      <Stack direction="horizontal" gap={3}>
-        <div>{meme && <canvas ref={canvasRef} width={500} height={500} />}</div>
+      <Stack direction="horizontal">
+        <div className="MemePreview">
+          {meme && <canvas ref={canvasRef} width={500} height={500} />}
+        </div>
 
         <div className="text-inputs">
           <h3>Customes ton meme ! </h3>
@@ -171,6 +175,10 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
           <Form.Text className="text-muted text">
             {bottomTextLength}/{maxTextLength}
           </Form.Text>
+          <div className="CreateMemePageButton">
+            <ButtonPublish label="Publier" canvasRef={canvasRef} />
+            <DownloadMeme label="Télécharger" canvasRef={canvasRef} />
+          </div>
         </div>
       </Stack>
     </div>
