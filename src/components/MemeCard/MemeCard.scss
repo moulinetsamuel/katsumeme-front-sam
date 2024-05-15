@@ -1,5 +1,10 @@
 .CardStyle {
   margin-top: 2rem;
+  padding: 1rem;
+}
+
+.Subtitle {
+  color: #fff !important;
 }
 
 .Emotes {
@@ -10,22 +15,12 @@
 
 .LoadMoreButton {
   height: 3rem;
-  margin-left: 17rem;
-  margin-right: 17rem;
 }
 
 .card-body {
-  background-color: #775088;
+  background-color: #fff;
 }
 
 .CardTitle {
-  border-bottom: #000000 solid 0.1rem;
-}
-
-.CardImage {
-  border: #000000 solid 0.1rem;
-}
-
-.margin-bottom-img {
-  margin-bottom: 1rem;
+  border-bottom: #fff solid 0.1rem;
 }
