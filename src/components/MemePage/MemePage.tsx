@@ -4,7 +4,7 @@ import './MemePage.scss';
 import { useEffect, useState } from 'react';
 import useUserStore from '../UserStore/UserState';
 import axiosInstance from '../API/axios';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 
 interface Meme {
   id: number;
@@ -64,11 +64,11 @@ function MemePage() {
   };
   return (
     <div>
-      <div className="MemeCardContainer d-flex flex-column justify-content-center">
+      <Row div className="MemeCardContainer">
         {memes.map((meme) => (
-          <div key={meme.id} className="row mb-4">
+          <Col div key={meme.id} xs={12} md={6} className="row mb-4">
             <MemeCard meme={meme} deleteMeme={deleteMeme} />
-          </div>
+          </Col>
         ))}
         {hasMoreMemes && (
           <div className="LoadMoreButton">
@@ -82,7 +82,7 @@ function MemePage() {
             </Button>
           </div>
         )}
-      </div>
+      </Row>
       <Sidebar />
     </div>
   );
