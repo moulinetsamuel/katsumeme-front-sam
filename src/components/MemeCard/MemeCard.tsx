@@ -89,9 +89,13 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
           <Card.Header style={{ backgroundColor: '#e8811c' }}>
             <Card.Title
               className="CardTitle pb-2"
-              style={{ fontSize: '1.8rem', color: '#ffffff' }}
+              style={{
+                fontSize: '1.8rem',
+                color: '#775088',
+              }}
             >
               {meme.title}
+              {show && <DeleteMeme memeId={meme.id} deleteMeme={deleteMeme} />}
             </Card.Title>
             <Card.Subtitle
               className="Subtitle my-1 d-flex justify-content-between"
@@ -102,7 +106,6 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
               }}
             >
               {`Auteur: ${meme.author.nickname}, ${formatDate()}`}
-              {show && <DeleteMeme memeId={meme.id} deleteMeme={deleteMeme} />}
             </Card.Subtitle>
           </Card.Header>
           <Card.Body>
