@@ -1,20 +1,21 @@
-.MemePage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
+// .MemePage {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   min-height: 100vh;
+// }
 
 .LoadMoreButton {
   display: flex;
   justify-content: center;
   margin-top: 0.5rem;
+  align-items: center;
 }
 
 .MemeCardContainer {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   margin-top: 6rem;
+  justify-content: center;
 }

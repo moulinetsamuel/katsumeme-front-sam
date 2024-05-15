@@ -65,14 +65,16 @@ function MemePage() {
   return (
     <div className="MemePage">
       <Row>
-        <Col md={3}>
+        <Col md={4} lg={3}>
           <Sidebar />
         </Col>
-        <Col md={9}>
-          <div className="MemeCardContainer">
+        <Col md={8} lg={9}>
+          <div className="MemeCardContainer d-flex flex-wrap">
             {memes.map((meme) => (
-              <div key={meme.id} className="row mb-4">
-                <MemeCard meme={meme} deleteMeme={deleteMeme} />
+              <div key={meme.id} className="row md-12">
+                <div className="col-12">
+                  <MemeCard meme={meme} deleteMeme={deleteMeme} />
+                </div>{' '}
               </div>
             ))}
           </div>
