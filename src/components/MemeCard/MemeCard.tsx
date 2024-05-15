@@ -89,7 +89,10 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
           <Card.Header style={{ backgroundColor: '#e8811c' }}>
             <Card.Title
               className="CardTitle pb-2"
-              style={{ fontSize: '1.8rem', color: '#ffffff' }}
+              style={{
+                fontSize: '1.8rem',
+                color: '#775088',
+              }}
             >
               {meme.title}
             </Card.Title>
