@@ -87,7 +87,7 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
       <div className="col d-flex justify-content-center">
         <Card
           className="CardStyle"
-          style={{ border: '#000000 solid 0.2rem', width: '32rem' }}
+          style={{ border: '#000000 solid 0.2rem', width: '80%' }}
         >
           <Card.Header style={{ backgroundColor: '#d6cadb' }}>
             <Card.Title className="CardTitle pb-2" style={{ fontSize: '2rem' }}>
@@ -107,6 +107,7 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
                 className="CardImage img-fluid"
                 variant="top"
                 src={`${import.meta.env.VITE_API_URL}${meme.image_url}`}
+                style={{ maxWidth: '100%', height: 'auto' }}
               />
             </div>
             <div className="my-2 d-flex flex-wrap align-items-center">
