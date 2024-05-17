@@ -9,29 +9,26 @@ import { FaBars } from 'react-icons/fa6';
 function Header() {
   return (
     <header className="Header d-flex justify-content-between">
-      <div className="Banner px-3 py-2">
-        {/* Logo pour les écrans larges */}
-        <Link to="/" className="d-none d-md-block">
-          <img
-            className="ImageTitle"
-            src="Logo.png"
-            alt="Logo Katsumeme Chat"
-          />
-        </Link>
+      {/* Logo pour les écrans larges */}
 
-        {/* Logo pour les écrans de taille md et plus petits */}
-        <Link to="/" className="bg-light d-md-none">
-          <div className="">
-            <img
-              className="ImageTitle"
-              src="public/Logoname.png"
-              alt="Logo Title"
-            />
-          </div>
-        </Link>
-        <div className="Login ms-auto d-none d-md-block">
-          <LoginLogout />
-        </div>
+      <Link to="/" className="d-none d-md-block">
+        <img className="ImageTitle" src="Logo.png" alt="Logo Katsumeme Chat" />
+      </Link>
+
+      {/* Logo pour les écrans de taille md et plus petits */}
+      <Link
+        to="/"
+        className=" d-flex justify-content-center align-items-center"
+      >
+        <img
+          className="Logoname d-md-none"
+          src="public/Logoname.png "
+          alt="Logo Title"
+          style={{ width: '70%' }}
+        />
+      </Link>
+      <div className="Login ms-auto d-none d-md-block">
+        <LoginLogout />
       </div>
 
       {/* Side bar for small screen */}
@@ -46,6 +43,7 @@ function Header() {
         >
           <FaBars />
         </Navbar.Toggle>
+
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="flex-column">
             <Nav.Link>Katsumeme du moment</Nav.Link>

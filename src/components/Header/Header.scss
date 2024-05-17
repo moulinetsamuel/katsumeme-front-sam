@@ -1,4 +1,4 @@
-.Header .Banner {
+.Header {
   position: fixed;
   top: 0;
   left: 0;
@@ -33,7 +33,10 @@
   border: solid 1px black;
   border-radius: 15rem;
 }
-
-.BurgerMenu {
-  z-index: 1000;
+.Logoname {
+  margin: 0;
 }
+
+// .BurgerMenu {
+//   z-index: 1000;
+// }
