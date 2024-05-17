@@ -4,7 +4,7 @@ import LoginLogout from '../Button/ButtonLogin-Logout/ButtonLogin-Logout';
 import { Link } from 'react-router-dom';
 import ButtonShare from '../Button/ButtonShare/ButtonShare';
 import ButtonCreate from '../Button/ButtonCreate/ButtonCreate';
-import { FaBars } from 'react-icons/fa6';
+import { RxHamburgerMenu } from 'react-icons/rx';
 
 function Header() {
   return (
@@ -22,7 +22,7 @@ function Header() {
       >
         <img
           className="Logoname d-md-none"
-          src="public/Logoname.png "
+          src="Logoname.png "
           alt="Logo Title"
           style={{ width: '70%' }}
         />
@@ -35,13 +35,14 @@ function Header() {
       <Navbar
         collapseOnSelect
         expand="md"
-        className="BurgerMenu d-md-none ms-auto"
+        className="BurgerMenu d-md-none me-auto"
+        style={{ paddingRight: '1rem' }}
       >
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="bg-light"
         >
-          <FaBars />
+          <RxHamburgerMenu />{' '}
         </Navbar.Toggle>
 
         <Navbar.Collapse id="responsive-navbar-nav">

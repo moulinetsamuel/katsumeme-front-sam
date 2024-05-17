@@ -1,3 +1,13 @@
+@media (max-width: 576px) {
+  // Média query pour les écrans de taille inférieure ou égale à 576px (taille typique de l'iPhone SE)
+  .navbar-collapse {
+    max-height: calc(
+      100vh - 56px
+    ); // 56px est la hauteur typique de la barre de navigation sur les iPhones
+    overflow-y: auto; // Ajouter une barre de défilement si le contenu est trop long pour tenir sur l'écran
+  }
+}
+
 .Header {
   position: fixed;
   top: 0;
@@ -33,10 +43,11 @@
   border: solid 1px black;
   border-radius: 15rem;
 }
-.Logoname {
-  margin: 0;
+
+.BurgerMenu {
+  margin-left: 0 !important;
+  margin-right: 2rem;
 }
 
-// .BurgerMenu {
-//   z-index: 1000;
-// }
+#responsive-navbar-nav {
+}
