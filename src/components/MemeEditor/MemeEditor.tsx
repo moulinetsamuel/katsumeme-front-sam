@@ -144,44 +144,85 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
   }, [meme, topText, bottomText]);
 
   return (
-    <div className="meme-container">
-      <Stack direction="horizontal">
-        <div className="MemePreview">
-          {meme && <canvas ref={canvasRef} width={500} height={500} />}
-        </div>
-
-        <div className="text-inputs">
-          <h3>Customes ton meme ! </h3>
-          <Form.Text className="text-muted text">
-            {topTextLength}/{maxTextLength}
-          </Form.Text>
-          <input
-            className="top-text form-control col-lg-8 mb-2"
-            type="text"
-            placeholder="Top Text"
-            value={topText}
-            onChange={handleTopTextChange}
-            maxLength={maxTextLength}
-          />
-
-          <input
-            className="bottom-text form-control col-lg-8 mb-2"
-            type="text"
-            placeholder="Bottom Text"
-            value={bottomText}
-            onChange={handleBottomTextChange}
-            maxLength={maxTextLength}
-          />
-          <Form.Text className="text-muted text">
-            {bottomTextLength}/{maxTextLength}
-          </Form.Text>
-          <div className="CreateMemePageButton">
-            <ButtonPublish label="Publier" canvasRef={canvasRef} />
-            <DownloadMeme label="Télécharger" canvasRef={canvasRef} />
+    <section>
+      <div className="meme-container">
+        <Stack direction="horizontal" gap={3}>
+          <div>
+            {meme && <canvas ref={canvasRef} width={500} height={500} />}
           </div>
-        </div>
-      </Stack>
-    </div>
+
+          <div className="text-inputs">
+            <h3>Customes ton meme ! </h3>
+            <Form.Text className="text-muted text">
+              {topTextLength}/{maxTextLength}
+            </Form.Text>
+            <input
+              className="top-text form-control col-lg-8 mb-2"
+              type="text"
+              placeholder="Top Text"
+              value={topText}
+              onChange={handleTopTextChange}
+              maxLength={maxTextLength}
+            />
+
+            <input
+              className="bottom-text form-control col-lg-8 mb-2"
+              type="text"
+              placeholder="Bottom Text"
+              value={bottomText}
+              onChange={handleBottomTextChange}
+              maxLength={maxTextLength}
+            />
+            <Form.Text className="text-muted text">
+              {bottomTextLength}/{maxTextLength}
+            </Form.Text>
+            <div className="CreateMemePageButton">
+              <ButtonPublish label="Publier" canvasRef={canvasRef} />
+              <DownloadMeme label="Télécharger" canvasRef={canvasRef} />
+            </div>
+          </div>
+        </Stack>
+      </div>
+
+      <div className="meme-container d-md-none">
+        <Stack direction="vertical">
+          <div className="MemePreview">
+            {meme && <canvas ref={canvasRef} width={500} height={500} />}
+          </div>
+
+          <div className="text-inputs">
+            <h3>Customes ton meme ! </h3>
+            <Form.Text className="text-muted text">
+              {topTextLength}/{maxTextLength}
+            </Form.Text>
+            <input
+              className="top-text form-control col-lg-8 mb-2"
+              type="text"
+              placeholder="Top Text"
+              value={topText}
+              onChange={handleTopTextChange}
+              maxLength={maxTextLength}
+            />
+
+            <input
+              className="bottom-text form-control col-lg-8 mb-2"
+              type="text"
+              placeholder="Bottom Text"
+              value={bottomText}
+              onChange={handleBottomTextChange}
+              maxLength={maxTextLength}
+            />
+            <Form.Text className="text-muted text">
+              {bottomTextLength}/{maxTextLength}
+            </Form.Text>
+            <div className="CreateMemePageButton">
+              <ButtonPublish label="Publier" canvasRef={canvasRef} />
+              <DownloadMeme label="Télécharger" canvasRef={canvasRef} />
+            </div>
+          </div>
+        </Stack>
+      </div>
+    </section>
   );
 }
 
