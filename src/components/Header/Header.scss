@@ -1,13 +1,3 @@
-@media (max-width: 576px) {
-  // Média query pour les écrans de taille inférieure ou égale à 576px (taille typique de l'iPhone SE)
-  .navbar-collapse {
-    max-height: calc(
-      100vh - 56px
-    ); // 56px est la hauteur typique de la barre de navigation sur les iPhones
-    overflow-y: auto; // Ajouter une barre de défilement si le contenu est trop long pour tenir sur l'écran
-  }
-}
-
 .Header {
   position: fixed;
   top: 0;
@@ -20,6 +10,16 @@
   box-shadow: 0.1rem 0.1rem 0.4rem #243f16;
   background-color: #70905f !important;
   z-index: 1000;
+}
+
+.logo-container {
+  display: relative;
+  width: 80%; /* S'assure que le conteneur prend toute la largeur */
+}
+
+.logo {
+  height: 3rem; /* Ajuster la taille du logo si nécessaire */
+  object-fit: cover;
 }
 
 .ImageTitle {
@@ -40,14 +40,74 @@
   color: white;
   width: 1rem;
   margin-right: 1rem;
-  border: solid 1px black;
   border-radius: 15rem;
 }
 
-.BurgerMenu {
-  margin-left: 0 !important;
-  margin-right: 2rem;
+.navbar-collapse {
+  position: fixed;
+  top: calc(3em + 3rem); /* Ajusté pour commencer sous le header */
+  left: 50%; /* Centrer horizontalement */
+  transform: translateX(-50%); /* Ajuster la position pour centrer */
+  width: 80%; /* Ajusté pour élargir l'encadré */
+  max-height: 80vh; /* Augmenter la hauteur maximale si nécessaire */
+  background-color: #f3f6f2;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  border: solid 2px #f9d701;
+  z-index: 1050;
+  padding: 3rem; /* Augmenté pour allonger l'encadré */
 }
 
-#responsive-navbar-nav {
+.Searchbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.styleSearchBar {
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: transparent;
+}
+
+.glass {
+  color: #e8811c;
+  height: auto;
+}
+
+.navbar-nav {
+  width: 100%;
+  text-align: center;
+}
+
+.nav-link {
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  color: black;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-logout {
+  background-color: #f9d701 !important;
+  color: #ffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+@media (max-width: 576px) {
+  .navbar-collapse {
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
 }

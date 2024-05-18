@@ -23,26 +23,28 @@ function LoginLogout() {
   };
 
   return (
-    <div className="Login ms-auto">
-      <FaRegUser className="ImageProfile" />
-      {isAuthenticated ? (
-        <Button
-          className="LoginButton"
-          variant="outline-light"
-          onClick={handleLogout}
-        >
-          Se déconnecter
-        </Button>
-      ) : (
-        <Button
-          className="LoginButton"
-          variant="outline-light"
-          onClick={handleOpenSigninModal}
-        >
-          Se connecter
-        </Button>
-      )}
-      <Signin hide={showSigninModal} onHide={handleCloseSigninModal} />
+    <div className="d-inline me-3">
+      <div className="Login">
+        <div className="ImageProfile" />
+        {isAuthenticated ? (
+          <Button
+            className="LoginButton"
+            variant="outline-light"
+            onClick={handleLogout}
+          >
+            Se déconnecter
+          </Button>
+        ) : (
+          <Button
+            className="LoginButton"
+            variant="outline-light"
+            onClick={handleOpenSigninModal}
+          >
+            Se connecter
+          </Button>
+        )}
+        <Signin hide={showSigninModal} onHide={handleCloseSigninModal} />
+      </div>
     </div>
   );
 }
