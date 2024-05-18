@@ -84,8 +84,8 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
 
   return (
     <div>
-      <div className="CardContainer col-md-8 col-lg-6 col-xl-10 d-flex justify-content-center">
-        <Card className="CardStyle">
+      <div className="CardContainer ">
+        <Card className="CardStyle col-md-10 col-lg-10 col-xl-10 d-flex justify-content-center">
           <Card.Header style={{ backgroundColor: '#e8811c' }}>
             <Card.Title
               className="CardTitle pb-2"

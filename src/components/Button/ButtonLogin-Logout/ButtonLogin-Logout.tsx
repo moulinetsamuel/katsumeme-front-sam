@@ -29,7 +29,11 @@ function LoginLogout() {
         {isAuthenticated ? (
           <Button
             className="LoginButton"
-            variant="outline-light"
+            style={{
+              backgroundColor: '#775088',
+              color: '#ffffff',
+              width: '9rem',
+            }}
             onClick={handleLogout}
           >
             Se déconnecter
@@ -37,7 +41,13 @@ function LoginLogout() {
         ) : (
           <Button
             className="LoginButton"
-            variant="outline-light"
+            style={{
+              backgroundColor: '#775088',
+              color: '#ffffff',
+              marginTop: '1rem',
+              borderColor: '#ffffff',
+              width: '9rem',
+            }}
             onClick={handleOpenSigninModal}
           >
             Se connecter
