@@ -75,22 +75,21 @@ function Sidebar() {
           <Nav className="flex-column">
             {/* Search bar added here */}
             <div className="Searchbar">
-              <form
-                className="styleSearchBar d-flex align-items-center"
-                action="search"
-              >
-                <FaSearch className="glass mglass mr-2" />
-                <input
-                  placeholder="Rechercher"
-                  type="text"
-                  style={{
-                    width: '100%',
-                    border: 'none',
-                    background: 'transparent',
-                    outline: 'none',
-                    textAlign: 'center',
-                  }}
-                />
+              <form className="styleSearchBar d-flex" action="search">
+                <div className="search-container">
+                  <FaSearch className="mglass mr-2" />
+                  <input
+                    placeholder="Rechercher"
+                    type="text"
+                    style={{
+                      width: '100%',
+                      border: 'none',
+                      background: 'transparent',
+                      outline: 'none',
+                      textAlign: 'center',
+                    }}
+                  />
+                </div>
               </form>
             </div>
             <div className="buttonContainer">

@@ -18,7 +18,7 @@
   height: 34rem;
   width: 14rem;
   padding-top: 3.5rem;
-  margin-left: 1.5rem;
+  margin-left: 3rem;
   text-align: left;
   border: #9a9797 solid 0.1rem;
   border-radius: 0.5rem;
@@ -34,14 +34,21 @@
 .Searchbar {
   display: flex;
   width: 13rem;
-  margin-left: 2rem;
+  margin-left: 3.5rem;
   border-radius: 1rem;
   border: solid 0.08rem;
   background-color: transparent;
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem; // Ajustez le padding selon vos besoins
+}
+
 .mglass {
-  margin-left: 0.7rem;
   color: #e7811c;
 }
 
