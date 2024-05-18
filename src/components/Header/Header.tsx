@@ -49,10 +49,12 @@ function Header() {
               <ButtonShare label="Partager" />
               <ButtonCreate />
             </div>
-            <Nav.Link>Katsumeme du moment</Nav.Link>
-            <Nav.Link>Les plus likés</Nav.Link>
-            <Nav.Link>Les moins likés</Nav.Link>
-            <Nav.Link>Derniers memes ajoutés</Nav.Link>
+            <div className="Links">
+              <Nav.Link>Katsumeme du moment</Nav.Link>
+              <Nav.Link>Les plus likés</Nav.Link>
+              <Nav.Link>Les moins likés</Nav.Link>
+              <Nav.Link>Derniers memes ajoutés</Nav.Link>
+            </div>
             <LoginLogout />
           </Nav>
         </Navbar.Collapse>

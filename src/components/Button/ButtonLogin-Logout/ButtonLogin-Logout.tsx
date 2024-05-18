@@ -30,9 +30,10 @@ function LoginLogout() {
           <Button
             className="LoginButton"
             style={{
-              backgroundColor: '#775088',
-              color: '#ffffff',
+              backgroundColor: '#FF3111',
+              color: 'white',
               width: '9rem',
+              border: 'solid 2px #',
             }}
             onClick={handleLogout}
           >
@@ -45,7 +46,7 @@ function LoginLogout() {
               backgroundColor: '#775088',
               color: '#ffffff',
               marginTop: '1rem',
-              borderColor: '#ffffff',
+              border: 'none',
               width: '9rem',
             }}
             onClick={handleOpenSigninModal}
