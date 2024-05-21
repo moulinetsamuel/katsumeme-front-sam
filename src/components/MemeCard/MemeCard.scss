@@ -1,6 +1,24 @@
+.CardContainer {
+  @media (max-width: 767.98px) {
+    // petits appareils
+    padding-left: 1rem;
+    padding-top: 3rem;
+  }
+  @media (min-width: 768px) and (max-width: 1199.98px) {
+    // appareils moyens et tablettes (y compris iPad Pro)
+    padding-left: 5rem;
+    padding-top: 8rem;
+  }
+  @media (min-width: 1200px) {
+    // grands appareils et écrans larges
+    padding-left: 3rem;
+    padding-top: 10rem;
+  }
+}
+
 .CardStyle {
-  margin-top: 2rem;
   padding: 1rem;
+  box-shadow: 0.1rem 0.1rem 1rem #766f67;
 }
 
 .Subtitle {

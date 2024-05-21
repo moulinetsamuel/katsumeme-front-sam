@@ -1,14 +1,15 @@
 .CustomButton {
-  gap: 0.5rem;
   align-items: center;
-  border-color: #806c00;
+  border-color: #806c00 !important;
+  color: #806c00 !important;
   width: 12rem;
+
   transition:
     background-color 0.3s,
     border-color 0.3s;
   &:hover {
-    background-color: #e7811c !important; /* le !important demande à ce que le css en priorité face à Bootstrap*/
-    border-color: #ffff !important;
+    background-color: #775088 !important;
+    border-color: #806c00 !important;
     color: #ffff !important;
   }
 }

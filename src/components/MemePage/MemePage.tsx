@@ -53,6 +53,7 @@ function MemePage() {
       console.error('Error fetching meme data', error);
     }
   };
+
   // Fetch memes when the page changes
   useEffect(() => {
     fetchMeme();
@@ -62,6 +63,7 @@ function MemePage() {
   const handleLoadMoreMemes = () => {
     setPage((prevPage) => prevPage + 1);
   };
+
   return (
     <div className="MemePage">
       <Row>
@@ -74,7 +76,7 @@ function MemePage() {
               <div key={meme.id} className="row md-12">
                 <div className="col-12">
                   <MemeCard meme={meme} deleteMeme={deleteMeme} />
-                </div>{' '}
+                </div>
               </div>
             ))}
           </div>
@@ -85,7 +87,8 @@ function MemePage() {
                 type="button"
                 onClick={handleLoadMoreMemes}
                 style={{
-                  backgroundColor: '#775088',
+                  color: 'black',
+                  backgroundColor: '#F9D701',
                   border: 'none',
                 }}
               >
