@@ -3,18 +3,25 @@ import { FaRegUser } from 'react-icons/fa6';
 import Button from 'react-bootstrap/Button';
 import Signin from '../../Modals/Signin/Signin';
 import useUserStore from '../../UserStore/UserState';
+import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 
-function LoginLogout() {
+type LoginLogoutProps = {
+  close?: (boolean: any) => void;
+};
+
+function LoginLogout({ close = () => {} }: LoginLogoutProps) {
   const [showSigninModal, setShowSigninModal] = useState(false);
 
   const { setAppState, isAuthenticated } = useUserStore();
 
   const handleLogout = () => {
+    close(false);
     localStorage.clear();
     setAppState();
   };
 
   const handleOpenSigninModal = () => {
+    close(false);
     setShowSigninModal(true); // Ouvrir la modal de connexion
   };
 

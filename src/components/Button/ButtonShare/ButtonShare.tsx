@@ -8,9 +8,10 @@ import useUserStore from '../../UserStore/UserState';
 
 type ButtonShareProps = {
   label: string;
+  close?: (boolean: any) => void;
 };
 
-function ButtonShare({ label }: ButtonShareProps) {
+function ButtonShare({ label, close = () => {} }: ButtonShareProps) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSigninModal, setShowSigninModal] = useState(false);
 
@@ -18,8 +19,10 @@ function ButtonShare({ label }: ButtonShareProps) {
 
   const handleOpenShareModal = () => {
     if (!isAuthenticated) {
+      close(false);
       handleOpenSigninModal();
     }
+    close(false);
     setShowShareModal(true);
   };
 

@@ -41,6 +41,7 @@ function DropZoneWithoutPreview({ setMeme, setMemeResp }: MemeProps) {
       style={{ position: 'relative', textAlign: 'center' }}
     >
       <button
+        className="deleteButton"
         style={{
           position: 'absolute',
           top: '-10%',
@@ -63,7 +64,7 @@ function DropZoneWithoutPreview({ setMeme, setMemeResp }: MemeProps) {
                   })}
                   style={{
                     border: 'dashed',
-                    width: '25rem',
+                    width: '100%',
                     height: '15rem',
                     display: 'flex',
                     justifyContent: 'center',

@@ -10,106 +10,57 @@ import LoginLogout from '../Button/ButtonLogin-Logout/ButtonLogin-Logout';
 
 function Sidebar() {
   return (
-    <>
-      <section className="SidebarContainer d-none d-md-block">
-        <div className="Searchbar">
-          <form
-            className="styleSearchBar d-flex align-items-center"
-            action="search"
-          >
-            <FaSearch className="mglass mr-2" />
-            <input
-              placeholder="Rechercher"
-              type="text"
-              style={{
-                width: '10rem',
-                border: 'none',
-                background: 'transparent',
-                outline: 'none',
-                textAlign: 'center',
-                paddingTop: '1rem',
-              }}
-            />
-          </form>
-        </div>
-        <div className="Sidebar color">
-          <div className="buttonContainer">
-            <ButtonShare label="Partager" />
-            <ButtonCreate />
-          </div>
-
-          <Navbar className="Navbar">
-            <Container>
-              <Nav.Link className="custom">Katsumeme du moment</Nav.Link>
-            </Container>
-          </Navbar>
-          <Navbar>
-            <Container>
-              <Nav.Link className="custom">Les plus likés</Nav.Link>
-            </Container>
-          </Navbar>
-          <Navbar>
-            <Container>
-              <Nav.Link className="custom">Les moins likés</Nav.Link>
-            </Container>
-          </Navbar>
-          <Navbar>
-            <Container>
-              <Nav.Link className="custom">Derniers memes ajoutés</Nav.Link>
-            </Container>
-          </Navbar>
-
-          <img src="/LogoChat.png" alt="Logo" className="SidebarImage" />
-        </div>
-      </section>
-
-      {/* Burger Menu for Small Screens */}
-      <Navbar collapseOnSelect expand="md" className="d-md-none me-auto">
-        <Navbar.Toggle
-          aria-controls="responsive-navbar-nav"
-          className="bg-light"
+    <section className="SidebarContainer d-none d-md-block">
+      <div className="Searchbar">
+        <form
+          className="styleSearchBar d-flex align-items-center"
+          action="search"
         >
-          <span className="navbar-toggler-icon"></span>
-        </Navbar.Toggle>
-        <Navbar.Collapse id="responsive-navbar-nav" className="navbar-collapse">
-          <Nav className="flex-column">
-            {/* Search bar added here */}
-            <div className="Searchbar">
-              <form className="styleSearchBar d-flex" action="search">
-                <div className="search-container">
-                  <FaSearch className="mglass mr-2" />
-                  <input
-                    placeholder="Rechercher"
-                    type="text"
-                    style={{
-                      width: '100%',
-                      border: 'none',
-                      background: 'transparent',
-                      outline: 'none',
-                      textAlign: 'center',
-                    }}
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="buttonContainer">
-              <ButtonShare label="Partager" />
-              <ButtonCreate />
-            </div>
+          <FaSearch className="mglass mr-2" />
+          <input
+            placeholder="Rechercher"
+            type="text"
+            style={{
+              width: '10rem',
+              border: 'none',
+              background: 'transparent',
+              outline: 'none',
+              textAlign: 'center',
+              paddingTop: '1rem',
+            }}
+          />
+        </form>
+      </div>
+      <div className="Sidebar color">
+        <div className="buttonContainer">
+          <ButtonShare label="Partager" />
+          <ButtonCreate />
+        </div>
+
+        <Navbar className="Navbar">
+          <Container>
             <Nav.Link className="custom">Katsumeme du moment</Nav.Link>
+          </Container>
+        </Navbar>
+        <Navbar>
+          <Container>
             <Nav.Link className="custom">Les plus likés</Nav.Link>
+          </Container>
+        </Navbar>
+        <Navbar>
+          <Container>
             <Nav.Link className="custom">Les moins likés</Nav.Link>
+          </Container>
+        </Navbar>
+        <Navbar>
+          <Container>
             <Nav.Link className="custom">Derniers memes ajoutés</Nav.Link>
-            <div className="logButton">
-              <Button className="btn-logout">
-                Se déconnecter
-                <LoginLogout />
-              </Button>
-            </div>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    </>
+          </Container>
+        </Navbar>
+
+        <img src="/LogoChat.png" alt="Logo" className="SidebarImage" />
+      </div>
+    </section>
   );
 }
 
