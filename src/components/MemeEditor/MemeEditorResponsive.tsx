@@ -5,11 +5,11 @@ import ButtonPublish from '../Button/ButtonPublish/ButtonPublish';
 import DownloadMeme from '../Button/ButtonDownload/ButtonDownload';
 
 type MemeEditorProps = {
-  meme: File | null;
-  canvasRef: React.RefObject<HTMLCanvasElement>;
+  memeResp: File | null;
+  canvasRefResp: React.RefObject<HTMLCanvasElement>;
 };
 
-function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
+function MemeEditorResponsive({ memeResp, canvasRefResp }: MemeEditorProps) {
   const [topText, setTopText] = useState<string>('');
   const [bottomText, setBottomText] = useState<string>('');
   const [topTextLength, setTopTextLength] = useState<number>(0);
@@ -67,16 +67,16 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
 
   useEffect(() => {
     const generateText = () => {
-      if (!canvasRef.current || !meme) return; // handle the case where the canvas or image is null
+      if (!canvasRefResp.current || !memeResp) return; // handle the case where the canvas or image is null
 
-      const canvas = canvasRef.current; // To interact with the canvas, we need to get the 2D context.
+      const canvas = canvasRefResp.current; // To interact with the canvas, we need to get the 2D context.
       const ctx = canvas.getContext('2d'); // 2D to render shapes, text, images, etc.
 
       const img = new Image(); // Create an image element
-      img.src = URL.createObjectURL(meme); // Set the image source to the uploaded image
+      img.src = URL.createObjectURL(memeResp); // Set the image source to the uploaded image
 
       img.onload = () => {
-        if (!canvasRef.current || !ctx) return; // handle the case where the canvas or context is null
+        if (!canvasRefResp.current || !ctx) return; // handle the case where the canvas or context is null
 
         canvas.width = 500; // Set dimensions
         canvas.height = 500;
@@ -141,14 +141,16 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
     };
 
     generateText();
-  }, [meme, topText, bottomText]);
+  }, [memeResp, topText, bottomText]);
 
   return (
     <section>
-      <div className="meme-container d-none d-md-block">
-        <Stack direction="horizontal" gap={3}>
+      <div className="meme-container d-md-none">
+        <Stack direction="vertical" gap={3}>
           <div>
-            {meme && <canvas ref={canvasRef} width={500} height={500} />}
+            {memeResp && (
+              <canvas ref={canvasRefResp} width={500} height={500} />
+            )}
           </div>
 
           <div className="text-inputs">
@@ -177,8 +179,8 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
               {bottomTextLength}/{maxTextLength}
             </Form.Text>
             <div className="CreateMemePageButton">
-              <ButtonPublish label="Publier" canvasRef={canvasRef} />
-              <DownloadMeme label="Télécharger" canvasRef={canvasRef} />
+              <ButtonPublish label="Publier" canvasRef={canvasRefResp} />
+              <DownloadMeme label="Télécharger" canvasRef={canvasRefResp} />
             </div>
           </div>
         </Stack>
@@ -187,4 +189,4 @@ function MemeEditor({ meme, canvasRef }: MemeEditorProps) {
   );
 }
 
-export default MemeEditor;
+export default MemeEditorResponsive;

@@ -13,12 +13,12 @@
 
 .Sidebar {
   position: fixed;
-  top: 17rem;
+  top: 16rem;
   left: 0;
-  height: 34rem;
+  height: 30rem;
   width: 14rem;
   padding-top: 3.5rem;
-  margin-left: 1.5rem;
+  margin-left: 3rem;
   text-align: left;
   border: #9a9797 solid 0.1rem;
   border-radius: 0.5rem;
@@ -26,24 +26,33 @@
 }
 
 .SidebarImage {
-  position: absolute;
-  bottom: 0;
+  display: flex;
   opacity: 0.5;
+  width: 90%;
+  padding-left: 1.5rem;
 }
 
 .Searchbar {
   display: flex;
   width: 13rem;
-  margin-left: 2rem;
+  margin-left: 3.5rem;
   border-radius: 1rem;
   border: solid 0.08rem;
   background-color: transparent;
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem; // Ajustez le padding selon vos besoins
+}
+
 .mglass {
-  margin-left: 0.7rem;
   color: #e7811c;
 }
+
 .styleSearchBar {
   display: flex;
   align-items: center;
@@ -66,4 +75,10 @@
   -webkit-text-fill-color: black;
   -webkit-text-stroke: 0.03rem #e7811c;
   text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .SidebarContainer {
+    display: none;
+  }
 }

@@ -5,6 +5,7 @@ import './PublishMeme.scss';
 import { IoIosRocket } from 'react-icons/io';
 import useUserStore from '../../UserStore/UserState';
 import { useNavigate } from 'react-router-dom';
+import { IoColorFill } from 'react-icons/io5';
 
 type PublishMemeProps = {
   hide: boolean;
@@ -178,10 +179,10 @@ function PublishMeme({ hide, onHide, canvasRef }: PublishMemeProps) {
                 style={{
                   gap: '0.5rem',
                   background: '#e8811c',
-                  color: 'black',
+                  color: '#ffffff',
                   border: 'transparent',
                 }}
-                className="d-flex justify-content-center align-items-center"
+                className="CustomButton d-flex justify-content-center align-items-center"
               >
                 <IoIosRocket />
                 Publier

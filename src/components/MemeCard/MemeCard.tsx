@@ -10,7 +10,7 @@ import { saveAs } from 'file-saver';
 import DeleteMeme from './DeleteMeme';
 import { useEffect, useState } from 'react';
 import useUserStore from '../UserStore/UserState';
-import { M } from 'vite/dist/node/types.d-aGj9QkWt';
+import { IoPricetagOutline } from 'react-icons/io5';
 
 interface MemeCardProps {
   meme: {
@@ -84,21 +84,28 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
 
   return (
     <div>
-      <div className="col d-flex justify-content-center">
-        <Card
-          className="CardStyle"
-          style={{ border: '#000000 solid 0.2rem', width: '32rem' }}
-        >
-          <Card.Header style={{ backgroundColor: '#d6cadb' }}>
-            <Card.Title className="CardTitle pb-2" style={{ fontSize: '2rem' }}>
+      <div className="CardContainer ">
+        <Card className="CardStyle col-md-10 col-lg-10 col-xl-10 d-flex justify-content-center">
+          <Card.Header style={{ backgroundColor: '#e8811c' }}>
+            <Card.Title
+              className="CardTitle pb-2"
+              style={{
+                fontSize: '1.8rem',
+                color: '#775088',
+              }}
+            >
               {meme.title}
+              {show && <DeleteMeme memeId={meme.id} deleteMeme={deleteMeme} />}
             </Card.Title>
             <Card.Subtitle
-              className="text-muted my-1 d-flex justify-content-between"
-              style={{ fontSize: '1rem', textAlign: 'left' }}
+              className="Subtitle my-1 d-flex justify-content-between"
+              style={{
+                fontSize: '0.8rem',
+                textAlign: 'left',
+                color: '#ffffff',
+              }}
             >
               {`Auteur: ${meme.author.nickname}, ${formatDate()}`}
-              {show && <DeleteMeme memeId={meme.id} deleteMeme={deleteMeme} />}
             </Card.Subtitle>
           </Card.Header>
           <Card.Body>
@@ -107,6 +114,7 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
                 className="CardImage img-fluid"
                 variant="top"
                 src={`${import.meta.env.VITE_API_URL}${meme.image_url}`}
+                style={{ maxWidth: '100%', height: 'auto' }}
               />
             </div>
             <div className="my-2 d-flex flex-wrap align-items-center">
@@ -118,25 +126,22 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    fontSize: '1.3rem',
-                    textDecoration: 'none',
-                    color: 'white',
-                    background: '#70905f',
-                    border: 'solid 0.1rem',
+                    fontSize: '1rem',
+                    color: '#806c00',
                     borderRadius: '0.8rem',
-                    padding: '0.3rem 0.5rem 0.3rem 0.5rem',
-                    marginRight: '0.5rem',
-                    marginBottom: '0.5rem',
-                    marginLeft: tagIndex !== 0 ? '0rem' : '0',
                   }}
                 >
+                  <IoPricetagOutline style={{ marginRight: '0.2rem' }} />
+
                   {tag.tags.name}
                 </Card.Link>
               ))}
             </div>
           </Card.Body>
           <Card.Footer
-            style={{ backgroundColor: '#d6cadb' }}
+            style={{
+              backgroundColor: '#E8811C',
+            }}
             className="d-flex justify-content-between align-items-center"
           >
             <Button
@@ -146,8 +151,8 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
               style={{
                 border: 'transparent',
                 background: 'transparent',
-                color: 'black',
-                fontSize: '2rem',
+                color: '#ffff',
+                fontSize: '1.5rem',
               }}
             >
               <FaComment />
@@ -168,8 +173,8 @@ function MemeCard({ meme, deleteMeme }: MemeCardProps) {
               style={{
                 border: 'transparent',
                 background: 'transparent',
-                color: 'black',
-                fontSize: '2rem',
+                color: '#ffff',
+                fontSize: '1.5rem',
               }}
             >
               <FaDownload />
