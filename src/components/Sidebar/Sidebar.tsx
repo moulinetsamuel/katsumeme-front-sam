@@ -5,10 +5,12 @@ import { FaSearch } from 'react-icons/fa';
 import './Sidebar.scss';
 import ButtonShare from '../Button/ButtonShare/ButtonShare';
 import ButtonCreate from '../Button/ButtonCreate/ButtonCreate';
+import { Button } from 'react-bootstrap';
+import LoginLogout from '../Button/ButtonLogin-Logout/ButtonLogin-Logout';
 
 function Sidebar() {
   return (
-    <section className="SidebarContainer">
+    <section className="SidebarContainer d-none d-md-block">
       <div className="Searchbar">
         <form
           className="styleSearchBar d-flex align-items-center"
@@ -34,6 +36,7 @@ function Sidebar() {
           <ButtonShare label="Partager" />
           <ButtonCreate />
         </div>
+
         <Navbar className="Navbar">
           <Container>
             <Nav.Link className="custom">Katsumeme du moment</Nav.Link>
@@ -54,6 +57,7 @@ function Sidebar() {
             <Nav.Link className="custom">Derniers memes ajoutés</Nav.Link>
           </Container>
         </Navbar>
+
         <img src="/LogoChat.png" alt="Logo" className="SidebarImage" />
       </div>
     </section>

@@ -127,7 +127,7 @@ function LikesDislikes({
         style={{
           border: 'transparent',
           display: 'flex',
-          fontSize: '1.5rem ',
+          fontSize: '1.2rem ',
         }}
       >
         <SlLike />({likes})
@@ -143,7 +143,8 @@ function LikesDislikes({
         style={{
           border: 'transparent',
           display: 'flex',
-          fontSize: '1.5rem ',
+          fontSize: '1.2rem ',
+          color: 'red',
         }}
       >
         ({dislikes})

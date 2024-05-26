@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<MemePage />} />
         <Route path="/create-meme" element={<CreateMemePage />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

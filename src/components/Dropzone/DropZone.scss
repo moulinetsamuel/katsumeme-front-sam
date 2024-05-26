@@ -11,3 +11,13 @@ input[type='file']::file-selector-button {
   height: 100%;
   margin-bottom: 1rem;
 }
+
+button {
+  align-items: center;
+}
+
+.deleteButton {
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
+}

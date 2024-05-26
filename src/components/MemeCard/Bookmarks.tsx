@@ -67,12 +67,16 @@ function Bookmarks({ memeId, isBookmarked }: BookmarksProps) {
         variant={bookmarked ? 'warning' : 'outline-dark'}
         style={{
           border: 'transparent',
-          fontSize: '2rem',
           backgroundColor: 'transparent',
         }}
       >
         <div>
-          <GoStarFill style={{ color: bookmarked ? 'yellow' : 'white' }} />
+          <GoStarFill
+            style={{
+              color: bookmarked ? 'yellow' : 'white',
+              fontSize: '1.5rem',
+            }}
+          />
         </div>
       </Button>
 

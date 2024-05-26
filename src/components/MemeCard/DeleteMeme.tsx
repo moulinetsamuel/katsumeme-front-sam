@@ -18,8 +18,15 @@ function DeleteMeme({ memeId, deleteMeme }: DeleteMemeProps) {
   };
 
   return (
-    <Button onClick={deleteMemeHandler}>
-      <TiDelete />
+    <Button
+      style={{
+        color: '#775088',
+        backgroundColor: 'transparent',
+        border: 'none',
+      }}
+      onClick={deleteMemeHandler}
+    >
+      <TiDelete style={{ color: '#775088' }} />
     </Button>
   );
 }
