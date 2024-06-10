@@ -1,7 +1,7 @@
 import { IoIosRocket } from 'react-icons/io';
 import './ButtonPublish.scss';
 import { Button } from 'react-bootstrap';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Signin from '../../Modals/Signin/Signin';
 import useUserStore from '../../UserStore/UserState';
 import PublishMeme from '../../Modals/PublishMeme/PublishMeme';

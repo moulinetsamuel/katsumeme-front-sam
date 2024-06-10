@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { FaRegUser } from 'react-icons/fa6';
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Signin from '../../Modals/Signin/Signin';
 import useUserStore from '../../UserStore/UserState';
-import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 
 type LoginLogoutProps = {
   close?: (boolean: any) => void;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import './Header.scss';
 import LoginLogout from '../Button/ButtonLogin-Logout/ButtonLogin-Logout';
@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import ButtonShare from '../Button/ButtonShare/ButtonShare';
 import ButtonCreate from '../Button/ButtonCreate/ButtonCreate';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { FaSearch } from 'react-icons/fa';
 
 function Header() {
   const [expanded, setExpanded] = useState(false);

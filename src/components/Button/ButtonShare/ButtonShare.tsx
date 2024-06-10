@@ -1,7 +1,7 @@
 import { IoIosRocket } from 'react-icons/io';
 import './ButtonShare.scss';
 import { Button } from 'react-bootstrap';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Signin from '../../Modals/Signin/Signin';
 import ShareMeme from '../../Modals/ShareMeme/ShareMeme';
 import useUserStore from '../../UserStore/UserState';
