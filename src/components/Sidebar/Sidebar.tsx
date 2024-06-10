@@ -5,8 +5,6 @@ import { FaSearch } from 'react-icons/fa';
 import './Sidebar.scss';
 import ButtonShare from '../Button/ButtonShare/ButtonShare';
 import ButtonCreate from '../Button/ButtonCreate/ButtonCreate';
-import { Button } from 'react-bootstrap';
-import LoginLogout from '../Button/ButtonLogin-Logout/ButtonLogin-Logout';
 
 function Sidebar() {
   return (

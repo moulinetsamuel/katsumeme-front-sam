@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Dropzone, { FileRejection } from 'react-dropzone';
 import './DropZone.scss';
 

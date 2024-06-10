@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import axiosInstance from '../API/axios';
-import { AxiosError } from 'axios';
 
 interface UserState {
   user: {

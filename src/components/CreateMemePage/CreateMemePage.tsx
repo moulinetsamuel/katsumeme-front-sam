@@ -2,8 +2,6 @@ import { useRef, useState } from 'react';
 import DropZoneWithoutPreview from '../Dropzone/DropZoneWithoutPreview';
 import './CreateMemePage.scss';
 import MemeEditor from '../MemeEditor/MemeEditor';
-import ButtonPublish from '../Button/ButtonPublish/ButtonPublish';
-import DownloadMeme from '../Button/ButtonDownload/ButtonDownload';
 import MemeEditorResponsive from '../MemeEditor/MemeEditorResponsive';
 
 function CreateMemePage() {
