@@ -72,13 +72,14 @@ function MemePage() {
         </Col>
         <Col md={8} lg={9}>
           <div className="MemeCardContainer d-flex flex-wrap">
-            {memes.map((meme) => (
-              <div key={meme.id} className="row md-12">
-                <div className="col-12">
-                  <MemeCard meme={meme} deleteMeme={deleteMeme} />
+            {Array.isArray(memes) &&
+              memes.map((meme) => (
+                <div key={meme.id} className="row md-12">
+                  <div className="col-12">
+                    <MemeCard meme={meme} deleteMeme={deleteMeme} />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
           {hasMoreMemes && (
             <div className="LoadMoreButton">
